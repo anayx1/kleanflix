@@ -1,0 +1,230 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { ChevronDown, Menu, X } from 'lucide-react';
+import Button from './Button';
+
+const NAV_ITEMS = [
+    { name: 'Home', href: '/' },
+    {
+        name: 'Products',
+        href: '/products',
+        isMega: true,
+        dropdown: [
+            { name: 'Facility Care', href: '/products/facility-care' },
+            { name: 'Pet Care', href: '/products/pet-care' },
+            { name: 'Kitchen Care', href: '/products/kitchen-care' },
+            { name: 'Personal Hygiene', href: '/products/personal-hygiene' },
+            { name: 'Laundry Care', href: '/products/laundry-care' },
+            { name: 'Germ Control', href: '/products/germ-control' },
+            { name: 'Toilet Care', href: '/products/toilet-care' },
+            { name: 'Marble Care', href: '/products/marble-care' },
+            { name: 'Automotive Care', href: '/products/automotive-care' },
+        ],
+    },
+    {
+        name: 'Industries',
+        href: '/industries',
+        isMega: true,
+        dropdown: [
+            { name: 'Healthcare & Pharma', href: '/industries/healthcare' },
+            { name: 'Hospitality & Hotels', href: '/industries/hospitality' },
+            { name: 'Commercial Offices', href: '/industries/commercial' },
+            { name: 'Food Processing', href: '/industries/food-processing' },
+            { name: 'Retail & Supermarkets', href: '/industries/retail' },
+            { name: 'Educational Institutes', href: '/industries/education' },
+            { name: 'Automotive Industry', href: '/industries/automotive' },
+            { name: 'Export Markets', href: '/industries/exports' },
+            { name: 'Private Label OEM', href: '/industries/oem' },
+        ],
+    },
+    { name: 'Build Your Product Line', href: '/build-product-line' },
+    { name: 'OEM & Private Label Execution', href: '/oem-private-label' },
+    { name: 'Exports', href: '/exports' },
+    { name: 'Manufacturing', href: '/manufacturing' },
+    { name: 'How It Works', href: '/how-it-works' },
+    { name: 'About Us', href: '/about' },
+];
+
+export default function Header() {
+    const [scrolled, setScrolled] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [activeMobileDropdown, setActiveMobileDropdown] = useState(null);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 20) {
+                setScrolled(true);
+            } else {
+                setScrolled(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const toggleMobileDropdown = (name) => {
+        setActiveMobileDropdown((prev) => (prev === name ? null : name));
+    };
+
+    return (
+        <header
+            className={`sticky top-0 z-50 w-full transition-all duration-300 border-b border-gray-200/70 bg-[#F5F5F7] ${scrolled ? 'shadow-md backdrop-blur-md bg-[#F5F5F7]/95 py-1' : 'py-1'
+                }`}
+        >
+            <div className="main-container px-4 md:px-6 xl:px-8">
+                <div className="flex items-center justify-between gap-2 lg:gap-4 xl:gap-6">
+                    {/* Logo */}
+                    <Link href="/" className="flex items-center shrink-0 transition-opacity hover:opacity-90">
+                        <Image
+                            src="/logo.avif"
+                            alt="Kleanflix Logo"
+                            width={54}
+                            height={54}
+                            className="h-11 md:h-16 w-auto object-contain"
+                            priority
+                        />
+                    </Link>
+
+                    {/* Desktop Navigation Links */}
+                    <nav className="hidden md:flex items-center justify-center flex-1 gap-3.5 lg:gap-5 xl:gap-6 text-secondary font-medium">
+                        {NAV_ITEMS.map((item) => {
+                            if (item.dropdown) {
+                                return (
+                                    <div key={item.name} className="relative group py-4">
+                                        <Link
+                                            href={item.href}
+                                            className="inline-flex items-center gap-1 text-[13px] lg:text-[14px] xl:text-[15px] font-medium text-secondary hover:text-[#d96610] group-hover:underline group-hover:underline-offset-8 group-hover:decoration-2 group-hover:decoration-secondary transition-all duration-200 whitespace-nowrap"
+                                        >
+                                            <span>{item.name}</span>
+                                            <ChevronDown className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180" />
+                                        </Link>
+
+                                        {/* Mega Dropdown Panel */}
+                                        <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 hidden group-hover:block z-50 transition-all duration-200 min-w-[680px] lg:min-w-[780px]">
+                                            <div className="bg-white rounded-[24px] shadow-2xl border border-gray-100 p-7 lg:p-9 grid grid-cols-3 gap-y-5 gap-x-10 lg:gap-x-14">
+                                                {item.dropdown.map((subItem) => (
+                                                    <Link
+                                                        key={subItem.name}
+                                                        href={subItem.href}
+                                                        className="text-secondary hover:text-[#d96610] hover:underline underline-offset-4 decoration-secondary text-base lg:text-lg font-medium transition-all duration-150 whitespace-nowrap"
+                                                    >
+                                                        {subItem.name}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            }
+
+                            return (
+                                <Link
+                                    key={item.name}
+                                    href={item.href}
+                                    className="text-[13px] lg:text-[14px] xl:text-[15px] font-medium text-secondary hover:text-[#d96610] hover:underline hover:underline-offset-8 hover:decoration-2 hover:decoration-secondary transition-all duration-200 whitespace-nowrap py-4"
+                                >
+                                    {item.name}
+                                </Link>
+                            );
+                        })}
+                    </nav>
+
+                    {/* Desktop CTA Button */}
+                    <div className="hidden md:flex items-center shrink-0">
+                        <Button
+                            href="/contact"
+                            variant="pill-secondary"
+                            size="sm"
+                            showArrow={false}
+                            className="text-xs lg:text-sm px-5 py-2.5 font-medium tracking-wide"
+                        >
+                            CONTACT US
+                        </Button>
+                    </div>
+
+                    {/* Mobile Menu Toggle Button */}
+                    <button
+                        type="button"
+                        onClick={() => setMobileMenuOpen((prev) => !prev)}
+                        className="md:hidden p-2 text-secondary hover:text-[#d96610] focus:outline-none rounded-lg"
+                        aria-label="Toggle Navigation Menu"
+                    >
+                        {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                    </button>
+                </div>
+            </div>
+
+            {/* Mobile Drawer Navigation */}
+            {mobileMenuOpen && (
+                <div className="md:hidden bg-white border-t border-gray-200 shadow-xl px-4 py-6 max-h-[85vh] overflow-y-auto">
+                    <div className="flex flex-col gap-3">
+                        {NAV_ITEMS.map((item) => {
+                            if (item.dropdown) {
+                                const isOpen = activeMobileDropdown === item.name;
+                                return (
+                                    <div key={item.name} className="border-b border-gray-100 pb-2">
+                                        <button
+                                            type="button"
+                                            onClick={() => toggleMobileDropdown(item.name)}
+                                            className="w-full flex items-center justify-between py-2 text-base font-semibold text-secondary text-left"
+                                        >
+                                            <span>{item.name}</span>
+                                            <ChevronDown
+                                                className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''
+                                                    }`}
+                                            />
+                                        </button>
+                                        {isOpen && (
+                                            <div className="pl-4 mt-1 grid grid-cols-1 gap-2 border-l-2 border-secondary/30 my-1">
+                                                {item.dropdown.map((subItem) => (
+                                                    <Link
+                                                        key={subItem.name}
+                                                        href={subItem.href}
+                                                        onClick={() => setMobileMenuOpen(false)}
+                                                        className="py-1.5 text-sm font-semibold text-secondary hover:text-[#d96610]"
+                                                    >
+                                                        {subItem.name}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            }
+
+                            return (
+                                <Link
+                                    key={item.name}
+                                    href={item.href}
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="py-2.5 text-base font-semibold text-secondary border-b border-gray-100 hover:text-[#d96610]"
+                                >
+                                    {item.name}
+                                </Link>
+                            );
+                        })}
+
+                        <div className="pt-4 mt-2">
+                            <Button
+                                href="/contact"
+                                variant="pill-secondary"
+                                size="md"
+                                showArrow={false}
+                                fullWidth
+                                onClick={() => setMobileMenuOpen(false)}
+                                className="justify-center font-bold tracking-wide"
+                            >
+                                CONTACT US
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </header>
+    );
+}
+
