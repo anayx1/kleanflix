@@ -1,6 +1,7 @@
 import { Open_Sans, Anton } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -24,9 +25,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${openSans.variable} ${anton.variable} font-sans`}>
-      <body className="min-h-screen bg-background text-foreground antialiased">
-        <Header />
-        {children}
+      <body className="min-h-screen bg-background text-foreground antialiased flex flex-col justify-between">
+        <div>
+          <Header />
+          {children}
+        </div>
+        <Footer />
       </body>
     </html>
   );

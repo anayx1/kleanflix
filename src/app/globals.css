@@ -12,6 +12,7 @@
   --breakpoint-lg: 1501px;
   --breakpoint-xl: 1801px;
   --color-primary: #1E6BB8;
+  --color-primary-dark: #0E4A8A;
   --color-secondary: #F47A1F;
   --font-sans: var(--font-open-sans), "Open Sans", system-ui, -apple-system, sans-serif;
   --font-anton: var(--font-anton), "Anton", sans-serif;

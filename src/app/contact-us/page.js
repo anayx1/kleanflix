@@ -2,6 +2,7 @@ import React from 'react';
 import ContactHero from './ContactHero';
 import ContactSectionform from './ContactSectionform';
 import WhyThisMattersSection from './WhyThisMattersSection';
+import ContactCtaVideoSection from './ContactCtaVideoSection';
 
 export const metadata = {
     title: "Contact Us | Kleanflix",
@@ -23,6 +24,7 @@ export default function ContactUsPage() {
             </section>
             <ContactSectionform />
             <WhyThisMattersSection />
+            <ContactCtaVideoSection />
         </main>
     );
 }

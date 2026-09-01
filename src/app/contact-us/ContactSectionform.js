@@ -87,7 +87,7 @@ export default function ContactSectionform() {
     };
 
     return (
-        <section className="py-10 md:py-16 bg-white">
+        <section id="contact-form" className="py-10 md:py-16 bg-white scroll-mt-10">
             <div className="main-container px-4 md:px-8 xl:px-12">
                 <div className="bg-[#F5F6F8] rounded-[24px] md:rounded-[32px] p-6 md:p-10 lg:p-12">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">

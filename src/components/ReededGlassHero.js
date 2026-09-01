@@ -2,50 +2,33 @@
 
 import React, { useEffect, useState, useId } from 'react';
 import Image from 'next/image';
-import { motion, animate } from 'framer-motion';
+import { animate } from 'framer-motion';
 
 /**
- * Generates a 40-stripe sinusoidal displacement map data URL
- * to produce Framer's exact vertical reeded glass wave distortion.
+ * Pre-computed 512x1 8-bit RGBA Sinusoidal Displacement Map (40 vertical sinusoidal waves).
+ * Embedded as a static constant to ensure 0ms SSR availability, eliminating initial paint flashes.
  */
-function createSinusoidalReededMap(stripes = 40) {
-    if (typeof window === 'undefined') return '';
-    const canvas = document.createElement('canvas');
-    canvas.width = 512;
-    canvas.height = 1; // 1px height stretched to 100% for 0ms execution
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return '';
-    const imgData = ctx.createImageData(512, 1);
-    const data = imgData.data;
-
-    for (let x = 0; x < 512; x++) {
-        const sine = Math.sin((x / 512) * stripes * Math.PI * 2);
-        const r = Math.floor(128 + 127 * sine);
-        const idx = x * 4;
-        data[idx] = r;       // Red channel controls X displacement
-        data[idx + 1] = 128; // Green neutral
-        data[idx + 2] = 128; // Blue neutral
-        data[idx + 3] = 255; // Alpha
-    }
-
-    ctx.putImageData(imgData, 0, 0);
-    return canvas.toDataURL();
-}
+const SINUSOIDAL_MAP_DATA_URI =
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAABCAYAAACouxZ2AAAArUlEQVR4nO2UIQ6DQBBFS0gqanB1tVh0fT0H6AF6AA7AO0APwAE4QH09urYWh6tBkDR9DcncAQFqMzvz/8/LbmYH+AQH8AeO4AtswCuYg3swBU9gCd7BDvyAxtnFfRlzaejy8GnCd4ycIXLn/At4BBPwABbgDWzBNziBX7AHH2AFnsEsNFnUVfT7mJ9C34ZfEf5J5M259ca/KH+9cv61v//S/Evvv+3/b/xL8v8BROP9RVRUtCAAAAAASUVORK5CYII=';
 
 /**
- * Reusable Hero Component with Reeded Glass Wave Blending Entry Animation.
- * Configured with Framer's exact transition specs:
- * - Ease In Out cubic-bezier(0.44, 0, 0.56, 1)
- * - Duration: 2.0 seconds
- * - Delay: 0 seconds
- * - Zero white/blank stripes on initial paint
+ * ReededGlassHero - Hero banner component with sinusoidal fluted glass reveal animation.
+ *
+ * Visual Features:
+ * - Instant First-Paint Loading: Uses static displacement map so SSR renders the exact fluted glass state immediately on page load.
+ * - Fluted Glass Rib Structure: Combines pure horizontal sinusoidal refraction with 3D glass bar specular highlights.
+ * - Smooth Ease-Out Reveal: Ribs and highlights smoothly flatten over 1.2s to reveal the crystal-sharp photo.
+ * - Zero GPU Overhead after completion: Filter is completely disabled once the reveal finishes.
+ * - Crisp Separate Text Layer: Orange headline and white subtitle sit in an unfiltered top layer.
  *
  * @param {Object} props
- * @param {string} props.title - Hero main title text
- * @param {string} props.subtitle - Hero subtitle text
+ * @param {string} props.title - Hero main headline (rendered in bold secondary orange with Anton font)
+ * @param {string} props.subtitle - Hero subtitle (rendered in crisp white Open Sans)
  * @param {string} props.imageSrc - Path to background image
  * @param {string} [props.imageAlt] - Image alt text
- * @param {number} [props.stripes=40] - Number of vertical reeded glass stripes
+ * @param {number} [props.stripes=40] - Number of vertical sinusoidal reeded glass stripes
+ * @param {number} [props.initialScale=65] - Starting displacement distortion scale
+ * @param {number} [props.duration=1.2] - Duration of reveal animation in seconds
  * @param {string} [props.className] - Additional wrapper container styles
  * @param {React.ReactNode} [props.children] - Additional content inside hero
  */
@@ -55,30 +38,27 @@ export default function ReededGlassHero({
     imageSrc,
     imageAlt = 'Hero Background',
     stripes = 40,
+    initialScale = 65,
+    duration = 1.2,
     className = '',
     children,
 }) {
     const rawId = useId();
     const filterId = `reeded-glass-${rawId.replace(/[^a-zA-Z0-9_-]/g, '')}`;
 
-    // Initialize mapUrl synchronously on first client render (eliminates blank stripe flashes)
-    const [mapUrl, setMapUrl] = useState(() => createSinusoidalReededMap(stripes));
-    const [filterScale, setFilterScale] = useState(60);
+    const [filterScale, setFilterScale] = useState(initialScale);
+    const [overlayOpacity, setOverlayOpacity] = useState(0.45);
     const [isCompleted, setIsCompleted] = useState(false);
 
     useEffect(() => {
-        if (!mapUrl) {
-            const url = createSinusoidalReededMap(stripes);
-            setMapUrl(url);
-        }
-
-        // Framer Transition parameters: Ease In Out Bezier (0.44, 0, 0.56, 1), Time: 2s, Delay: 0s
-        const controls = animate(60, 0, {
-            duration: 2.0,
-            delay: 0,
-            ease: [0.44, 0, 0.56, 1],
-            onUpdate: (latest) => {
-                setFilterScale(latest);
+        // Smooth ease-out reveal animation starting right on page load
+        const controls = animate(0, 1, {
+            duration: duration,
+            delay: 0.08,
+            ease: [0.25, 0.1, 0.25, 1], // Natural ease-out curve
+            onUpdate: (progress) => {
+                setFilterScale(initialScale * (1 - progress));
+                setOverlayOpacity(0.45 * (1 - progress));
             },
             onComplete: () => {
                 setIsCompleted(true);
@@ -88,23 +68,23 @@ export default function ReededGlassHero({
         return () => {
             controls.stop();
         };
-    }, [stripes, mapUrl]);
+    }, [initialScale, duration]);
 
     return (
         <section className={`relative w-full overflow-hidden bg-black ${className}`}>
-            {/* Sinusoidal Reeded Glass SVG Filter with 0px Y shift */}
-            {!isCompleted && mapUrl && (
-                <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
+            {/* Sinusoidal Reeded Glass SVG Filter with pure horizontal displacement */}
+            {!isCompleted && (
+                <svg className="absolute w-0 h-0 pointer-events-none opacity-0" aria-hidden="true">
                     <defs>
-                        <filter id={filterId} x="0%" y="0%" width="100%" height="100%">
+                        <filter id={filterId} x="0%" y="0%" width="100%" height="100%" colorInterpolationFilters="sRGB">
                             <feImage
-                                href={mapUrl}
+                                href={SINUSOIDAL_MAP_DATA_URI}
                                 result="reededMap"
                                 preserveAspectRatio="none"
                                 width="100%"
                                 height="100%"
                             />
-                            {/* Force G channel to exact 0.5 for 0px Y displacement (prevents vertical shifting) */}
+                            {/* Force G channel to exact 0.5 for 0.00px Y displacement (pure horizontal wave refraction) */}
                             <feComponentTransfer in="reededMap" result="zeroYMap">
                                 <feFuncG type="discrete" tableValues="0.5" />
                             </feComponentTransfer>
@@ -122,13 +102,20 @@ export default function ReededGlassHero({
 
             {/* Hero Main Container */}
             <div className="relative w-full h-[480px] md:h-[620px] lg:h-[60dvh] overflow-hidden">
-
-                {/* Background Image with Reeded Glass distortion blending 60 -> 0 using Bezier(0.44, 0, 0.56, 1) over 2s */}
+                {/* Background Image Layer with Reeded Glass distortion resolving into full clarity */}
+                {/* Negative insets extend the image beyond visible bounds so displacement at edges */}
+                {/* pulls from real image pixels instead of the black background (overflow:hidden clips it) */}
                 <div
-                    className="absolute inset-0 w-full h-full"
+                    className="absolute w-full h-full"
                     style={{
-                        filter: !isCompleted && mapUrl ? `url(#${filterId})` : 'none',
-                        willChange: 'filter',
+                        top: '-20px',
+                        left: isCompleted ? '0px' : '-40px',
+                        right: isCompleted ? '0px' : '-40px',
+                        bottom: '-20px',
+                        width: isCompleted ? '100%' : 'calc(100% + 80px)',
+                        height: 'calc(100% + 40px)',
+                        filter: !isCompleted ? `url(#${filterId})` : 'none',
+                        willChange: isCompleted ? 'auto' : 'filter',
                     }}
                 >
                     <Image
@@ -141,44 +128,39 @@ export default function ReededGlassHero({
                     />
                 </div>
 
-                {/* Gradient Contrast Overlay */}
-                {/* <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" /> */}
+                {/* Reeded Glass Ribs Surface Highlights & Shading (Synchronized with refraction) */}
+                {!isCompleted && (
+                    <div
+                        className="absolute inset-0 pointer-events-none z-1"
+                        style={{
+                            opacity: overlayOpacity,
+                            backgroundImage: `repeating-linear-gradient(
+                                90deg,
+                                rgba(255, 255, 255, 0.28) 0px,
+                                rgba(255, 255, 255, 0.08) 2px,
+                                transparent 3px,
+                                transparent calc(100% / ${stripes} - 3px),
+                                rgba(0, 0, 0, 0.25) calc(100% / ${stripes} - 1px),
+                                rgba(0, 0, 0, 0.40) calc(100% / ${stripes})
+                            )`,
+                            mixBlendMode: 'overlay',
+                        }}
+                    />
+                )}
 
-                {/* Hero Text Content */}
-                <div className="absolute inset-0 flex items-end">
+                {/* Hero Text Content - Separate, completely unfiltered layer sitting crisp on top */}
+                <div className="absolute inset-0 z-10 flex items-end">
                     <div className="main-container px-6 md:px-12 pb-12 md:pb-10 w-full">
                         <div className="max-w-4xl">
                             {title && (
-                                <motion.h1
-                                    initial={{ opacity: 0, y: 35 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{
-                                        type: "spring",
-                                        stiffness: 250,
-                                        damping: 55,
-                                        mass: 2.9,
-                                        delay: 0.1,
-                                    }}
-                                    className="font-anton text-[52px] md:text-[80px] lg:text-[100px] font-normal text-secondary tracking-normal mb-2 leading-[1.1] drop-shadow-md"
-                                >
+                                <h1 className="font-anton text-[52px] md:text-[80px] lg:text-[100px] font-normal text-secondary tracking-normal mb-2 leading-[1.1] drop-shadow-md">
                                     {title}
-                                </motion.h1>
+                                </h1>
                             )}
                             {subtitle && (
-                                <motion.p
-                                    initial={{ opacity: 0, y: 25 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{
-                                        type: "spring",
-                                        stiffness: 250,
-                                        damping: 55,
-                                        mass: 2.9,
-                                        delay: 0.25,
-                                    }}
-                                    className="text-white text-lg md:text-2xl lg:text-3xl font-semibold tracking-wide drop-shadow-sm"
-                                >
+                                <p className="text-white text-lg md:text-2xl lg:text-3xl font-semibold tracking-wide drop-shadow-sm">
                                     {subtitle}
-                                </motion.p>
+                                </p>
                             )}
                             {children}
                         </div>

@@ -66,13 +66,13 @@ export default function Button({
   // Variant color definitions
   const variants = {
     // Secondary: Text-only link style in orange (#F47A1F) with diagonal top-right arrow
-    secondary: "bg-transparent p-0",
+    secondary: "bg-transparent p-0 leading-tight",
     // Primary: Solid Blue Pill (#1E6BB8)
     primary:
       "bg-primary text-white hover:bg-[#185899] focus:ring-primary/50 shadow-md hover:shadow-lg",
     // Solid Orange Pill (#F47A1F)
     "pill-secondary":
-      "bg-secondary text-white hover:bg-[#e06912] focus:ring-secondary/50 shadow-md hover:shadow-lg",
+      "bg-secondary text-white hover:bg-[#e06912] focus:ring-secondary/50 shadow-md hover:shadow-lg font-medium leading-tight",
     // Outline style
     outline:
       "border-2 border-secondary text-secondary hover:bg-secondary hover:text-white focus:ring-secondary/50",
@@ -84,15 +84,15 @@ export default function Button({
   // Size variations
   const sizes = isLinkVariant
     ? {
-        sm: "text-sm gap-1.5",
-        md: "text-base sm:text-lg gap-2.5",
-        lg: "text-lg sm:text-xl gap-3",
-      }
+      sm: "text-sm gap-1.5",
+      md: "text-base sm:text-lg gap-2.5",
+      lg: "text-lg sm:text-xl gap-3",
+    }
     : {
-        sm: "px-5 py-2 text-xs",
-        md: "px-8 py-3 text-sm sm:text-base",
-        lg: "px-10 py-4 text-base sm:text-lg",
-      };
+      sm: "px-5 py-2 text-xs",
+      md: "px-8 py-3 text-sm sm:text-base",
+      lg: "px-10 py-4 text-base sm:text-lg",
+    };
 
   const arrowIconSizes = {
     sm: "w-4 h-4",
