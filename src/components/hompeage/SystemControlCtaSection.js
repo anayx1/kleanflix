@@ -30,7 +30,7 @@ export default function SystemControlCtaSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.8 }}
-                    className="max-w-5xl mx-auto space-y-6 md:space-y-8 flex flex-col items-start text-left"
+                    className="max-w-5xl mx-auto space-y-6 md:space-y-8 flex flex-col items-start text-left py-20 md:py-0"
                 >
                     {/* Main Heading */}
                     <h2 className="font-sans font-bold text-3xl md:text-5xl lg:text-[56px] !text-white leading-[1.12] tracking-tight text-left">

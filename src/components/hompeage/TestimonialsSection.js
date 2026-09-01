@@ -52,13 +52,16 @@ const testimonials = [
 
 const slideVariants = {
     enter: (direction) => ({
-        y: direction > 0 ? '100%' : '-100%',
+        y: direction > 0 ? 20 : -20,
+        opacity: 0,
     }),
     center: {
-        y: '0%',
+        y: 0,
+        opacity: 1,
     },
     exit: (direction) => ({
-        y: direction > 0 ? '-100%' : '100%',
+        y: direction > 0 ? -20 : 20,
+        opacity: 0,
     }),
 };
 
@@ -79,8 +82,8 @@ export default function TestimonialsSection() {
     const currentTestimonial = testimonials[currentIndex];
 
     return (
-        <section className="py-16 md:py-24 bg-white relative overflow-hidden w-full">
-            <div className="max-w-7xl mx-auto">
+        <section className="py-12 md:py-24 bg-white relative overflow-hidden w-full">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-0">
 
                 {/* Section Header */}
                 <motion.div
@@ -88,7 +91,7 @@ export default function TestimonialsSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.6 }}
-                    className="mb-8 md:mb-12"
+                    className="mb-6 md:mb-12"
                 >
                     <h2 className="text-primary tracking-tight leading-tight">
                         What our clients say
@@ -96,10 +99,10 @@ export default function TestimonialsSection() {
                 </motion.div>
 
                 {/* 2-Column Content Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-stretch">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 lg:gap-12 items-stretch">
 
                     {/* Left Column: Image Container with scale 1.1 -> 1.0 entry animation */}
-                    <div className="md:col-span-6 relative min-h-[360px] md:min-h-[440px] lg:min-h-[480px] rounded-3xl overflow-hidden shadow-sm">
+                    <div className="md:col-span-6 relative h-[300px] md:h-auto min-h-0 md:min-h-[440px] lg:min-h-[480px] rounded-2xl md:rounded-3xl overflow-hidden shadow-sm">
                         <motion.div
                             initial={{ scale: 1.2 }}
                             whileInView={{ scale: 1 }}
@@ -124,10 +127,10 @@ export default function TestimonialsSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
-                        className="md:col-span-6 relative min-h-[360px] md:min-h-[440px] lg:min-h-[480px] bg-white rounded-3xl border border-primary-dark p-8  flex flex-col justify-between overflow-hidden shadow-sm"
+                        className="md:col-span-6 relative h-auto min-h-[360px] md:min-h-[440px] lg:min-h-[480px] bg-white rounded-2xl md:rounded-3xl border border-primary-dark p-6 md:p-8 flex flex-col justify-between shadow-sm"
                     >
-                        <div className="relative z-10 flex-1 h-full w-full overflow-hidden">
-                            <AnimatePresence initial={false} custom={direction}>
+                        <div className="relative z-10 flex-1 w-full pb-6 md:pb-0">
+                            <AnimatePresence mode="wait" initial={false} custom={direction}>
                                 <motion.div
                                     key={currentTestimonial.id}
                                     custom={direction}
@@ -135,20 +138,20 @@ export default function TestimonialsSection() {
                                     initial="enter"
                                     animate="center"
                                     exit="exit"
-                                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                                    className="absolute inset-0 flex flex-col justify-between space-y-6"
+                                    transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+                                    className="w-full flex flex-col justify-between space-y-4 md:space-y-6"
                                 >
                                     {/* Testimonial Quote */}
-                                    <p className="font-sans text-primary-dark text-lg md:text-xl lg:text-[22px] leading-relaxed">
+                                    <p className="font-sans text-primary-dark text-base md:text-xl lg:text-[22px] leading-relaxed pr-10 md:pr-14">
                                         “{currentTestimonial.text}”
                                     </p>
 
                                     {/* Designation & Name */}
-                                    <div className="pr-14">
-                                        <p className="font-sans font-medium text-primary-dark">
+                                    <div className="pr-10 md:pr-14 pt-2">
+                                        <p className="font-sans font-medium text-primary-dark text-sm md:text-base">
                                             {currentTestimonial.designation}
                                         </p>
-                                        <h3 className=" text-primary-dark text-lg md:text-xl mt-0.5">
+                                        <h3 className="text-primary-dark text-base md:text-xl mt-0.5 font-bold">
                                             {currentTestimonial.name}
                                         </h3>
                                     </div>
@@ -157,7 +160,7 @@ export default function TestimonialsSection() {
                         </div>
 
                         {/* Navigation Arrows (Bottom-Right) */}
-                        <div className="absolute bottom-6 right-6 md:bottom-8 md:right-8 z-20 flex flex-col gap-2">
+                        <div className="absolute bottom-5 right-5 md:bottom-8 md:right-8 z-20 flex flex-col gap-1.5 md:gap-2">
                             <button
                                 onClick={handlePrev}
                                 aria-label="Previous testimonial"

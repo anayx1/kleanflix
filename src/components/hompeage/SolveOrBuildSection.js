@@ -40,20 +40,20 @@ const divisions = [
 
 export default function SolveOrBuildSection() {
     return (
-        <section className="relative w-full py-16 md:py-24 lg:py-32 bg-[#F7F7F7] overflow-hidden">
+        <section className="relative w-full py-12 md:py-24 lg:py-32 bg-[#F7F7F7] overflow-hidden">
 
             {/* Main Section Header — inside container */}
-            <div className="main-container px-6 md:px-12">
+            <div className="main-container px-4 md:px-12">
                 <div className='w-full justify-center items-center md:flex md:-ml-32'>
 
-                    <div className="mb-16 md:mb-24 lg:mb-28 max-w-4xl">
+                    <div className="mb-10 md:mb-24 lg:mb-28 max-w-4xl">
 
                         <motion.h2
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.3 }}
                             transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-                            className="font-sans font-bold text-3xl md:text-5xl lg:text-[56px] text-primary leading-[1.12] tracking-tight mb-6"
+                            className="font-sans font-bold text-3xl md:text-5xl lg:text-[56px] text-primary leading-[1.12] tracking-tight mb-4 md:mb-6"
                         >
                             What are you trying to solve or build?
                         </motion.h2>
@@ -76,7 +76,7 @@ export default function SolveOrBuildSection() {
 
                 {/* Division 1 & 2 Map */}
                 {divisions.map((division, idx) => (
-                    <div key={idx} className="grid grid-cols-1 md:grid-cols-12 items-center">
+                    <div key={idx} className="grid grid-cols-1 md:grid-cols-12 items-center mb-12 md:mb-0">
 
                         {/* Left Column: Text & List Items — padded inside container bounds */}
                         <motion.div
@@ -84,7 +84,7 @@ export default function SolveOrBuildSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.2 }}
                             transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-                            className="md:col-span-7 flex flex-col px-6 md:px-12"
+                            className="md:col-span-7 flex flex-col px-4 md:px-12"
                         >
                             {/* Title */}
                             <h3 className="font-sans font-bold text-xl md:text-2xl lg:text-3xl text-primary leading-tight mb-2">
@@ -100,7 +100,7 @@ export default function SolveOrBuildSection() {
 
                             {/* Description */}
                             {division.description && (
-                                <p className="font-sans text-xs md:text-sm lg:text-base text-primary-dark/80 mb-6 leading-relaxed">
+                                <p className="font-sans text-xs md:text-sm lg:text-base text-primary-dark/80 mb-4 md:mb-6 leading-relaxed">
                                     {division.description}
                                 </p>
                             )}
@@ -116,7 +116,7 @@ export default function SolveOrBuildSection() {
                                             className="group flex items-start py-1.5 text-primary-dark hover:text-secondary transition-colors duration-200 select-none"
                                         >
                                             {/* Consecutive Number */}
-                                            <span className="w-20 md:w-24 text-xs md:text-sm font-sans text-primary-dark/50 group-hover:text-secondary transition-colors duration-200 mt-0.5">
+                                            <span className="w-12 md:w-24 text-xs md:text-sm font-sans text-primary-dark/50 group-hover:text-secondary transition-colors duration-200 mt-0.5 shrink-0">
                                                 {numStr}
                                             </span>
                                             {/* Text & Arrow */}
@@ -131,13 +131,13 @@ export default function SolveOrBuildSection() {
                         </motion.div>
 
                         {/* Right Column: Image 400px wide, right-aligned, full height visible */}
-                        <div className={`md:col-span-5 flex justify-end ${division.minHeightClass}`}>
+                        <div className={`md:col-span-5 flex justify-end mt-6 md:mt-0 ${division.minHeightClass}`}>
                             <Image
                                 src={division.image}
                                 alt={division.title}
                                 width={400}
                                 height={600}
-                                className="w-full md:w-[400px] h-auto "
+                                className="w-full md:w-[400px] h-auto"
                                 priority
                             />
                         </div>
@@ -146,7 +146,7 @@ export default function SolveOrBuildSection() {
                 ))}
 
                 {/* Row 3: Export Supply & Explore All Products combined */}
-                <div className="grid grid-cols-1 md:grid-cols-12 items-center md:-mt-8">
+                <div className="grid grid-cols-1 md:grid-cols-12 items-center mb-12 md:mb-0 md:-mt-8">
 
                     {/* Left Column: Export Supply details + Explore All Products details */}
                     <motion.div
@@ -154,17 +154,17 @@ export default function SolveOrBuildSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.2 }}
                         transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-                        className="md:col-span-7 flex flex-col px-6 md:px-12"
+                        className="md:col-span-7 flex flex-col px-4 md:px-12"
                     >
                         {/* Block 1: Export Supply */}
-                        <div className="flex flex-col mb-16 md:mb-24 justify-between">
+                        <div className="flex flex-col mb-10 md:mb-24 justify-between">
                             <h3 className="font-sans font-bold text-xl md:text-2xl lg:text-3xl text-primary leading-tight mb-2">
                                 Export Supply
                             </h3>
                             <p className="font-sans text-xs md:text-sm lg:text-base text-primary-dark/80 tracking-wide mb-1 leading-snug">
                                 Bulk Supply | Repeat Orders | Multi-Market Delivery | Consistent Output | Exports
                             </p>
-                            <p className="font-sans text-xs md:text-sm lg:text-base text-primary-dark/80 mb-6 leading-relaxed">
+                            <p className="font-sans text-xs md:text-sm lg:text-base text-primary-dark/80 mb-4 md:mb-6 leading-relaxed">
                                 Reliable bulk supply and international fulfillment solutions:
                             </p>
                             <div className="flex flex-col">
@@ -172,7 +172,7 @@ export default function SolveOrBuildSection() {
                                     href="#"
                                     className="group flex items-start py-1.5 text-primary-dark hover:text-secondary transition-colors duration-200 select-none"
                                 >
-                                    <span className="w-20 md:w-24 text-xs md:text-sm font-sans text-primary-dark/50 group-hover:text-secondary transition-colors duration-200 mt-0.5">
+                                    <span className="w-12 md:w-24 text-xs md:text-sm font-sans text-primary-dark/50 group-hover:text-secondary transition-colors duration-200 mt-0.5 shrink-0">
                                         01
                                     </span>
                                     <span className="font-sans font-semibold text-base md:text-lg flex items-center gap-1.5 md:gap-2 leading-normal">
@@ -185,7 +185,7 @@ export default function SolveOrBuildSection() {
 
                         {/* Block 2: Explore All Products */}
                         <div className="flex flex-col">
-                            <h3 className="font-sans font-bold text-xl md:text-2xl lg:text-3xl text-primary leading-tight mb-6">
+                            <h3 className="font-sans font-bold text-xl md:text-2xl lg:text-3xl text-primary leading-tight mb-4 md:mb-6">
                                 Explore All Products
                             </h3>
                             <div className="flex flex-col">
@@ -193,7 +193,7 @@ export default function SolveOrBuildSection() {
                                     href="#"
                                     className="group flex items-start py-1.5 text-primary-dark hover:text-secondary transition-colors duration-200 select-none"
                                 >
-                                    <span className="w-20 md:w-24 text-xs md:text-sm font-sans text-primary-dark/50 group-hover:text-secondary transition-colors duration-200 mt-0.5">
+                                    <span className="w-12 md:w-24 text-xs md:text-sm font-sans text-primary-dark/50 group-hover:text-secondary transition-colors duration-200 mt-0.5 shrink-0">
                                         01
                                     </span>
                                     <span className="font-sans font-semibold text-base md:text-lg flex items-center gap-1.5 md:gap-2 leading-normal">
@@ -206,7 +206,7 @@ export default function SolveOrBuildSection() {
                     </motion.div>
 
                     {/* Right Column: Export/Cargo Image 400px wide, right-aligned, full height visible */}
-                    <div className="md:col-span-5 flex justify-end">
+                    <div className="md:col-span-5 flex justify-end mt-6 md:mt-0">
                         <Image
                             src="/homepage/sec23.jpg"
                             alt="Global cargo and export supply logistics"
@@ -222,16 +222,16 @@ export default function SolveOrBuildSection() {
             </div>
 
             {/* Main Help CTA Banner Section */}
-            <div className="main-container px-6 md:px-10 mt-16 md:mt-24 lg:mt-32 flex justify-center">
-                <div className="relative bg-white rounded-md overflow-hidden max-w-[95%]">
+            <div className="main-container px-4 md:px-10 mt-12 md:mt-24 lg:mt-32 flex justify-center">
+                <div className="relative bg-white rounded-xl md:rounded-md overflow-hidden w-full md:max-w-[95%] shadow-sm md:shadow-none">
                     <div className="grid grid-cols-1 md:grid-cols-12 items-center">
 
                         {/* Left Column: Text Content and Button */}
-                        <div className="md:col-span-7 p-8 md:p-16 lg:p-20 flex flex-col items-start">
-                            <h3 className="font-sans font-bold text-2xl md:text-4xl lg:text-[44px] text-primary leading-tight mb-4">
+                        <div className="md:col-span-7 p-6 md:p-16 lg:p-20 flex flex-col items-start">
+                            <h3 className="font-sans font-bold text-2xl md:text-4xl lg:text-[44px] text-primary leading-tight mb-3 md:mb-4">
                                 Need help choosing the right system?
                             </h3>
-                            <p className="font-sans text-base md:text-lg lg:text-xl text-primary-dark/80 mb-8 max-w-xl">
+                            <p className="font-sans text-base md:text-lg lg:text-xl text-primary-dark/80 mb-6 md:mb-8 max-w-xl">
                                 Not sure where to start or need a customized recommendation?
                             </p>
                             <Link
@@ -243,8 +243,8 @@ export default function SolveOrBuildSection() {
                         </div>
 
                         {/* Right Column: Image of pointing woman */}
-                        <div className="md:col-span-5 relative self-stretch min-h-[300px] md:min-h-0 flex items-end justify-end">
-                            <div className="relative w-full h-[320px] md:h-[400px] lg:h-[430px]">
+                        <div className="md:col-span-5 relative self-stretch min-h-[260px] md:min-h-0 flex items-end justify-end mt-2 md:mt-0">
+                            <div className="relative w-full h-[260px] md:h-[400px] lg:h-[430px]">
                                 <Image
                                     src="/homepage/woman.avif"
                                     alt="Need help choosing the right system"

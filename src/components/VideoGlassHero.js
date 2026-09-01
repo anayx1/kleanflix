@@ -26,6 +26,7 @@ export default function VideoGlassHero({
     title,
     subtitle,
     videoSrc,
+    fallbackVideoSrc,
     imageSrc,
     imageAlt = 'Hero Background',
     stripes = 40,
@@ -42,7 +43,7 @@ export default function VideoGlassHero({
     const [overlayOpacity, setOverlayOpacity] = useState(0.45);
     const [isCompleted, setIsCompleted] = useState(false);
     // Wait for video to buffer enough frames before starting reveal animation
-    const [mediaReady, setMediaReady] = useState(!videoSrc);
+    const [mediaReady, setMediaReady] = useState(!videoSrc && !fallbackVideoSrc);
     const videoRef = useRef(null);
 
     const handleVideoReady = useCallback(() => {
@@ -51,10 +52,10 @@ export default function VideoGlassHero({
 
     // Catch the case where video loaded before React attached the onLoadedData handler
     useEffect(() => {
-        if (videoSrc && videoRef.current && videoRef.current.readyState >= 2) {
+        if ((videoSrc || fallbackVideoSrc) && videoRef.current && videoRef.current.readyState >= 2) {
             setMediaReady(true);
         }
-    }, [videoSrc]);
+    }, [videoSrc, fallbackVideoSrc]);
 
     useEffect(() => {
         if (!mediaReady) return;
@@ -134,9 +135,19 @@ export default function VideoGlassHero({
                             loop
                             playsInline
                             onLoadedData={handleVideoReady}
+                            onError={handleVideoReady}
                             className="w-full h-full object-cover object-center"
                         >
-                            <source src={videoSrc} type="video/mp4" />
+                            {Array.isArray(videoSrc) ? (
+                                videoSrc.map((src, index) => (
+                                    <source key={index} src={src} type="video/mp4" />
+                                ))
+                            ) : (
+                                <>
+                                    <source src={videoSrc} type="video/mp4" />
+                                    {fallbackVideoSrc && <source src={fallbackVideoSrc} type="video/mp4" />}
+                                </>
+                            )}
                         </video>
                     ) : imageSrc ? (
                         <Image
