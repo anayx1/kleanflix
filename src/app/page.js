@@ -32,7 +32,7 @@ const page = () => {
             <WhyKleanfixSection />
             <ConsistentOutputSection />
             <TestimonialsSection />
-            <SystemControlCtaSection />
+            {/* <SystemControlCtaSection /> */}
         </main>
     )
 }

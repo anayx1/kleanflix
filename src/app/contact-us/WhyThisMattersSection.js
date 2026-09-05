@@ -22,14 +22,17 @@ export default function WhyThisMattersSection() {
         restDelta: 0.001,
     });
 
-    // Card 2 animation: reveals smoothly flush under Card 1 between 20% and 35% on screen
-    const maxHeightCard2 = useTransform(smoothProgress, [0.0, 0.45], ['0px', '200px']);
-    const opacityCard2 = useTransform(smoothProgress, [0.0, 0.35], [0, 1]);
+    // Card 2 animation: grows to its natural content height (no hardcoded px guess,
+    // so it never clips text or leaves a gap on different screen sizes).
+    // Height/opacity/y all share the same 0 -> 0.45 window so the card never sits
+    // fully opaque while its container is still shorter than the content.
+    const gridRowsCard2 = useTransform(smoothProgress, [0.0, 0.45], ['0fr', '1fr']);
+    const opacityCard2 = useTransform(smoothProgress, [0.0, 0.45], [0, 1]);
     const yCard2 = useTransform(smoothProgress, [0.0, 0.45], [-10, 0]);
 
-    // Card 3 animation: reveals smoothly flush under Card 2 between 35% and 50% on screen
-    const maxHeightCard3 = useTransform(smoothProgress, [0.45, 0.95], ['0px', '450px']);
-    const opacityCard3 = useTransform(smoothProgress, [0.45, 0.85], [0, 1]);
+    // Card 3 animation: same auto-height approach, synced 0.45 -> 0.95 window.
+    const gridRowsCard3 = useTransform(smoothProgress, [0.45, 0.95], ['0fr', '1fr']);
+    const opacityCard3 = useTransform(smoothProgress, [0.45, 0.95], [0, 1]);
     const yCard3 = useTransform(smoothProgress, [0.45, 0.95], [-10, 0]);
 
     return (
@@ -56,45 +59,51 @@ export default function WhyThisMattersSection() {
 
                             {/* Card 2: Middle Stacked Card (Muted Blue) - Expands flush under Card 1 */}
                             <motion.div
-                                style={{
-                                    maxHeight: maxHeightCard2,
-                                    opacity: opacityCard2,
-                                    y: yCard2,
-                                }}
-                                className="bg-[#D9E6F2] overflow-hidden relative z-20 origin-top transform-gpu"
+                                style={{ opacity: opacityCard2, y: yCard2 }}
+                                className="relative z-20 transform-gpu"
                             >
-                                <div className="p-6 md:p-8">
-                                    <p className="font-medium text-primary text-lg md:text-xl lg:text-[22px] leading-snug !text-primary">
-                                        You are entering a structured solution process.
-                                    </p>
-                                </div>
+                                <motion.div
+                                    style={{ gridTemplateRows: gridRowsCard2 }}
+                                    className="grid bg-[#D9E6F2]"
+                                >
+                                    <div className="overflow-hidden">
+                                        <div className="p-6 md:p-8">
+                                            <p className="font-medium text-primary text-lg md:text-xl lg:text-[22px] leading-snug !text-primary">
+                                                You are entering a structured solution process.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </motion.div>
                             </motion.div>
 
                             {/* Card 3: Bottom Stacked Card (Light Off-white) - Expands flush under Card 2 */}
                             <motion.div
-                                style={{
-                                    maxHeight: maxHeightCard3,
-                                    opacity: opacityCard3,
-                                    y: yCard3,
-                                }}
-                                className="bg-[#F5F7FA] overflow-hidden relative z-10 origin-top transform-gpu"
+                                style={{ opacity: opacityCard3, y: yCard3 }}
+                                className="relative z-10 transform-gpu"
                             >
-                                <div className="p-6 md:p-8 pb-4">
-                                    <p className="font-medium text-primary text-lg md:text-xl lg:text-[22px] leading-snug !text-primary mb-4 md:mb-6">
-                                        Correct routing reduces delays and improves response accuracy.
-                                    </p>
-                                    
-                                    {/* Products Image */}
-                                    <div className="mt-2 pt-2 flex justify-center">
-                                        <Image
-                                            src="/contactus/products.avif"
-                                            alt="Kleanfix product lineup"
-                                            width={480}
-                                            height={180}
-                                            className="w-full h-auto object-contain max-h-[160px] md:max-h-[190px]"
-                                        />
+                                <motion.div
+                                    style={{ gridTemplateRows: gridRowsCard3 }}
+                                    className="grid bg-[#F5F7FA]"
+                                >
+                                    <div className="overflow-hidden">
+                                        <div className="p-6 md:p-8 pb-4">
+                                            <p className="font-medium text-primary text-lg md:text-xl lg:text-[22px] leading-snug !text-primary mb-4 md:mb-6">
+                                                Correct routing reduces delays and improves response accuracy.
+                                            </p>
+
+                                            {/* Products Image */}
+                                            <div className="mt-2 pt-2 flex justify-center">
+                                                <Image
+                                                    src="/contactus/products.avif"
+                                                    alt="Kleanfix product lineup"
+                                                    width={480}
+                                                    height={180}
+                                                    className="w-full h-auto object-contain max-h-[160px] md:max-h-[190px]"
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                </motion.div>
                             </motion.div>
 
                         </div>

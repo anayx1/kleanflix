@@ -60,8 +60,8 @@ export default function Button({
 
   // Base layout styles
   const baseStyles = isLinkVariant
-    ? "inline-flex items-center group font-bold uppercase tracking-wider text-secondary hover:text-[#d96610] transition-colors duration-200 cursor-pointer select-none focus:outline-none"
-    : "inline-flex items-center justify-center rounded-full font-bold uppercase tracking-wider transition-all duration-200 ease-in-out cursor-pointer select-none focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-[0.98]";
+    ? "inline-flex items-center group font-bold uppercase text-secondary hover:text-[#d96610] transition-colors duration-200 cursor-pointer select-none focus:outline-none"
+    : "inline-flex items-center justify-center rounded-full font-bold uppercase  transition-all duration-200 ease-in-out cursor-pointer select-none focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-[0.98]";
 
   // Variant color definitions
   const variants = {
@@ -122,7 +122,7 @@ export default function Button({
       <span>{text || children}</span>
       {hasArrow && (
         <ArrowUpRightIcon
-          className={`${arrowIconSizes[size] || arrowIconSizes.md} text-secondary transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5`}
+          className={`${arrowIconSizes[size] || arrowIconSizes.md} ${isLinkVariant ? "text-secondary" : "text-current"} transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5`}
         />
       )}
     </>
