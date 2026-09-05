@@ -56,6 +56,13 @@ body {
   width: 100%;
 }
 
+.grid-cols-4,
+.overview-table-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  width: 100% !important;
+}
+
 /* Product Card Image Container */
 .product-card-image-wrapper {
   position: relative;
