@@ -33,6 +33,7 @@ export default function ProductsSection({
     actionCardText = "This system removes guesswork and standardizes cleaning execution across facility operations.",
     actionCardButtonText = "REQUEST TECHNICAL DETAILS",
     actionCardHref = "/contact-us",
+    usageNote = null,
     footerNote = "IMPORTANT NOTE: Packaging may vary by pack size, format, or supply requirement.",
 }) {
     const gridRef = useRef(null);
@@ -203,6 +204,36 @@ export default function ProductsSection({
                             )}
                         </div>
 
+                        {/* Usage Note Banner */}
+                        {usageNote && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-20px" }}
+                                transition={{ duration: 0.5, delay: 0.1 }}
+                                className="mt-6 md:mt-8 bg-[#E2EAF2]/90 rounded-xl py-4 px-6 text-center"
+                            >
+                                <div className="space-y-1 leading-snug ">
+                                    {Array.isArray(usageNote) ? (
+                                        usageNote.map((line, i) => (
+                                            <p
+                                                key={i}
+                                                className={
+                                                    i === 0
+                                                        ? "text-xs md:text-sm font-bold tracking-wide text-primary mb-1 uppercase"
+                                                        : "text-xs md:text-sm font-semibold text-primary"
+                                                }
+                                            >
+                                                {line}
+                                            </p>
+                                        ))
+                                    ) : (
+                                        <p className="text-xs md:text-sm font-semibold text-primary">{usageNote}</p>
+                                    )}
+                                </div>
+                            </motion.div>
+                        )}
+
                         {/* Bottom Packaging Note Banner */}
                         {footerNote && (
                             <motion.div
@@ -210,9 +241,9 @@ export default function ProductsSection({
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: "-20px" }}
                                 transition={{ duration: 0.5, delay: 0.15 }}
-                                className="mt-6 md:mt-8 bg-[#E2EAF2]/90 rounded-xl py-3.5 md:py-4 px-6 text-center"
+                                className={`${usageNote ? "mt-3 md:mt-4" : "mt-6 md:mt-8"} bg-[#E2EAF2]/90 rounded-xl py-3.5 md:py-4 px-6 text-center`}
                             >
-                                <p className="text-xs md:text-sm lg:text-[15px] font-semibold text-primary tracking-normal">
+                                <p className="text-xs md:text-sm lg:text-[14px] font-semibold text-primary tracking-normal">
                                     {footerNote}
                                 </p>
                             </motion.div>
