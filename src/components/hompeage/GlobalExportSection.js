@@ -38,8 +38,23 @@ export default function GlobalExportSection() {
                             autoPlay
                             loop
                             muted
+                            defaultMuted
                             playsInline
-                            className="w-full h-auto object-contain rounded-2xl"
+                            preload="auto"
+                            controls={false}
+                            disablePictureInPicture
+                            disableRemotePlayback
+                            ref={(el) => {
+                                if (el) {
+                                    el.muted = true;
+                                    el.defaultMuted = true;
+                                }
+                            }}
+                            onCanPlay={(e) => {
+                                e.currentTarget.muted = true;
+                                e.currentTarget.play().catch(() => {});
+                            }}
+                            className="w-full h-auto object-contain rounded-2xl pointer-events-none"
                         >
                             <source src="https://res.cloudinary.com/spqd54wy/video/upload/v1788197347/map.mp4" type="video/mp4" />
                             <source src="/homepage/map.mp4" type="video/mp4" />

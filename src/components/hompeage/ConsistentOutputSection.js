@@ -12,8 +12,23 @@ export default function ConsistentOutputSection() {
                 autoPlay
                 loop
                 muted
+                defaultMuted
                 playsInline
-                className="absolute inset-0 w-full h-full object-cover z-0"
+                preload="auto"
+                controls={false}
+                disablePictureInPicture
+                disableRemotePlayback
+                ref={(el) => {
+                    if (el) {
+                        el.muted = true;
+                        el.defaultMuted = true;
+                    }
+                }}
+                onCanPlay={(e) => {
+                    e.currentTarget.muted = true;
+                    e.currentTarget.play().catch(() => {});
+                }}
+                className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
             >
                 <source src="https://res.cloudinary.com/spqd54wy/video/upload/v1788202715/10598760-hd_3840_2160_30fps_1_1_1.mp4" type="video/mp4" />
                 <source src="/homepage/sec13.mp4" type="video/mp4" />

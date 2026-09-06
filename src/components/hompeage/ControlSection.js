@@ -45,8 +45,23 @@ export default function ControlSection() {
                                 autoPlay
                                 loop
                                 muted
+                                defaultMuted
                                 playsInline
-                                className="absolute inset-0 w-full h-full object-cover z-0"
+                                preload="auto"
+                                controls={false}
+                                disablePictureInPicture
+                                disableRemotePlayback
+                                ref={(el) => {
+                                    if (el) {
+                                        el.muted = true;
+                                        el.defaultMuted = true;
+                                    }
+                                }}
+                                onCanPlay={(e) => {
+                                    e.currentTarget.muted = true;
+                                    e.currentTarget.play().catch(() => {});
+                                }}
+                                className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
                             />
 
                             {/* Dark Gradient Overlay for text readability */}

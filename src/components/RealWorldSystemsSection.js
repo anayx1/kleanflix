@@ -100,10 +100,25 @@ export default function RealWorldSystemsSection() {
                                 autoPlay
                                 loop
                                 muted
+                                defaultMuted
                                 playsInline
+                                preload="auto"
+                                controls={false}
+                                disablePictureInPicture
+                                disableRemotePlayback
                                 key={videoSrc}
+                                ref={(el) => {
+                                    if (el) {
+                                        el.muted = true;
+                                        el.defaultMuted = true;
+                                    }
+                                }}
+                                onCanPlay={(e) => {
+                                    e.currentTarget.muted = true;
+                                    e.currentTarget.play().catch(() => {});
+                                }}
                                 onError={handleVideoError}
-                                className="w-full h-full object-cover rounded-xl"
+                                className="w-full h-full object-cover rounded-xl pointer-events-none"
                             >
                                 <source src={videoSrc} type="video/mp4" onError={handleVideoError} />
                                 <source src="/products/sec2.mp4" type="video/mp4" />

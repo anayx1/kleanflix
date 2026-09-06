@@ -52,8 +52,13 @@ export default function VideoGlassHero({
 
     // Catch the case where video loaded before React attached the onLoadedData handler
     useEffect(() => {
-        if ((videoSrc || fallbackVideoSrc) && videoRef.current && videoRef.current.readyState >= 2) {
-            setMediaReady(true);
+        if ((videoSrc || fallbackVideoSrc) && videoRef.current) {
+            videoRef.current.muted = true;
+            videoRef.current.defaultMuted = true;
+            videoRef.current.play().catch(() => {});
+            if (videoRef.current.readyState >= 2) {
+                setMediaReady(true);
+            }
         }
     }, [videoSrc, fallbackVideoSrc]);
 
@@ -132,11 +137,21 @@ export default function VideoGlassHero({
                             ref={videoRef}
                             autoPlay
                             muted
+                            defaultMuted
                             loop
                             playsInline
+                            preload="auto"
+                            controls={false}
+                            disablePictureInPicture
+                            disableRemotePlayback
                             onLoadedData={handleVideoReady}
+                            onCanPlay={(e) => {
+                                e.currentTarget.muted = true;
+                                e.currentTarget.play().catch(() => {});
+                                handleVideoReady();
+                            }}
                             onError={handleVideoReady}
-                            className="w-full h-full object-cover object-center"
+                            className="w-full h-full object-cover object-center pointer-events-none"
                         >
                             {Array.isArray(videoSrc) ? (
                                 videoSrc.map((src, index) => (
