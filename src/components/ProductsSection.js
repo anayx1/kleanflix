@@ -66,6 +66,7 @@ export default function ProductsSection({
     }, []);
 
     useEffect(() => {
+        if (!products || products.length === 0) return;
         syncCardHeights();
         const rafId = requestAnimationFrame(syncCardHeights);
         window.addEventListener('resize', syncCardHeights);
@@ -76,9 +77,7 @@ export default function ProductsSection({
         };
     }, [syncCardHeights, products, showActionCard]);
 
-    if (!products || products.length === 0) {
-        return null;
-    }
+    const hasProducts = Array.isArray(products) && products.length > 0;
 
     return (
         <section className={`py-16 bg-[#F8F9FA] ${className}`}>
@@ -101,97 +100,124 @@ export default function ProductsSection({
                     )}
                 </motion.div>
 
-                {/* Products Grid: 1 col on mobile, 2 cols on tablet, 3 cols on md: */}
-                <div ref={gridRef} className="grid grid-cols-1 min-[640px]:grid-cols-2 md:grid-cols-3 gap-5 items-stretch">
-                    {products.map((product, index) => (
-                        <motion.div
-                            key={product.id || product.slug}
-                            initial={{ opacity: 0, y: 35 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-40px" }}
-                            transition={{
-                                duration: 0.5,
-                                ease: [0.22, 1, 0.36, 1],
-                                delay: (index % 3) * 0.1,
-                            }}
-                            className="h-full flex flex-col"
-                        >
-                            <div className="product-card-inner bg-white rounded-xl p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center border border-slate-100/90 w-full flex-1">
-                                {/* Product Image Container */}
-                                <div className="product-card-image-wrapper mb-5 md:mb-6 flex items-center justify-center">
-                                    {product.image ? (
-                                        <Image
-                                            src={product.image}
-                                            alt={product.title}
-                                            fill
-                                            sizes="(max-width: 640px) 100vw, (max-width: 1001px) 50vw, 33vw"
-                                            className="object-contain object-center"
-                                            priority={index < 3}
-                                            onLoad={syncCardHeights}
-                                        />
-                                    ) : (
-                                        <div className="w-full h-full flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl text-sm">
-                                            No Image Available
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* Product Title */}
-                                <h3 className="font-semibold text-lg md:text-xl lg:text-[22px] text-primary mb-2 leading-snug">
-                                    {product.title}
-                                </h3>
-
-                                {/* Product Description */}
-                                <p className="font-medium text-xs md:text-sm lg:text-[15px] text-primary-dark leading-tight max-w-[320px] mx-auto">
-                                    {product.description?.trim()}
-                                </p>
-                            </div>
-                        </motion.div>
-                    ))}
-
-                    {/* Final Action Card after all products */}
-                    {showActionCard && (
-                        <motion.div
-                            initial={{ opacity: 0, y: 35 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-40px" }}
-                            transition={{
-                                duration: 0.5,
-                                ease: [0.22, 1, 0.36, 1],
-                                delay: (products.length % 3) * 0.1,
-                            }}
-                            className="h-full flex flex-col"
-                        >
-                            <div className="product-card-inner bg-white rounded-xl p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-lg transition-shadow duration-300 flex flex-col items-center justify-center text-center border border-slate-100/90 w-full flex-1">
-                                <p className="font-medium text-base md:text-lg lg:text-xl text-primary leading-relaxed max-w-[280px] mb-8">
-                                    {actionCardText}
-                                </p>
-                                <Button
-                                    variant="pill-secondary"
-                                    href={actionCardHref}
-                                    showArrow={false}
-                                    className="text-xs md:text-sm font-semibold uppercase tracking-wider px-7 py-3 md:px-8 md:py-3.5 shadow-md"
-                                >
-                                    {actionCardButtonText}
-                                </Button>
-                            </div>
-                        </motion.div>
-                    )}
-                </div>
-
-                {/* Bottom Packaging Note Banner */}
-                {footerNote && (
+                {!hasProducts ? (
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 25 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-20px" }}
-                        transition={{ duration: 0.5, delay: 0.15 }}
-                        className="mt-6 md:mt-8 bg-[#E2EAF2]/90 rounded-xl py-3.5 md:py-4 px-6 text-center"
+                        transition={{ duration: 0.5 }}
+                        className="bg-white rounded-xl p-8 md:p-12 text-center border border-slate-100/90 shadow-[0_4px_20px_rgba(0,0,0,0.03)] max-w-xl mx-auto flex flex-col items-center"
                     >
-                        <p className="text-xs md:text-sm lg:text-[15px] font-semibold text-primary tracking-normal">
-                            {footerNote}
+                        <p className="font-semibold text-lg md:text-xl lg:text-2xl text-primary mb-2">
+                            No products found
                         </p>
+                        <p className="font-medium text-xs md:text-sm lg:text-base text-primary-dark/80 leading-relaxed max-w-md mb-6">
+                            There are currently no products listed under this category. Contact us to request system specifications or custom formulations.
+                        </p>
+                        <Button
+                            variant="pill-secondary"
+                            href={actionCardHref}
+                            showArrow={false}
+                            className="text-xs md:text-sm font-semibold uppercase tracking-wider px-7 py-3 md:px-8 md:py-3.5 shadow-md"
+                        >
+                            {actionCardButtonText}
+                        </Button>
                     </motion.div>
+                ) : (
+                    <>
+                        {/* Products Grid: 1 col on mobile, 2 cols on tablet, 3 cols on md: */}
+                        <div ref={gridRef} className="grid grid-cols-1 min-[640px]:grid-cols-2 md:grid-cols-3 gap-5 items-stretch">
+                            {products.map((product, index) => (
+                                <motion.div
+                                    key={product.id || product.slug}
+                                    initial={{ opacity: 0, y: 35 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, margin: "-40px" }}
+                                    transition={{
+                                        duration: 0.5,
+                                        ease: [0.22, 1, 0.36, 1],
+                                        delay: (index % 3) * 0.1,
+                                    }}
+                                    className="h-full flex flex-col"
+                                >
+                                    <div className="product-card-inner bg-white rounded-xl p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center border border-slate-100/90 w-full flex-1">
+                                        {/* Product Image Container */}
+                                        <div className="product-card-image-wrapper mb-5 md:mb-6 flex items-center justify-center">
+                                            {product.image ? (
+                                                <Image
+                                                    src={product.image}
+                                                    alt={product.title}
+                                                    fill
+                                                    sizes="(max-width: 640px) 100vw, (max-width: 1001px) 50vw, 33vw"
+                                                    className="object-contain object-center"
+                                                    priority={index < 3}
+                                                    onLoad={syncCardHeights}
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl text-sm">
+                                                    No Image Available
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Product Title */}
+                                        <h3 className="font-semibold text-lg md:text-xl lg:text-[22px] text-primary mb-2 leading-snug">
+                                            {product.title}
+                                        </h3>
+
+                                        {/* Product Description */}
+                                        <p className="font-medium text-xs md:text-sm lg:text-[15px] text-primary-dark leading-tight max-w-[320px] mx-auto">
+                                            {product.description?.trim()}
+                                        </p>
+                                    </div>
+                                </motion.div>
+                            ))}
+
+                            {/* Final Action Card after all products */}
+                            {showActionCard && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 35 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, margin: "-40px" }}
+                                    transition={{
+                                        duration: 0.5,
+                                        ease: [0.22, 1, 0.36, 1],
+                                        delay: (products.length % 3) * 0.1,
+                                    }}
+                                    className="h-full flex flex-col"
+                                >
+                                    <div className="product-card-inner bg-white rounded-xl p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-lg transition-shadow duration-300 flex flex-col items-center justify-center text-center border border-slate-100/90 w-full flex-1">
+                                        <p className="font-medium text-base md:text-lg lg:text-xl text-primary leading-relaxed max-w-[280px] mb-8">
+                                            {actionCardText}
+                                        </p>
+                                        <Button
+                                            variant="pill-secondary"
+                                            href={actionCardHref}
+                                            showArrow={false}
+                                            className="text-xs md:text-sm font-semibold uppercase tracking-wider px-7 py-3 md:px-8 md:py-3.5 shadow-md"
+                                        >
+                                            {actionCardButtonText}
+                                        </Button>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </div>
+
+                        {/* Bottom Packaging Note Banner */}
+                        {footerNote && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-20px" }}
+                                transition={{ duration: 0.5, delay: 0.15 }}
+                                className="mt-6 md:mt-8 bg-[#E2EAF2]/90 rounded-xl py-3.5 md:py-4 px-6 text-center"
+                            >
+                                <p className="text-xs md:text-sm lg:text-[15px] font-semibold text-primary tracking-normal">
+                                    {footerNote}
+                                </p>
+                            </motion.div>
+                        )}
+                    </>
                 )}
             </div>
         </section>

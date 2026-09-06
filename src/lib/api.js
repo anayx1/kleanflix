@@ -9,6 +9,10 @@ import { getAllProducts } from '@/lib/db';
 export async function getProductsByCategory(category = 'Facility Care') {
   try {
     const products = getAllProducts({ category });
+
+    if (!products || products.length === 0) {
+      return [];
+    }
     
     // Sort naturally by title (K1, K2, K3...)
     return products.sort((a, b) =>
@@ -19,3 +23,4 @@ export async function getProductsByCategory(category = 'Facility Care') {
     return [];
   }
 }
+
