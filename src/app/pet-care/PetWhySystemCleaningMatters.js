@@ -12,7 +12,6 @@ export default function PetWhySystemCleaningMatters() {
                 autoPlay
                 loop
                 muted
-                defaultMuted
                 playsInline
                 preload="auto"
                 controls={false}

@@ -13,7 +13,6 @@ export default function SystemControlCtaSection() {
                 autoPlay
                 loop
                 muted
-                defaultMuted
                 playsInline
                 preload="auto"
                 controls={false}

@@ -100,7 +100,6 @@ export default function RealWorldSystemsSection() {
                                 autoPlay
                                 loop
                                 muted
-                                defaultMuted
                                 playsInline
                                 preload="auto"
                                 controls={false}

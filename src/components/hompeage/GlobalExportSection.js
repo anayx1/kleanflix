@@ -38,7 +38,6 @@ export default function GlobalExportSection() {
                             autoPlay
                             loop
                             muted
-                            defaultMuted
                             playsInline
                             preload="auto"
                             controls={false}

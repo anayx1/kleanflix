@@ -12,7 +12,6 @@ export default function KitchenWhySystemCleaningMatters() {
                 autoPlay
                 loop
                 muted
-                defaultMuted
                 playsInline
                 preload="auto"
                 controls={false}

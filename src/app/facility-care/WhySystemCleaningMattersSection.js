@@ -12,7 +12,6 @@ export default function WhySystemCleaningMattersSection() {
                 autoPlay
                 loop
                 muted
-                defaultMuted
                 playsInline
                 preload="auto"
                 controls={false}

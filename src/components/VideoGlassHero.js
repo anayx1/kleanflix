@@ -137,7 +137,6 @@ export default function VideoGlassHero({
                             ref={videoRef}
                             autoPlay
                             muted
-                            defaultMuted
                             loop
                             playsInline
                             preload="auto"

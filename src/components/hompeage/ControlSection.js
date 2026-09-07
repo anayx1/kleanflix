@@ -45,7 +45,6 @@ export default function ControlSection() {
                                 autoPlay
                                 loop
                                 muted
-                                defaultMuted
                                 playsInline
                                 preload="auto"
                                 controls={false}

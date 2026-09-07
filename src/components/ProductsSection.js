@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Button from '@/components/Button';
+import ProductDetailModal from '@/components/ProductDetailModal';
 
 /**
  * Reusable ProductsSection Component
@@ -36,6 +37,7 @@ export default function ProductsSection({
     usageNote = null,
     footerNote = "IMPORTANT NOTE: Packaging may vary by pack size, format, or supply requirement.",
 }) {
+    const [selectedProduct, setSelectedProduct] = useState(null);
     const gridRef = useRef(null);
 
     // Dynamically equalize all cards to the height of the card with the maximum content
@@ -141,7 +143,18 @@ export default function ProductsSection({
                                     }}
                                     className="h-full flex flex-col"
                                 >
-                                    <div className="product-card-inner bg-white rounded-xl p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center border border-slate-100/90 w-full flex-1">
+                                    <div
+                                        role="button"
+                                        tabIndex={0}
+                                        onClick={() => setSelectedProduct(product)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter' || e.key === ' ') {
+                                                e.preventDefault();
+                                                setSelectedProduct(product);
+                                            }
+                                        }}
+                                        className="product-card-inner bg-white rounded-xl p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-primary/30 transition-all duration-300 flex flex-col items-center text-center border border-slate-100/90 w-full flex-1 cursor-pointer group focus:outline-none focus:ring-2 focus:ring-primary/40 select-none"
+                                    >
                                         {/* Product Image Container */}
                                         <div className="product-card-image-wrapper mb-5 md:mb-6 flex items-center justify-center">
                                             {product.image ? (
@@ -150,7 +163,7 @@ export default function ProductsSection({
                                                     alt={product.title}
                                                     fill
                                                     sizes="(max-width: 640px) 100vw, (max-width: 1001px) 50vw, 33vw"
-                                                    className="object-contain object-center"
+                                                    className="object-contain object-center group-hover:scale-105 transition-transform duration-300"
                                                     priority={index < 3}
                                                     onLoad={syncCardHeights}
                                                 />
@@ -162,7 +175,7 @@ export default function ProductsSection({
                                         </div>
 
                                         {/* Product Title */}
-                                        <h3 className="font-semibold text-lg md:text-xl lg:text-[22px] text-primary mb-2 leading-snug">
+                                        <h3 className="font-semibold text-lg md:text-xl lg:text-[22px] text-primary mb-2 leading-snug group-hover:text-secondary transition-colors">
                                             {product.title}
                                         </h3>
 
@@ -170,6 +183,17 @@ export default function ProductsSection({
                                         <p className="font-medium text-xs md:text-sm lg:text-[15px] text-primary-dark leading-tight max-w-[320px] mx-auto">
                                             {product.description?.trim()}
                                         </p>
+
+                                        {/* Action Hint / Badge */}
+                                        {/* {product.detailImage ? (
+                                            <span className="mt-4 inline-flex items-center gap-1 text-[11px] md:text-xs font-semibold text-primary bg-primary/5 group-hover:bg-primary group-hover:text-white px-3 py-1 rounded-full border border-primary/10 transition-colors">
+                                                View Specification
+                                            </span>
+                                        ) : (
+                                            <span className="mt-4 inline-flex items-center gap-1 text-[11px] md:text-xs font-semibold text-primary/70 group-hover:bg-primary group-hover:text-white px-3 py-1 rounded-full transition-colors opacity-0 group-hover:opacity-100">
+                                                View Details
+                                            </span>
+                                        )} */}
                                     </div>
                                 </motion.div>
                             ))}
@@ -251,6 +275,13 @@ export default function ProductsSection({
                     </>
                 )}
             </div>
+
+            {/* Product Detail Modal */}
+            <ProductDetailModal
+                product={selectedProduct}
+                isOpen={!!selectedProduct}
+                onClose={() => setSelectedProduct(null)}
+            />
         </section>
     );
 }

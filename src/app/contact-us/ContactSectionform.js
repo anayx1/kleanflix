@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Mail, Phone, MapPin, CheckCircle2 } from 'lucide-react';
 import Button from '@/components/Button';
@@ -17,6 +18,8 @@ const REQUIREMENT_OPTIONS = [
 ];
 
 export default function ContactSectionform() {
+    const searchParams = useSearchParams();
+
     const [formData, setFormData] = useState({
         requirementType: '',
         companyName: '',
@@ -29,6 +32,36 @@ export default function ContactSectionform() {
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+
+    useEffect(() => {
+        if (!searchParams) return;
+        const product = searchParams.get('product');
+        const subject = searchParams.get('subject');
+        const reqType = searchParams.get('requirementType');
+
+        if (product || subject || reqType) {
+            setFormData((prev) => {
+                let newMessage = prev.message;
+                let newReqType = prev.requirementType;
+
+                if (subject === 'technical-details' && product) {
+                    newMessage = `I would like to request the Technical Data Sheet / PIS specification for ${product}.`;
+                    newReqType = reqType || 'institutional-cleaning';
+                } else if (product) {
+                    newMessage = `Requirement inquiry for ${product}.`;
+                    newReqType = reqType || 'institutional-cleaning';
+                } else if (reqType) {
+                    newReqType = reqType;
+                }
+
+                return {
+                    ...prev,
+                    requirementType: newReqType,
+                    message: newMessage,
+                };
+            });
+        }
+    }, [searchParams]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;

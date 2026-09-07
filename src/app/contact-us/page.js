@@ -22,7 +22,9 @@ export default function ContactUsPage() {
                     </div>
                 </div>
             </section>
-            <ContactSectionform />
+            <React.Suspense fallback={<div className="min-h-[400px]" />}>
+                <ContactSectionform />
+            </React.Suspense>
             <WhyThisMattersSection />
             {/* <ContactCtaVideoSection /> */}
         </main>

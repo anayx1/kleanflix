@@ -151,7 +151,7 @@ export default function ReededGlassHero({
                 {/* Hero Text Content - Separate, completely unfiltered layer sitting crisp on top */}
                 <div className="absolute inset-0 z-10 flex items-end">
                     <div className="main-container px-6 md:px-12 pb-12 md:pb-10 w-full">
-                        <div className="max-w-4xl">
+                        <div className="max-w-7xl">
                             {title && (
                                 <h1 className="font-anton text-[52px] md:text-[80px] lg:text-[100px] font-normal text-secondary tracking-normal mb-2 leading-[1.1] drop-shadow-md">
                                     {title}

@@ -98,5 +98,33 @@ video::-webkit-media-controls-enclosure {
   opacity: 0 !important;
 }
 
+/* Modal Product & Detail Image Containers */
+.modal-product-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 300px;
+}
 
+.modal-detail-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 360px;
+}
 
+@media (min-width: 640px) {
+  .modal-product-image-wrapper {
+    height: 380px;
+  }
+  .modal-detail-image-wrapper {
+    height: 440px;
+  }
+}
+
+@media (min-width: 1001px) {
+  .modal-product-image-wrapper {
+    height: 460px;
+  }
+  .modal-detail-image-wrapper {
+    height: 480px;
+  }
+}
