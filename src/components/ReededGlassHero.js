@@ -158,9 +158,15 @@ export default function ReededGlassHero({
                                 </h1>
                             )}
                             {subtitle && (
-                                <p className="text-white text-lg md:text-2xl lg:text-3xl font-semibold tracking-wide drop-shadow-sm">
-                                    {subtitle}
-                                </p>
+                                typeof subtitle === 'string' ? (
+                                    <p className="text-white text-lg md:text-2xl lg:text-3xl font-semibold tracking-wide drop-shadow-sm">
+                                        {subtitle}
+                                    </p>
+                                ) : (
+                                    <div className="drop-shadow-sm">
+                                        {subtitle}
+                                    </div>
+                                )
                             )}
                             {children}
                         </div>

@@ -35,7 +35,7 @@ const NAV_ITEMS = [
             { name: 'Industrial Operations', href: '/industries/industrial-operations' },
         ],
     },
-    { name: 'Build Your Product Line', href: '/build-product-line' },
+    { name: 'Build Your Product Line', href: '/build-your-product-line' },
     { name: 'OEM & Private Label Execution', href: '/oem-private-label' },
     { name: 'Exports', href: '/exports' },
     { name: 'Manufacturing', href: '/manufacturing' },
