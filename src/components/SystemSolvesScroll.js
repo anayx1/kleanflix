@@ -17,7 +17,8 @@ import Button from '@/components/Button';
 export default function SystemSolvesScroll({
     slides = [],
     heightClass = "h-[250vh]",
-    className = ""
+    className = "",
+    bgColor = "bg-white"
 }) {
     const containerRef = useRef(null);
     const [activeSlide, setActiveSlide] = useState(0);
@@ -56,10 +57,10 @@ export default function SystemSolvesScroll({
     return (
         <section
             ref={containerRef}
-            className={`relative ${heightClass} bg-white ${className}`}
+            className={`relative ${heightClass} ${bgColor} ${className}`}
         >
             {/* Sticky viewport pinned to top during vertical scroll */}
-            <div className="sticky top-0 h-screen h-[120dvh] w-full overflow-hidden flex items-center bg-white">
+            <div className={`sticky top-0 h-screen h-[120dvh] w-full overflow-hidden flex items-center ${bgColor}`}>
                 {/* Horizontal sliding track with smooth slide-change transition */}
                 <motion.div
                     className="flex flex-nowrap w-full h-full will-change-transform"
@@ -92,88 +93,128 @@ export default function SystemSolvesScroll({
                                     <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 lg:gap-16 items-center">
                                         {/* Left Column: Typography */}
                                         <div className="md:col-span-5 flex flex-col justify-center">
-                                            {/* Main Slide Title */}
-                                            <h2
-                                                className={`${slide.headingClassName ||
-                                                    (isLargeTitle
-                                                        ? "font-semibold text-3xl md:text-5xl lg:text-[50px] text-primary    mb-4 md:mb-6"
-                                                        : "font-medium text-2xl md:text-3xl lg:text-[34px] text-primary leading-snug mb-4 md:mb-5")
-                                                    }`}
-                                            >
-                                                {typeof headingText === 'string' && headingText.includes('\n') ? (
-                                                    headingText.split('\n').map((line, i, arr) => (
-                                                        <React.Fragment key={i}>
-                                                            {line}
-                                                            {i < arr.length - 1 && <br />}
-                                                        </React.Fragment>
-                                                    ))
-                                                ) : (
-                                                    headingText
-                                                )}
-                                            </h2>
+                                            {slide.content ? (
+                                                typeof slide.content === 'function' ? slide.content() : slide.content
+                                            ) : (
+                                                <>
+                                                    {/* Main Slide Title */}
+                                                    {headingText ? (
+                                                        <h2
+                                                            className={`${slide.headingClassName ||
+                                                                (isLargeTitle
+                                                                    ? "font-semibold text-3xl md:text-5xl lg:text-[50px] text-primary mb-4 md:mb-6 leading-tight"
+                                                                    : "font-medium text-2xl md:text-3xl lg:text-[34px] text-primary leading-snug mb-4 md:mb-5")
+                                                                }`}
+                                                        >
+                                                            {typeof headingText === 'string' && headingText.includes('\n') ? (
+                                                                headingText.split('\n').map((line, i, arr) => (
+                                                                    <React.Fragment key={i}>
+                                                                        {line}
+                                                                        {i < arr.length - 1 && <br />}
+                                                                    </React.Fragment>
+                                                                ))
+                                                            ) : (
+                                                                headingText
+                                                            )}
+                                                        </h2>
+                                                    ) : null}
 
-                                            {/* Subtitle / Intro Text */}
-                                            {subText && (
-                                                <p className="font-sans font-medium text-base md:text-xl lg:text-[22px] text-primary leading-tight mb-5 md:mb-6">
-                                                    {typeof subText === 'string' && subText.includes('\n') ? (
-                                                        subText.split('\n').map((line, i, arr) => (
-                                                            <React.Fragment key={i}>
-                                                                {line}
-                                                                {i < arr.length - 1 && <br className="hidden md:block" />}
-                                                            </React.Fragment>
-                                                        ))
-                                                    ) : (
-                                                        subText
+                                                    {/* Subtitle / Intro Text */}
+                                                    {subText && (
+                                                        <p className="font-sans font-medium text-base md:text-xl lg:text-[22px] text-primary leading-tight mb-5 md:mb-6">
+                                                            {typeof subText === 'string' && subText.includes('\n') ? (
+                                                                subText.split('\n').map((line, i, arr) => (
+                                                                    <React.Fragment key={i}>
+                                                                        {line}
+                                                                        {i < arr.length - 1 && <br className="hidden md:block" />}
+                                                                    </React.Fragment>
+                                                                ))
+                                                            ) : (
+                                                                subText
+                                                            )}
+                                                        </p>
                                                     )}
-                                                </p>
-                                            )}
 
-                                            {/* Bullet Points */}
-                                            {bullets.length > 0 && (
-                                                <ul className={`space-y-0 font-sans font-medium text-base md:text-lg lg:text-[20px] text-primary ${footer || ctaConfig ? 'mb-2' : ''}`}>
-                                                    {bullets.map((item, itemIdx) => (
-                                                        <li key={itemIdx} className="flex items-center gap-2.5">
-                                                            <span className="text-primary text-base select-none">•</span>
-                                                            <span>{item}</span>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            )}
-
-                                            {/* Concluding / Footer Paragraph */}
-                                            {footer && (
-                                                <p className="font-sans font-medium text-base md:text-xl lg:text-[22px] text-primary leading-relaxed mb-6 md:mb-8">
-                                                    {typeof footer === 'string' && footer.includes('\n') ? (
-                                                        footer.split('\n').map((line, i, arr) => (
-                                                            <React.Fragment key={i}>
-                                                                {line}
-                                                                {i < arr.length - 1 && <br className="hidden md:block" />}
-                                                            </React.Fragment>
-                                                        ))
-                                                    ) : (
-                                                        footer
+                                                    {/* Single Bullet Points List */}
+                                                    {bullets.length > 0 && (
+                                                        <ul className={`space-y-0 font-sans font-medium text-base md:text-lg lg:text-[20px] text-primary ${footer || ctaConfig ? 'mb-2' : ''}`}>
+                                                            {bullets.map((item, itemIdx) => (
+                                                                <li key={itemIdx} className="flex items-start gap-2.5 leading-snug">
+                                                                    <span className="text-primary text-base select-none mt-0.5">•</span>
+                                                                    <span>{item}</span>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
                                                     )}
-                                                </p>
-                                            )}
 
-                                            {/* Optional CTA Button */}
-                                            {ctaConfig && (
-                                                <div>
-                                                    <Button
-                                                        variant={ctaConfig.variant || "pill-secondary"}
-                                                        showArrow={ctaConfig.showArrow ?? true}
-                                                        href={ctaConfig.href || "/how-it-works"}
-                                                        className="font-semibold text-xs md:text-sm px-6 py-3 md:px-8 md:py-3.5 gap-2.5"
-                                                    >
-                                                        {ctaConfig.text}
-                                                    </Button>
-                                                </div>
+                                                    {/* Multiple Sections Support */}
+                                                    {slide.sections && slide.sections.map((section, sIdx) => {
+                                                        const secTitle = section.title || section.subtitle || section.heading;
+                                                        const secItems = section.items || section.points || [];
+                                                        const secText = section.text || section.description;
+
+                                                        return (
+                                                            <div key={sIdx} className={sIdx > 0 ? (section.className || "mt-5 md:mt-6") : ""}>
+                                                                {secTitle && (
+                                                                    <p className={section.titleClassName || "font-sans font-medium text-base md:text-xl lg:text-[22px] text-primary leading-tight mb-2 md:mb-3"}>
+                                                                        {secTitle}
+                                                                    </p>
+                                                                )}
+                                                                {secText && (
+                                                                    <p className="font-sans font-normal text-base md:text-lg lg:text-[20px] text-primary leading-relaxed mb-3">
+                                                                        {secText}
+                                                                    </p>
+                                                                )}
+                                                                {secItems.length > 0 && (
+                                                                    <ul className="space-y-1 font-sans font-normal text-base md:text-lg lg:text-[19px] text-primary">
+                                                                        {secItems.map((item, itemIdx) => (
+                                                                            <li key={itemIdx} className="flex items-start gap-2.5 leading-snug">
+                                                                                <span className="text-primary text-base select-none mt-0.5">•</span>
+                                                                                <span>{item}</span>
+                                                                            </li>
+                                                                        ))}
+                                                                    </ul>
+                                                                )}
+                                                            </div>
+                                                        );
+                                                    })}
+
+                                                    {/* Concluding / Footer Paragraph */}
+                                                    {footer && (
+                                                        <p className={slide.footerClassName || "font-sans font-medium text-base md:text-xl lg:text-[22px] text-primary leading-relaxed mb-6 md:mb-8"}>
+                                                            {typeof footer === 'string' && footer.includes('\n') ? (
+                                                                footer.split('\n').map((line, i, arr) => (
+                                                                    <React.Fragment key={i}>
+                                                                        {line}
+                                                                        {i < arr.length - 1 && <br className="hidden md:block" />}
+                                                                    </React.Fragment>
+                                                                ))
+                                                            ) : (
+                                                                footer
+                                                            )}
+                                                        </p>
+                                                    )}
+
+                                                    {/* Optional CTA Button */}
+                                                    {ctaConfig && (
+                                                        <div>
+                                                            <Button
+                                                                variant={ctaConfig.variant || "pill-secondary"}
+                                                                showArrow={ctaConfig.showArrow ?? true}
+                                                                href={ctaConfig.href || "/how-it-works"}
+                                                                className="font-semibold text-xs md:text-sm px-6 py-3 md:px-8 md:py-3.5 gap-2.5"
+                                                            >
+                                                                {ctaConfig.text}
+                                                            </Button>
+                                                        </div>
+                                                    )}
+                                                </>
                                             )}
                                         </div>
 
                                         {/* Right Column: Slide Image */}
                                         <div className="md:col-span-7">
-                                            <div className="relative w-full h-[280px] md:h-[460px] lg:h-[540px] rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm">
+                                            <div className={slide.imageContainerClassName || "relative w-full h-[280px] md:h-[460px] lg:h-[540px] rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm"}>
                                                 {imgSrc && (
                                                     <Image
                                                         src={imgSrc}
