@@ -13,38 +13,33 @@ const NAV_ITEMS = [
         href: '/products',
         isMega: true,
         dropdown: [
-            { name: 'Facility Care', href: '/products/facility-care' },
-            { name: 'Pet Care', href: '/products/pet-care' },
-            { name: 'Kitchen Care', href: '/products/kitchen-care' },
-            { name: 'Personal Hygiene', href: '/products/personal-hygiene' },
-            { name: 'Laundry Care', href: '/products/laundry-care' },
-            { name: 'Germ Control', href: '/products/germ-control' },
-            { name: 'Toilet Care', href: '/products/toilet-care' },
-            { name: 'Marble Care', href: '/products/marble-care' },
-            { name: 'Automotive Care', href: '/products/automotive-care' },
+            { name: 'Facility Care', href: '/facility-care' },
+            { name: 'Pet Care', href: '/pet-care' },
+            { name: 'Kitchen Care', href: '/kitchen-care' },
+            { name: 'Personal Hygiene', href: '/personal-hygiene' },
+            { name: 'Laundry Care', href: '/laundry-care' },
+            { name: 'Germ Control', href: '/germ-control' },
+            { name: 'Carpet Care', href: '/carpet-care' },
+            { name: 'Marble Care', href: '/marble-care' },
+            { name: 'Automotive Care', href: '/automotive-care' },
         ],
     },
     {
         name: 'Industries',
         href: '/industries',
-        isMega: true,
+        isMega: false,
         dropdown: [
-            { name: 'Healthcare & Pharma', href: '/industries/healthcare' },
-            { name: 'Hospitality & Hotels', href: '/industries/hospitality' },
-            { name: 'Commercial Offices', href: '/industries/commercial' },
-            { name: 'Food Processing', href: '/industries/food-processing' },
-            { name: 'Retail & Supermarkets', href: '/industries/retail' },
-            { name: 'Educational Institutes', href: '/industries/education' },
-            { name: 'Automotive Industry', href: '/industries/automotive' },
-            { name: 'Export Markets', href: '/industries/exports' },
-            { name: 'Private Label OEM', href: '/industries/oem' },
+            { name: 'Hospitality', href: '/industries/hospitality' },
+            { name: 'Healthcare', href: '/industries/healthcare' },
+            { name: 'Facility Services', href: '/industries/facility-services' },
+            { name: 'Industrial Operations', href: '/industries/industrial-operations' },
         ],
     },
     { name: 'Build Your Product Line', href: '/build-product-line' },
     { name: 'OEM & Private Label Execution', href: '/oem-private-label' },
     { name: 'Exports', href: '/exports' },
     { name: 'Manufacturing', href: '/manufacturing' },
-    { name: 'How It Works', href: '/how-it-works' },
+    { name: 'How It Works', href: '/how-the-system-works' },
     { name: 'About Us', href: '/about' },
 ];
 
@@ -97,26 +92,52 @@ export default function Header() {
                                     <div key={item.name} className="relative group py-4">
                                         <Link
                                             href={item.href}
-                                            className="inline-flex items-center gap-1 text-[13px] lg:text-[14px] xl:text-[15px] font-medium text-secondary hover:text-[#d96610] group-hover:underline group-hover:underline-offset-8 group-hover:decoration-2 group-hover:decoration-secondary transition-all duration-200 whitespace-nowrap"
+                                            className="inline-flex items-center gap-1 text-[13px] lg:text-[14px] xl:text-[15px] font-medium text-secondary hover:text-[#d96610] transition-all duration-200 whitespace-nowrap"
                                         >
-                                            <span>{item.name}</span>
-                                            <ChevronDown className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180" />
+                                            <span className="group-hover:underline group-hover:underline-offset-8 group-hover:decoration-2 group-hover:decoration-secondary">
+                                                {item.name}
+                                            </span>
+                                            <svg
+                                                className="w-2.5 h-1.5 fill-current ml-0.5 shrink-0"
+                                                viewBox="0 0 10 6"
+                                                fill="currentColor"
+                                            >
+                                                <path d="M0 0L5 6L10 0H0Z" />
+                                            </svg>
                                         </Link>
 
-                                        {/* Mega Dropdown Panel */}
-                                        <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 hidden group-hover:block z-50 transition-all duration-200 min-w-[680px] lg:min-w-[780px]">
-                                            <div className="bg-white rounded-[24px] shadow-2xl border border-gray-100 p-7 lg:p-9 grid grid-cols-3 gap-y-5 gap-x-10 lg:gap-x-14">
-                                                {item.dropdown.map((subItem) => (
-                                                    <Link
-                                                        key={subItem.name}
-                                                        href={subItem.href}
-                                                        className="text-secondary hover:text-[#d96610] hover:underline underline-offset-4 decoration-secondary text-base lg:text-lg font-medium transition-all duration-150 whitespace-nowrap"
-                                                    >
-                                                        {subItem.name}
-                                                    </Link>
-                                                ))}
+                                        {/* Dropdown Panel */}
+                                        {item.isMega ? (
+                                            /* Mega Dropdown for Products (3 Columns) */
+                                            <div className="absolute top-full left-0 pt-2 hidden group-hover:block z-50 transition-all duration-200 min-w-[580px] lg:min-w-[680px]">
+                                                <div className="bg-white rounded-[24px] shadow-2xl border border-gray-100 p-6 lg:p-8 grid grid-cols-3 gap-y-4 md:gap-y-5 gap-x-8 lg:gap-x-12">
+                                                    {item.dropdown.map((subItem) => (
+                                                        <Link
+                                                            key={subItem.name}
+                                                            href={subItem.href}
+                                                            className="text-secondary hover:text-[#d96610] hover:underline underline-offset-4 decoration-secondary text-[13px] lg:text-[14px] xl:text-[15px] font-medium transition-all duration-150 whitespace-nowrap"
+                                                        >
+                                                            {subItem.name}
+                                                        </Link>
+                                                    ))}
+                                                </div>
                                             </div>
-                                        </div>
+                                        ) : (
+                                            /* Single-column Dropdown for Industries */
+                                            <div className="absolute top-full -left-4 pt-2 hidden group-hover:block z-50 transition-all duration-200 min-w-[200px] lg:min-w-[220px]">
+                                                <div className="bg-white rounded-[20px] shadow-2xl border border-gray-100 p-5 lg:p-6 flex flex-col gap-3 lg:gap-3.5">
+                                                    {item.dropdown.map((subItem) => (
+                                                        <Link
+                                                            key={subItem.name}
+                                                            href={subItem.href}
+                                                            className="text-secondary hover:text-[#d96610] hover:underline underline-offset-4 decoration-secondary text-[13px] lg:text-[14px] xl:text-[15px] font-medium transition-all duration-150 whitespace-nowrap"
+                                                        >
+                                                            {subItem.name}
+                                                        </Link>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 );
                             }

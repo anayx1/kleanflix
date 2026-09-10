@@ -3,6 +3,8 @@ import ReededGlassHero from '@/components/ReededGlassHero';
 import Button from '@/components/Button';
 import WhyIndustryMappingMattersSection from './WhyIndustryMappingMattersSection';
 import IndustriesWeServeSection from './IndustriesWeServeSection';
+import IndustryBreakdownSection from './IndustryBreakdownSection';
+import CTASection from '@/components/CTASection';
 
 export const metadata = {
     title: "Industries | Kleanflix",
@@ -59,6 +61,26 @@ export default function IndustriesPage() {
 
             {/* Industries We Serve Section */}
             <IndustriesWeServeSection />
+
+            {/* Industry Breakdown Section */}
+            <IndustryBreakdownSection />
+
+            {/* Decision Support CTA Section */}
+            <CTASection
+                title="Decision support"
+                description={
+                    <>
+                        If your requirement spans multiple environments or systems:
+                        <span className="block mt-1">
+                            Share your environment, use-case, and challenge — the system maps the right path.
+                        </span>
+                    </>
+                }
+                ctaText="SUBMIT REQUIREMENT"
+                href="/contact-us"
+                bg="white"
+                className="bg-[#F7F7F7] py-12 md:py-16 lg:py-20"
+            />
         </main>
     );
 }
