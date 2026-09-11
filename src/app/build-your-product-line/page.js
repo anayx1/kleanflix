@@ -5,7 +5,6 @@ import WhatFoundersActuallyExperienceSection from './WhatFoundersActuallyExperie
 import BuildProductLineSystemSolvesScroll from './BuildProductLineSystemSolvesScroll';
 import HowKleanfixStructuresProductDevelopmentSection from './HowKleanfixStructuresProductDevelopmentSection';
 import WhatThisMeansForFoundersSection from './WhatThisMeansForFoundersSection';
-import WhenProductBuildingBecomesUnstableSection from './WhenProductBuildingBecomesUnstableSection';
 
 export const metadata = {
     title: "Build Your Product Line | Kleanfix",
@@ -83,9 +82,6 @@ export default function BuildYourProductLinePage() {
 
             {/* OEM Execution Card & What This Means For Founders Section (with Video) */}
             <WhatThisMeansForFoundersSection />
-
-            {/* When Product Building Becomes Unstable Section */}
-            <WhenProductBuildingBecomesUnstableSection />
         </main>
     );
 }
