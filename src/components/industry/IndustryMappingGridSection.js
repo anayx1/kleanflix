@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Button from '@/components/Button';
 
@@ -36,57 +37,65 @@ export default function IndustryMappingGridSection({
 
                 {/* 3-Column Staggered Cards Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch pb-0 md:pb-12">
-                    {cards.map((card, idx) => (
-                        <motion.div
-                            key={card.id || idx}
-                            initial={{ opacity: 0, y: 24 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: '-30px' }}
-                            transition={{
-                                duration: 0.5,
-                                delay: idx * 0.08,
-                                ease: [0.22, 1, 0.36, 1],
-                            }}
-                            className={`bg-[#F7F7F7] rounded-[20px] md:rounded-[24px] p-6 md:p-7 lg:p-8 flex flex-col justify-between ${card.height || 'h-[280px] md:h-[300px] lg:h-[320px]'} shadow-xs transition-transform duration-300 hover:shadow-sm ${
-                                card.isMiddle ? 'md:translate-y-7 lg:translate-y-8' : ''
-                            }`}
-                        >
-                            {card.isStatement ? (
-                                /* Concluding Text Card */
-                                <div className="flex flex-col justify-center h-full px-2 md:px-3">
-                                    <p className="text-primary-dark font-normal text-base md:text-lg lg:text-[20px] leading-relaxed">
-                                        {card.text}
-                                    </p>
-                                </div>
-                            ) : (
-                                /* Area Cards */
-                                <>
-                                    {/* Top Content: Title and Description */}
-                                    <div>
-                                        <h3 className="text-primary font-semibold text-lg md:text-xl lg:text-[22px] leading-snug">
-                                            {card.title}
-                                        </h3>
-                                        <p className="text-primary-dark font-normal text-xs md:text-sm lg:text-[15px] leading-relaxed mt-1 md:mt-1.5">
-                                            {card.description}
-                                        </p>
-                                    </div>
+                    {cards.map((card, idx) => {
+                        const CardWrapper = card.href ? Link : 'div';
+                        const wrapperProps = card.href
+                            ? { href: card.href, className: 'flex flex-col justify-between h-full group cursor-pointer' }
+                            : { className: 'flex flex-col justify-between h-full' };
 
-                                    {/* Bottom Content: 3D Illustration */}
-                                    {card.imageSrc && (
-                                        <div className={`relative w-full ${card.imageHeight || 'h-[110px] md:h-[125px] lg:h-[135px]'} mt-auto`}>
-                                            <Image
-                                                src={card.imageSrc}
-                                                alt={card.imageAlt || (typeof card.title === 'string' ? card.title : 'Card image')}
-                                                fill
-                                                sizes="(max-width: 1001px) 100vw, 33vw"
-                                                className="object-contain object-bottom"
-                                            />
+                        return (
+                            <motion.div
+                                key={card.id || idx}
+                                initial={{ opacity: 0, y: 24 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: '-30px' }}
+                                transition={{
+                                    duration: 0.5,
+                                    delay: idx * 0.08,
+                                    ease: [0.22, 1, 0.36, 1],
+                                }}
+                                className={`bg-[#F7F7F7] rounded-[20px] md:rounded-[24px] p-6 md:p-7 lg:p-8 flex flex-col justify-between ${card.height || 'h-[280px] md:h-[300px] lg:h-[320px]'} shadow-xs transition-transform duration-300 hover:shadow-sm ${card.isMiddle ? 'md:translate-y-7 lg:translate-y-8' : ''
+                                    }`}
+                            >
+                                <CardWrapper {...wrapperProps}>
+                                    {card.isStatement ? (
+                                        /* Concluding Text Card */
+                                        <div className="flex flex-col justify-center h-full px-2 md:px-3">
+                                            <p className="text-primary-dark font-normal text-base md:text-lg lg:text-[20px] leading-relaxed">
+                                                {card.text}
+                                            </p>
                                         </div>
+                                    ) : (
+                                        /* Area Cards */
+                                        <>
+                                            {/* Top Content: Title and Description */}
+                                            <div>
+                                                <h3 className="text-primary-dark font-semibold text-lg md:text-xl lg:text-[22px] leading-snug">
+                                                    {card.title}
+                                                </h3>
+                                                <p className="text-primary-dark font-normal text-xs md:text-sm lg:text-[15px] leading-relaxed mt-1 md:mt-1.5">
+                                                    {card.description}
+                                                </p>
+                                            </div>
+
+                                            {/* Bottom Content: 3D Illustration */}
+                                            {card.imageSrc && (
+                                                <div className={`relative w-full ${card.imageHeight || 'h-[110px] md:h-[125px] lg:h-[135px]'} mt-auto overflow-hidden`}>
+                                                    <Image
+                                                        src={card.imageSrc}
+                                                        alt={card.imageAlt || (typeof card.title === 'string' ? card.title : 'Card image')}
+                                                        fill
+                                                        sizes="(max-width: 1001px) 100vw, 33vw"
+                                                        className="object-contain object-bottom transition-transform duration-300 group-hover:scale-105"
+                                                    />
+                                                </div>
+                                            )}
+                                        </>
                                     )}
-                                </>
-                            )}
-                        </motion.div>
-                    ))}
+                                </CardWrapper>
+                            </motion.div>
+                        );
+                    })}
                 </div>
 
                 {/* Optional CTA Button */}
