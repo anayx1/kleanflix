@@ -1,9 +1,30 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Search, Filter, Loader2, FileText, Calendar, User, Tag, Globe, X } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import {
+  Plus,
+  Edit2,
+  Trash2,
+  Search,
+  Filter,
+  Loader2,
+  FileText,
+  Calendar,
+  User,
+  Tag,
+  Globe,
+  X,
+  Bold,
+  Italic,
+  Heading,
+  List,
+  CheckSquare,
+  Quote,
+  ExternalLink,
+} from 'lucide-react';
 import Image from 'next/image';
 import MediaUploader from './MediaUploader';
+import BlogContentRenderer, { FloralBulletIcon } from '@/components/blogs/BlogContentRenderer';
 
 export default function BlogManager() {
   const [blogs, setBlogs] = useState([]);
@@ -16,6 +37,8 @@ export default function BlogManager() {
   const [editingBlog, setEditingBlog] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [activeTab, setActiveTab] = useState('write');
+  const contentTextareaRef = useRef(null);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -30,6 +53,24 @@ export default function BlogManager() {
     metaTitle: '',
     metaDescription: '',
   });
+
+  const insertFormatting = (prefix, suffix = '', defaultText = '') => {
+    const textarea = contentTextareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = formData.content;
+    const selectedText = text.substring(start, end) || defaultText;
+
+    const newText = text.substring(0, start) + prefix + selectedText + suffix + text.substring(end);
+    setFormData((prev) => ({ ...prev, content: newText }));
+
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(start + prefix.length, start + prefix.length + selectedText.length);
+    }, 0);
+  };
 
   const fetchBlogs = async () => {
     setLoading(true);
@@ -57,6 +98,7 @@ export default function BlogManager() {
 
   const handleOpenAdd = () => {
     setEditingBlog(null);
+    setActiveTab('write');
     setFormData({
       title: '',
       content: '',
@@ -75,12 +117,13 @@ export default function BlogManager() {
 
   const handleOpenEdit = (blog) => {
     setEditingBlog(blog);
+    setActiveTab('write');
     setFormData({
       title: blog.title || '',
       content: blog.content || '',
       excerpt: blog.excerpt || '',
       featuredImage: blog.featuredImage || '',
-      author: blog.author || 'Kleanflix Team',
+      author: blog.author || 'Kleanfix Team',
       tags: blog.tags || '',
       status: blog.status || 'PUBLISHED',
       publishedAt: blog.publishedAt ? new Date(blog.publishedAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
@@ -223,11 +266,10 @@ export default function BlogManager() {
                   </div>
                 )}
                 <span
-                  className={`absolute top-3 left-3 text-xs font-semibold px-2.5 py-1 rounded-full shadow ${
-                    blog.status === 'PUBLISHED'
+                  className={`absolute top-3 left-3 text-xs font-semibold px-2.5 py-1 rounded-full shadow ${blog.status === 'PUBLISHED'
                       ? 'bg-green-600 text-white'
                       : 'bg-yellow-500 text-white'
-                  }`}
+                    }`}
                 >
                   {blog.status}
                 </span>
@@ -271,6 +313,15 @@ export default function BlogManager() {
                   </div>
 
                   <div className="flex items-center gap-2">
+                    <a
+                      href={`/blogs/${blog.slug}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 text-gray-600 hover:text-[#1E6BB8] hover:bg-blue-50 rounded-lg transition"
+                      title="View Live Blog"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
                     <button
                       onClick={() => handleOpenEdit(blog)}
                       className="p-2 text-gray-600 hover:text-[#1E6BB8] hover:bg-blue-50 rounded-lg transition"
@@ -384,22 +435,125 @@ export default function BlogManager() {
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">Article Content *</label>
-                <textarea
-                  rows={6}
-                  required
-                  placeholder="Full blog content (supports paragraphs / HTML)..."
-                  value={formData.content}
-                  onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                  className="w-full p-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1E6BB8] font-mono text-xs"
-                />
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <label className="block text-sm font-semibold text-gray-700">Article Content *</label>
+                  <div className="flex items-center gap-1 bg-gray-100 p-0.5 rounded-lg text-xs font-medium">
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab('write')}
+                      className={`px-3 py-1 rounded-md transition ${activeTab === 'write'
+                          ? 'bg-white shadow-xs text-primary font-semibold'
+                          : 'text-gray-600 hover:text-gray-900'
+                        }`}
+                    >
+                      Write
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab('preview')}
+                      className={`px-3 py-1 rounded-md transition ${activeTab === 'preview'
+                          ? 'bg-white shadow-xs text-primary font-semibold'
+                          : 'text-gray-600 hover:text-gray-900'
+                        }`}
+                    >
+                      Preview
+                    </button>
+                  </div>
+                </div>
+
+                {activeTab === 'write' ? (
+                  <div className="border border-gray-300 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-[#1E6BB8] focus-within:border-transparent">
+                    {/* Formatting Toolbar */}
+                    <div className="flex flex-wrap items-center gap-1 p-2 bg-gray-50 border-b border-gray-200 text-xs text-gray-700">
+                      <button
+                        type="button"
+                        onClick={() => insertFormatting('**', '**', 'bold text')}
+                        title="Bold"
+                        className="px-2 py-1 hover:bg-white hover:shadow-xs rounded font-bold text-gray-800 flex items-center gap-1 border border-transparent hover:border-gray-200 transition"
+                      >
+                        <Bold className="w-3.5 h-3.5" /> Bold
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => insertFormatting('*', '*', 'italic text')}
+                        title="Italic"
+                        className="px-2 py-1 hover:bg-white hover:shadow-xs rounded italic text-gray-800 flex items-center gap-1 border border-transparent hover:border-gray-200 transition"
+                      >
+                        <Italic className="w-3.5 h-3.5" /> Italic
+                      </button>
+                      <div className="h-4 w-px bg-gray-300 mx-1" />
+                      <button
+                        type="button"
+                        onClick={() => insertFormatting('### ', '\n', 'Subheading Title')}
+                        title="Heading"
+                        className="px-2 py-1 hover:bg-white hover:shadow-xs rounded font-semibold text-[#1E6BB8] flex items-center gap-1 border border-transparent hover:border-gray-200 transition"
+                      >
+                        <Heading className="w-3.5 h-3.5" /> Heading
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => insertFormatting('- ', '\n', 'Bullet point item')}
+                        title="Bullet List"
+                        className="px-2 py-1 hover:bg-white hover:shadow-xs rounded text-gray-800 flex items-center gap-1 border border-transparent hover:border-gray-200 transition"
+                      >
+                        <List className="w-3.5 h-3.5" /> Bullets
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => insertFormatting('✓ ', '\n', 'Checklist item')}
+                        title="Checkmark Bullet"
+                        className="px-2 py-1 hover:bg-white hover:shadow-xs rounded text-primary font-semibold flex items-center gap-1 border border-transparent hover:border-gray-200 transition"
+                      >
+                        <CheckSquare className="w-3.5 h-3.5" /> Checkmark (✓)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => insertFormatting('✤ ', '\n', 'Floral bullet item')}
+                        title="Floral Bullet (✤)"
+                        className="px-2 py-1 hover:bg-white hover:shadow-xs rounded text-primary-dark font-semibold flex items-center gap-1 border border-transparent hover:border-gray-200 transition"
+                      >
+                        <FloralBulletIcon className="w-3.5 h-3.5 text-primary-dark" /> Floral (✤)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => insertFormatting('> ', '\n', 'Quote callout')}
+                        title="Quote"
+                        className="px-2 py-1 hover:bg-white hover:shadow-xs rounded text-gray-800 flex items-center gap-1 border border-transparent hover:border-gray-200 transition"
+                      >
+                        <Quote className="w-3.5 h-3.5" /> Quote
+                      </button>
+                    </div>
+
+                    <textarea
+                      ref={contentTextareaRef}
+                      rows={8}
+                      required
+                      placeholder="Full blog content (use toolbar for bold words, checkmarks, bullets, headings)..."
+                      value={formData.content}
+                      onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                      className="w-full p-3 text-sm focus:outline-none font-mono text-xs text-gray-800 leading-relaxed resize-y min-h-[160px]"
+                    />
+                  </div>
+                ) : (
+                  <div className="p-4 border border-gray-200 rounded-xl bg-gray-50/50 min-h-[200px] max-h-[350px] overflow-y-auto text-primary-dark">
+                    {formData.content ? (
+                      <BlogContentRenderer content={formData.content} />
+                    ) : (
+                      <p className="text-gray-400 text-sm italic">
+                        Nothing to preview. Enter some content in Write mode.
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
 
               <MediaUploader
                 label="Featured Image"
                 value={formData.featuredImage}
                 onChange={(url) => setFormData({ ...formData, featuredImage: url })}
+                customName={formData.title}
+                helperText="Saved as lossless WebP named after blog title ({blog-title}.webp)"
               />
 
               {/* SEO Meta Details */}

@@ -9,6 +9,7 @@ export default function MediaUploader({
   onChange,
   label = 'Product Image',
   suffix = '',
+  customName = '',
   helperText = '',
   height = '200px',
 }) {
@@ -32,6 +33,9 @@ export default function MediaUploader({
       formData.append('file', file);
       if (suffix) {
         formData.append('suffix', suffix);
+      }
+      if (customName) {
+        formData.append('customName', customName);
       }
 
       const res = await fetch('/api/upload', {

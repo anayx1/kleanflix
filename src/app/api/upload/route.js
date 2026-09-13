@@ -9,6 +9,7 @@ export async function POST(request) {
     const formData = await request.formData();
     const file = formData.get('file');
     const suffix = formData.get('suffix') || '';
+    const customName = formData.get('customName') || '';
 
     if (!file) {
       return NextResponse.json(
@@ -27,6 +28,18 @@ export async function POST(request) {
       .trim()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '');
+
+    // If customName is provided (e.g. blog title), use it for the filename
+    if (customName && typeof customName === 'string' && customName.trim()) {
+      const cleanCustom = customName
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+      if (cleanCustom) {
+        cleanBase = cleanCustom;
+      }
+    }
 
     // If suffix is specified (e.g. 'description'), append it unless already present
     if (suffix) {

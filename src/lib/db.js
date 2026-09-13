@@ -297,13 +297,103 @@ export function getAllBlogs({ status, search, tag } = {}) {
   query += ' ORDER BY datetime(publishedAt) DESC';
 
   const stmt = db.prepare(query);
-  return stmt.all(...params);
+  const rows = stmt.all(...params);
+  return rows.map((r) => ({ ...r }));
 }
 
 export function getBlogByIdOrSlug(identifier) {
-  const stmt = db.prepare('SELECT * FROM blogs WHERE id = ? OR slug = ? LIMIT 1');
-  const row = stmt.all(identifier, identifier)[0];
+  if (!identifier) return null;
+  const raw = String(identifier).trim();
+  let decoded = raw;
+  try {
+    decoded = decodeURIComponent(raw).trim();
+  } catch (e) {
+    // Keep raw if decoding fails
+  }
+  const slugified = generateSlug(decoded);
+
+  const stmt = db.prepare(`
+    SELECT * FROM blogs 
+    WHERE id = ? 
+       OR slug = ? 
+       OR slug = ? 
+       OR slug = ? 
+       OR LOWER(title) = LOWER(?)
+    LIMIT 1
+  `);
+  const row = stmt.all(raw, raw, decoded, slugified, decoded)[0];
   return row || null;
+}
+
+export function getAdjacentBlogs(publishedAt, currentId) {
+  if (!publishedAt) return { prev: null, next: null };
+
+  const prevStmt = db.prepare(`
+    SELECT id, title, slug 
+    FROM blogs 
+    WHERE status = 'PUBLISHED' 
+      AND (datetime(publishedAt) < datetime(?) OR (datetime(publishedAt) = datetime(?) AND id < ?))
+    ORDER BY datetime(publishedAt) DESC, id DESC 
+    LIMIT 1
+  `);
+
+  const nextStmt = db.prepare(`
+    SELECT id, title, slug 
+    FROM blogs 
+    WHERE status = 'PUBLISHED' 
+      AND (datetime(publishedAt) > datetime(?) OR (datetime(publishedAt) = datetime(?) AND id > ?))
+    ORDER BY datetime(publishedAt) ASC, id ASC 
+    LIMIT 1
+  `);
+
+  const prev = prevStmt.all(publishedAt, publishedAt, currentId || '')[0] || null;
+  const next = nextStmt.all(publishedAt, publishedAt, currentId || '')[0] || null;
+
+  return { prev, next };
+}
+
+
+
+export function normalizeBlogFeaturedImage(imagePath, blogTitle) {
+  if (!imagePath || typeof imagePath !== 'string' || !blogTitle) return imagePath || null;
+  const trimmed = imagePath.trim();
+  if (!trimmed) return null;
+
+  if (trimmed.startsWith('/uploads/')) {
+    const rawFileName = trimmed.substring('/uploads/'.length);
+    const targetSlug = generateSlug(blogTitle);
+    if (!targetSlug) return trimmed;
+
+    const targetFileName = `${targetSlug}.webp`;
+    if (rawFileName === targetFileName) return trimmed;
+
+    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+    const oldPath = path.join(uploadDir, rawFileName);
+
+    if (fs.existsSync(oldPath)) {
+      let finalTargetName = targetFileName;
+      let counter = 1;
+      while (
+        fs.existsSync(path.join(uploadDir, finalTargetName)) &&
+        path.join(uploadDir, finalTargetName) !== oldPath
+      ) {
+        finalTargetName = `${targetSlug}-${counter}.webp`;
+        counter++;
+      }
+      const newPath = path.join(uploadDir, finalTargetName);
+
+      try {
+        if (rawFileName.toLowerCase().endsWith('.webp')) {
+          fs.renameSync(oldPath, newPath);
+        }
+        return `/uploads/${finalTargetName}`;
+      } catch (err) {
+        console.error('Error renaming blog image to webp:', err);
+      }
+    }
+  }
+
+  return trimmed;
 }
 
 export function createBlog(data) {
@@ -317,6 +407,7 @@ export function createBlog(data) {
     count++;
   }
 
+  const cleanedImage = normalizeBlogFeaturedImage(data.featuredImage, data.title);
   const now = new Date().toISOString();
   const publishedAt = data.publishedAt ? new Date(data.publishedAt).toISOString() : now;
 
@@ -331,8 +422,8 @@ export function createBlog(data) {
     slug,
     data.content,
     data.excerpt || data.title,
-    data.featuredImage || null,
-    data.author || 'Kleanflix Team',
+    cleanedImage || null,
+    data.author || 'Kleanfix Team',
     data.tags || '',
     data.status || 'PUBLISHED',
     publishedAt,
@@ -352,7 +443,6 @@ export function updateBlog(id, data) {
   let title = data.title !== undefined ? data.title : existing.title;
   let content = data.content !== undefined ? data.content : existing.content;
   let excerpt = data.excerpt !== undefined ? data.excerpt : existing.excerpt;
-  let featuredImage = data.featuredImage !== undefined ? data.featuredImage : existing.featuredImage;
   let author = data.author !== undefined ? data.author : existing.author;
   let tags = data.tags !== undefined ? data.tags : existing.tags;
   let status = data.status !== undefined ? data.status : existing.status;
@@ -372,6 +462,9 @@ export function updateBlog(id, data) {
       count++;
     }
   }
+
+  const rawFeaturedImage = data.featuredImage !== undefined ? data.featuredImage : existing.featuredImage;
+  const featuredImage = normalizeBlogFeaturedImage(rawFeaturedImage, title);
 
   const now = new Date().toISOString();
   const stmt = db.prepare(`
