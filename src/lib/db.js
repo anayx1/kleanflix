@@ -52,6 +52,17 @@ db.exec(`
     name TEXT UNIQUE NOT NULL,
     createdAt TEXT NOT NULL
   );
+
+  CREATE TABLE IF NOT EXISTS events (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    dates TEXT NOT NULL,
+    location TEXT,
+    featuredImage TEXT,
+    orderIndex INTEGER DEFAULT 0,
+    createdAt TEXT NOT NULL,
+    updatedAt TEXT NOT NULL
+  );
 `);
 
 // Migration: ensure detailImage column exists on existing databases
@@ -322,7 +333,7 @@ export function getBlogByIdOrSlug(identifier) {
     LIMIT 1
   `);
   const row = stmt.all(raw, raw, decoded, slugified, decoded)[0];
-  return row || null;
+  return row ? { ...row } : null;
 }
 
 export function getAdjacentBlogs(publishedAt, currentId) {
@@ -346,8 +357,11 @@ export function getAdjacentBlogs(publishedAt, currentId) {
     LIMIT 1
   `);
 
-  const prev = prevStmt.all(publishedAt, publishedAt, currentId || '')[0] || null;
-  const next = nextStmt.all(publishedAt, publishedAt, currentId || '')[0] || null;
+  const prevRow = prevStmt.all(publishedAt, publishedAt, currentId || '')[0];
+  const nextRow = nextStmt.all(publishedAt, publishedAt, currentId || '')[0];
+
+  const prev = prevRow ? { ...prevRow } : null;
+  const next = nextRow ? { ...nextRow } : null;
 
   return { prev, next };
 }
@@ -520,6 +534,86 @@ export function createCategory(name) {
   const now = new Date().toISOString();
   db.prepare('INSERT INTO categories (id, name, createdAt) VALUES (?, ?, ?)').run(id, cleanName, now);
   return cleanName;
+}
+
+// --- EVENT DB OPERATIONS ---
+export function getAllEvents() {
+  const stmt = db.prepare('SELECT * FROM events ORDER BY orderIndex ASC, createdAt DESC');
+  const rows = stmt.all();
+  return rows.map((r) => ({
+    id: String(r.id),
+    name: String(r.name || ''),
+    dates: String(r.dates || ''),
+    location: String(r.location || ''),
+    featuredImage: String(r.featuredImage || ''),
+    orderIndex: Number(r.orderIndex) || 0,
+    createdAt: String(r.createdAt || ''),
+    updatedAt: String(r.updatedAt || ''),
+  }));
+}
+
+export function getEventById(id) {
+  const stmt = db.prepare('SELECT * FROM events WHERE id = ?');
+  const rows = stmt.all(id);
+  if (!rows || rows.length === 0) return null;
+  const r = rows[0];
+  return {
+    id: String(r.id),
+    name: String(r.name || ''),
+    dates: String(r.dates || ''),
+    location: String(r.location || ''),
+    featuredImage: String(r.featuredImage || ''),
+    orderIndex: Number(r.orderIndex) || 0,
+    createdAt: String(r.createdAt || ''),
+    updatedAt: String(r.updatedAt || ''),
+  };
+}
+
+export function createEvent(data) {
+  const id = generateId();
+  const now = new Date().toISOString();
+  const stmt = db.prepare(`
+    INSERT INTO events (id, name, dates, location, featuredImage, orderIndex, createdAt, updatedAt)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+  stmt.run(
+    id,
+    data.name || '',
+    data.dates || '',
+    data.location || '',
+    data.featuredImage || '',
+    data.orderIndex !== undefined ? Number(data.orderIndex) : 0,
+    now,
+    now
+  );
+  return getEventById(id);
+}
+
+export function updateEvent(id, data) {
+  const existing = getEventById(id);
+  if (!existing) return null;
+
+  const name = data.name !== undefined ? data.name : existing.name;
+  const dates = data.dates !== undefined ? data.dates : existing.dates;
+  const location = data.location !== undefined ? data.location : existing.location;
+  const featuredImage = data.featuredImage !== undefined ? data.featuredImage : existing.featuredImage;
+  const orderIndex = data.orderIndex !== undefined ? Number(data.orderIndex) : existing.orderIndex;
+  const now = new Date().toISOString();
+
+  const stmt = db.prepare(`
+    UPDATE events
+    SET name = ?, dates = ?, location = ?, featuredImage = ?, orderIndex = ?, updatedAt = ?
+    WHERE id = ?
+  `);
+  stmt.run(name, dates, location, featuredImage, orderIndex, now, id);
+  return getEventById(id);
+}
+
+export function deleteEvent(id) {
+  const existing = getEventById(id);
+  if (!existing) return false;
+  db.prepare('DELETE FROM events WHERE id = ?').run(id);
+  return true;
 }
 
 export default db;

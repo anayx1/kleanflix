@@ -4,7 +4,9 @@ import Button from '@/components/Button';
 import WhyMeetAtEventsSection from '@/components/events/WhyMeetAtEventsSection';
 import PlanYourDiscussionSection from '@/components/events/PlanYourDiscussionSection';
 import PastParticipationsSection from '@/components/events/PastParticipationsSection';
+import UpcomingEventsSection from '@/components/events/UpcomingEventsSection';
 import CTASection from '@/components/CTASection';
+import { getAllEvents } from '@/lib/db';
 
 export const metadata = {
     title: "Events | Kleanfix",
@@ -12,6 +14,9 @@ export const metadata = {
 };
 
 export default function EventsPage() {
+    // Server-side fetching of events per AGENTS.md guidelines
+    const events = getAllEvents();
+
     return (
         <main className="min-h-screen bg-white">
             {/* Hero Section with Reeded Glass Reveal */}
@@ -75,6 +80,9 @@ export default function EventsPage() {
 
             {/* Past Participations Section */}
             <PastParticipationsSection />
+
+            {/* Upcoming Events Section (Connected to DB & /api/events) */}
+            <UpcomingEventsSection events={events} />
 
             {/* Not Attending CTA Section */}
             <section className='bg-gray-50'>
