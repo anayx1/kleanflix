@@ -10,8 +10,8 @@ import OEMScalingSupportSection from '@/components/OEMScalingSupportSection';
 import { getProductsByCategory } from '@/lib/api';
 
 export const metadata = {
-    title: "Personal Hygiene | Kleanflix",
-    description: "High-Frequency Hygiene That Shapes User Experience - Kleanflix Personal Hygiene System.",
+    title: "Personal Hygiene | kleanfix",
+    description: "High-Frequency Hygiene That Shapes User Experience - kleanfix Personal Hygiene System.",
 };
 
 const personalHygieneSlides = [

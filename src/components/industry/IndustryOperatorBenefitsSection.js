@@ -7,7 +7,7 @@ export default function IndustryOperatorBenefitsSection({
     bullets = [],
     closingStatements = [],
     imageSrc = '/hospitality/pink-glove.avif',
-    imageAlt = 'Kleanflix spray bottle with pink glove',
+    imageAlt = 'kleanfix spray bottle with pink glove',
     className = '',
 }) {
     return (

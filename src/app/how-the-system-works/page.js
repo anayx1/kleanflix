@@ -8,8 +8,8 @@ import WhatThisLooksLikeSection from './WhatThisLooksLikeSection';
 import WhatThisMeansForYouSection from './WhatThisMeansForYouSection';
 
 export const metadata = {
-    title: "How The System Works | Kleanflix",
-    description: "This is not a product flow. This is a system designed to control output - Kleanflix.",
+    title: "How The System Works | kleanfix",
+    description: "This is not a product flow. This is a system designed to control output - kleanfix.",
 };
 
 export default function HowTheSystemWorksPage() {

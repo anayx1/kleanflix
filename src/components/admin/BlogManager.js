@@ -46,7 +46,7 @@ export default function BlogManager() {
     content: '',
     excerpt: '',
     featuredImage: '',
-    author: 'Kleanflix Team',
+    author: 'kleanfix Team',
     tags: '',
     status: 'PUBLISHED',
     publishedAt: new Date().toISOString().split('T')[0],
@@ -104,7 +104,7 @@ export default function BlogManager() {
       content: '',
       excerpt: '',
       featuredImage: '',
-      author: 'Kleanflix Team',
+      author: 'kleanfix Team',
       tags: 'Cleaning, Tips, Maintenance',
       status: 'PUBLISHED',
       publishedAt: new Date().toISOString().split('T')[0],
@@ -267,8 +267,8 @@ export default function BlogManager() {
                 )}
                 <span
                   className={`absolute top-3 left-3 text-xs font-semibold px-2.5 py-1 rounded-full shadow ${blog.status === 'PUBLISHED'
-                      ? 'bg-green-600 text-white'
-                      : 'bg-yellow-500 text-white'
+                    ? 'bg-green-600 text-white'
+                    : 'bg-yellow-500 text-white'
                     }`}
                 >
                   {blog.status}
@@ -443,8 +443,8 @@ export default function BlogManager() {
                       type="button"
                       onClick={() => setActiveTab('write')}
                       className={`px-3 py-1 rounded-md transition ${activeTab === 'write'
-                          ? 'bg-white shadow-xs text-primary font-semibold'
-                          : 'text-gray-600 hover:text-gray-900'
+                        ? 'bg-white shadow-xs text-primary font-semibold'
+                        : 'text-gray-600 hover:text-gray-900'
                         }`}
                     >
                       Write
@@ -453,8 +453,8 @@ export default function BlogManager() {
                       type="button"
                       onClick={() => setActiveTab('preview')}
                       className={`px-3 py-1 rounded-md transition ${activeTab === 'preview'
-                          ? 'bg-white shadow-xs text-primary font-semibold'
-                          : 'text-gray-600 hover:text-gray-900'
+                        ? 'bg-white shadow-xs text-primary font-semibold'
+                        : 'text-gray-600 hover:text-gray-900'
                         }`}
                     >
                       Preview

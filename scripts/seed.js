@@ -1,6 +1,6 @@
 import { createProduct, createBlog, getAllProducts } from '../src/lib/db.js';
 
-console.log('Seeding initial data into Kleanflix database...');
+console.log('Seeding initial data into kleanfix database...');
 
 const existingProducts = getAllProducts();
 if (existingProducts.length === 0) {
@@ -33,15 +33,15 @@ if (existingProducts.length === 0) {
 
   createBlog({
     title: '10 Secrets to Keeping a Spotless Home Between Professional Cleanings',
-    content: `Maintaining a clean home doesn't have to consume your weekends. With a few daily habits and simple routines, you can preserve that post-cleaning shine effortlessly. Here are our top professional tips from the Kleanflix team to help maintain your living space clean and fresh.`,
+    content: `Maintaining a clean home doesn't have to consume your weekends. With a few daily habits and simple routines, you can preserve that post-cleaning shine effortlessly. Here are our top professional tips from the kleanfix team to help maintain your living space clean and fresh.`,
     excerpt: 'Discover easy daily habits to keep your living room, kitchen, and bathrooms shining bright between professional visits.',
     featuredImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80',
-    author: 'Kleanflix Experts',
+    author: 'kleanfix Experts',
     tags: 'Home Care, Cleaning Tips, Maintenance',
     status: 'PUBLISHED',
     publishedAt: new Date().toISOString(),
-    metaTitle: '10 Home Cleaning Tips | Kleanflix Blog',
-    metaDescription: 'Learn top cleaning tips from Kleanflix professionals to keep your home clean every day.',
+    metaTitle: '10 Home Cleaning Tips | kleanfix Blog',
+    metaDescription: 'Learn top cleaning tips from kleanfix professionals to keep your home clean every day.',
   });
 
   createBlog({
@@ -53,7 +53,7 @@ if (existingProducts.length === 0) {
     tags: 'Commercial, Office, Productivity',
     status: 'PUBLISHED',
     publishedAt: new Date(Date.now() - 86400000 * 3).toISOString(),
-    metaTitle: 'Office Cleanliness & Productivity | Kleanflix Blog',
+    metaTitle: 'Office Cleanliness & Productivity | kleanfix Blog',
     metaDescription: 'Explore the connection between clean office environments and workplace output.',
   });
 

@@ -10,8 +10,8 @@ import OEMScalingSupportSection from '@/components/OEMScalingSupportSection';
 import { getProductsByCategory } from '@/lib/api';
 
 export const metadata = {
-    title: "Germ Control | Kleanflix",
-    description: "Hygiene Beyond Visible Cleaning - Kleanflix Germ Control System.",
+    title: "Germ Control | kleanfix",
+    description: "Hygiene Beyond Visible Cleaning - kleanfix Germ Control System.",
 };
 
 const germControlSlides = [

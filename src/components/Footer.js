@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import SystemControlCtaSection from './hompeage/SystemControlCtaSection';
 
@@ -116,8 +117,13 @@ function FooterLink({ href, children, isExternal = false, className = '' }) {
 }
 
 export default function Footer() {
+    const pathname = usePathname();
     const [email, setEmail] = useState('');
     const [subscribed, setSubscribed] = useState(false);
+
+    if (pathname?.startsWith('/admin')) {
+        return null;
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();

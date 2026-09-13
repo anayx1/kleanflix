@@ -22,7 +22,7 @@ function ArrowUpRightIcon({ className = "w-5 h-5" }) {
 }
 
 /**
- * Reusable Button Component for Kleanflix
+ * Reusable Button Component for kleanfix
  *
  * @param {Object} props
  * @param {string} [props.href] - Optional URL target. If provided, renders a Next.js Link.

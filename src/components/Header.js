@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import Button from './Button';
 
@@ -44,6 +45,7 @@ const NAV_ITEMS = [
 ];
 
 export default function Header() {
+    const pathname = usePathname();
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [activeMobileDropdown, setActiveMobileDropdown] = useState(null);
@@ -60,6 +62,10 @@ export default function Header() {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    if (pathname?.startsWith('/admin')) {
+        return null;
+    }
 
     const toggleMobileDropdown = (name) => {
         setActiveMobileDropdown((prev) => (prev === name ? null : name));

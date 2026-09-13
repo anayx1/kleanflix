@@ -357,11 +357,8 @@ export function getAdjacentBlogs(publishedAt, currentId) {
     LIMIT 1
   `);
 
-  const prevRow = prevStmt.all(publishedAt, publishedAt, currentId || '')[0];
-  const nextRow = nextStmt.all(publishedAt, publishedAt, currentId || '')[0];
-
-  const prev = prevRow ? { ...prevRow } : null;
-  const next = nextRow ? { ...nextRow } : null;
+  const prev = prevStmt.all(publishedAt, publishedAt, currentId || '')[0] || null;
+  const next = nextStmt.all(publishedAt, publishedAt, currentId || '')[0] || null;
 
   return { prev, next };
 }
@@ -541,14 +538,14 @@ export function getAllEvents() {
   const stmt = db.prepare('SELECT * FROM events ORDER BY orderIndex ASC, createdAt DESC');
   const rows = stmt.all();
   return rows.map((r) => ({
-    id: String(r.id),
-    name: String(r.name || ''),
-    dates: String(r.dates || ''),
-    location: String(r.location || ''),
-    featuredImage: String(r.featuredImage || ''),
-    orderIndex: Number(r.orderIndex) || 0,
-    createdAt: String(r.createdAt || ''),
-    updatedAt: String(r.updatedAt || ''),
+    id: r.id,
+    name: r.name,
+    dates: r.dates,
+    location: r.location,
+    featuredImage: r.featuredImage,
+    orderIndex: Number(r.orderIndex || 0),
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
   }));
 }
 
@@ -558,14 +555,14 @@ export function getEventById(id) {
   if (!rows || rows.length === 0) return null;
   const r = rows[0];
   return {
-    id: String(r.id),
-    name: String(r.name || ''),
-    dates: String(r.dates || ''),
-    location: String(r.location || ''),
-    featuredImage: String(r.featuredImage || ''),
-    orderIndex: Number(r.orderIndex) || 0,
-    createdAt: String(r.createdAt || ''),
-    updatedAt: String(r.updatedAt || ''),
+    id: r.id,
+    name: r.name,
+    dates: r.dates,
+    location: r.location,
+    featuredImage: r.featuredImage,
+    orderIndex: Number(r.orderIndex || 0),
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
   };
 }
 

@@ -27,7 +27,7 @@ model BlogPost {
   content         String
   excerpt         String?
   featuredImage   String?
-  author          String    @default("Kleanflix Team")
+  author          String    @default("kleanfix Team")
   tags            String?   @default("")
   status          String    @default("PUBLISHED")
   publishedAt     DateTime  @default(now())

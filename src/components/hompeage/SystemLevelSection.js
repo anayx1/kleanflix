@@ -15,7 +15,7 @@ export default function SystemLevelSection() {
                 {/* Heading */}
                 <BlurText
                     as="h2"
-                    text="Kleanflix solves this at the system level — by bringing formulation, manufacturing, and application under one controlled structure."
+                    text="kleanfix solves this at the system level — by bringing formulation, manufacturing, and application under one controlled structure."
                     delay={50}
                     animateBy="words"
                     direction="top"

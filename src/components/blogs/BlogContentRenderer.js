@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * 4-petal floral / quatrefoil bullet icon matching Kleanflix branding
+ * 4-petal floral / quatrefoil bullet icon matching kleanfix branding
  */
 export function FloralBulletIcon({ className = 'w-4 h-4 text-primary-dark inline-block' }) {
   return (

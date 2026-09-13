@@ -4,8 +4,8 @@ import "../globals.css";
 
 
 export const metadata = {
-  title: 'Admin Dashboard | Kleanflix',
-  description: 'Manage Products, Blogs, and Media Content for Kleanflix',
+  title: 'Admin Dashboard | kleanfix',
+  description: 'Manage Products, Blogs, and Media Content for kleanfix',
 };
 
 export default function AdminLayout({ children }) {
@@ -20,7 +20,7 @@ export default function AdminLayout({ children }) {
                 K
               </div>
               <span className="font-bold text-lg text-slate-900 tracking-tight">
-                Kleanflix <span className="text-[#F47A1F] text-xs uppercase px-2 py-0.5 bg-orange-50 rounded-full font-semibold border border-orange-200 ml-1">Admin Lite</span>
+                kleanfix <span className="text-[#F47A1F] text-xs uppercase px-2 py-0.5 bg-orange-50 rounded-full font-semibold border border-orange-200 ml-1">Admin Lite</span>
               </span>
             </Link>
 

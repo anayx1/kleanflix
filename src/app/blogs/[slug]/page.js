@@ -66,7 +66,7 @@ export default async function SingleBlogPage({ params }) {
         <div className="flex items-center gap-2 text-primary font-medium text-xs md:text-sm mb-6 md:mb-8">
           <span>{formattedDate}</span>
           <span className="text-primary/60">•</span>
-          <span>By Kleanflix Team</span>
+          <span>By kleanfix Team</span>
         </div>
 
         {/* Featured Image with Entry (115% -> 110%) & Scroll (110% -> 100%) Scale Animation */}

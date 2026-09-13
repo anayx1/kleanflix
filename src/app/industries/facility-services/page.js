@@ -10,8 +10,8 @@ import ScalabilityAndReplicationSection from './ScalabilityAndReplicationSection
 import WhatThisMeansForFacilityOperatorsSection from './WhatThisMeansForFacilityOperatorsSection';
 
 export const metadata = {
-    title: "Facility Services | Kleanflix",
-    description: "Where Scale Demands System Control - Kleanflix.",
+    title: "Facility Services | kleanfix",
+    description: "Where Scale Demands System Control - kleanfix.",
 };
 
 export default function FacilityCarePage() {

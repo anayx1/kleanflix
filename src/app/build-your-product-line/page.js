@@ -8,7 +8,7 @@ import WhatThisMeansForFoundersSection from './WhatThisMeansForFoundersSection';
 
 export const metadata = {
     title: "Build Your Product Line | Kleanfix",
-    description: "Build Your Product Line Without Losing Control of It - Kleanflix.",
+    description: "Build Your Product Line Without Losing Control of It - kleanfix.",
 };
 
 export default function BuildYourProductLinePage() {

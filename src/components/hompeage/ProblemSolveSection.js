@@ -21,7 +21,7 @@ export default function ProblemSolveSection() {
                             transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
                             className="font-sans font-bold text-primary leading-[1.12] tracking-tight"
                         >
-                            The problem<br />kleanflix solves
+                            The problem<br />kleanfix solves
                         </motion.h2>
                     </div>
 
@@ -152,7 +152,7 @@ export default function ProblemSolveSection() {
                     className="flex justify-center"
                 >
                     <p className="font-sans text-primary-dark leading-relaxed text-center">
-                        Kleanflix replaces this fragmentation with one structured, controlled system.
+                        kleanfix replaces this fragmentation with one structured, controlled system.
                     </p>
                 </motion.div>
 

@@ -18,8 +18,8 @@ const anton = Anton({
 });
 
 export const metadata = {
-  title: "Kleanflix",
-  description: "Kleanflix Application",
+  title: "kleanfix",
+  description: "kleanfix Application",
 };
 
 export default function RootLayout({ children }) {

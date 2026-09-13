@@ -25,7 +25,7 @@ export default function RealWorldSystemsSection() {
 
                 >
                     <h2 className="text-primary font-semibold !text-2xl md:!text-3xl lg:!text-[40px] leading-[1.25] tracking-tight">
-                        Kleanflix organizes systems around real-world usage conditions — not technical complexity.
+                        kleanfix organizes systems around real-world usage conditions — not technical complexity.
                         <br />
                         You don’t need to think in formulations.
                     </h2>
@@ -114,7 +114,7 @@ export default function RealWorldSystemsSection() {
                                 }}
                                 onCanPlay={(e) => {
                                     e.currentTarget.muted = true;
-                                    e.currentTarget.play().catch(() => {});
+                                    e.currentTarget.play().catch(() => { });
                                 }}
                                 onError={handleVideoError}
                                 className="w-full h-full object-cover rounded-xl pointer-events-none"
