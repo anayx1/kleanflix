@@ -17,7 +17,7 @@ const facilityCare = async () => {
             <ReededGlassHero
                 title="Facility Care"
                 subtitle="The Backbone of Daily Hygiene Systems"
-                imageSrc="/facility-care/hero.png"
+                imageSrc="/facility-care/hero.webp"
                 imageAlt="Contact Us Hero Background"
             />
             <section className="py-12 md:py-16 lg:py-20 bg-white">

@@ -78,7 +78,7 @@ const INDUSTRIES_LINKS = [
 
 const LEGAL_LINKS = [
     { name: 'Privacy Policy', href: '/privacy-policy' },
-    { name: 'Terms & Conditions', href: '/terms-conditions' },
+    { name: 'Terms & Conditions', href: '/terms-and-conditions' },
 ];
 
 const CONTACT_INFO = {

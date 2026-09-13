@@ -11,8 +11,9 @@ if (!fs.existsSync(dataDir)) {
 const dbPath = path.join(dataDir, 'kleanflix.db');
 const db = new DatabaseSync(dbPath);
 
-// Enable WAL mode for high concurrency
+// Enable WAL mode and busy timeout for high concurrency across Next.js build workers
 db.exec('PRAGMA journal_mode = WAL;');
+db.exec('PRAGMA busy_timeout = 10000;');
 
 // Initialize Tables
 db.exec(`
@@ -85,20 +86,20 @@ const DEFAULT_CATEGORIES = [
 
 try {
   const catCount = db.prepare('SELECT count(*) as count FROM categories').all()[0]?.count || 0;
-  const now = new Date().toISOString();
-  const insertCat = db.prepare('INSERT OR IGNORE INTO categories (id, name, createdAt) VALUES (?, ?, ?)');
-
   if (catCount === 0) {
+    const now = new Date().toISOString();
+    const insertCat = db.prepare('INSERT OR IGNORE INTO categories (id, name, createdAt) VALUES (?, ?, ?)');
+
     for (let i = 0; i < DEFAULT_CATEGORIES.length; i++) {
       insertCat.run(`${Date.now()}_cat_${i}`, DEFAULT_CATEGORIES[i], now);
     }
-  }
 
-  const existingProductCats = db.prepare("SELECT DISTINCT category FROM products WHERE category IS NOT NULL AND category != ''").all();
-  for (let i = 0; i < existingProductCats.length; i++) {
-    const cat = existingProductCats[i].category;
-    if (cat && cat.trim()) {
-      insertCat.run(`${Date.now()}_prodcat_${i}`, cat.trim(), now);
+    const existingProductCats = db.prepare("SELECT DISTINCT category FROM products WHERE category IS NOT NULL AND category != ''").all();
+    for (let i = 0; i < existingProductCats.length; i++) {
+      const cat = existingProductCats[i].category;
+      if (cat && cat.trim()) {
+        insertCat.run(`${Date.now()}_prodcat_${i}`, cat.trim(), now);
+      }
     }
   }
 } catch (e) {

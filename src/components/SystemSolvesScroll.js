@@ -37,7 +37,10 @@ export default function SystemSolvesScroll({
             return;
         }
 
-        if (totalSlides === 3) {
+        if (totalSlides === 2) {
+            // Balanced 50/50 dwell distribution for 2 slides
+            setActiveSlide(latest < 0.5 ? 0 : 1);
+        } else if (totalSlides === 3) {
             // Fine-tuned thresholds for 3 slides with resting dwell on final slide
             if (latest < 0.28) {
                 setActiveSlide(0);
