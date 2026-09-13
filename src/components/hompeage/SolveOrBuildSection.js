@@ -38,6 +38,20 @@ const divisions = [
     }
 ];
 
+const ITEM_HREFS = {
+    "Facility Care": "/facility-care",
+    "Kitchen Care": "/kitchen-care",
+    "Laundry Care": "/laundry-care",
+    "Carpet Care": "/carpet-care",
+    "Marble Care": "/marble-care",
+    "Automotive Care": "/automotive-care",
+    "Pet Care": "/pet-care",
+    "Personal Hygiene": "/personal-hygiene",
+    "Germ Control": "/germ-control",
+    "OEM & Private Label Execution": "/oem-private-label",
+    "Building your own product line": "/build-your-product-line",
+};
+
 export default function SolveOrBuildSection() {
     return (
         <section className="relative w-full py-12 md:py-24 lg:py-32 bg-[#F7F7F7] overflow-hidden">
@@ -112,7 +126,7 @@ export default function SolveOrBuildSection() {
                                     return (
                                         <Link
                                             key={itemIdx}
-                                            href="#"
+                                            href={ITEM_HREFS[item] || "/products"}
                                             className="group flex items-start py-1.5 text-primary-dark hover:text-secondary transition-colors duration-200 select-none"
                                         >
                                             {/* Consecutive Number */}
@@ -169,7 +183,7 @@ export default function SolveOrBuildSection() {
                             </p>
                             <div className="flex flex-col">
                                 <Link
-                                    href="#"
+                                    href="/exports"
                                     className="group flex items-start py-1.5 text-primary-dark hover:text-secondary transition-colors duration-200 select-none"
                                 >
                                     <span className="w-12 md:w-24 text-xs md:text-sm font-sans text-primary-dark/50 group-hover:text-secondary transition-colors duration-200 mt-0.5 shrink-0">
@@ -190,7 +204,7 @@ export default function SolveOrBuildSection() {
                             </h3>
                             <div className="flex flex-col">
                                 <Link
-                                    href="#"
+                                    href="/products"
                                     className="group flex items-start py-1.5 text-primary-dark hover:text-secondary transition-colors duration-200 select-none"
                                 >
                                     <span className="w-12 md:w-24 text-xs md:text-sm font-sans text-primary-dark/50 group-hover:text-secondary transition-colors duration-200 mt-0.5 shrink-0">

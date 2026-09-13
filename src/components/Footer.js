@@ -44,29 +44,30 @@ function InstagramIcon({ className = 'w-4 h-4 text-secondary shrink-0' }) {
 // Data Arrays for Footer Navigation & Info
 const QUICK_LINKS = [
     { name: 'Home', href: '/' },
-    { name: 'Build Your Product Line', href: '/build-product-line' },
+    { name: 'Build Your Product Line', href: '/build-your-product-line' },
     { name: 'OEM & Private Label Execution', href: '/oem-private-label' },
     { name: 'Manufacturing', href: '/manufacturing' },
     { name: 'Exports', href: '/exports' },
-    { name: 'How It Works', href: '/how-it-works' },
-    { name: 'About Us', href: '/about' },
+    { name: 'How It Works', href: '/how-the-system-works' },
+    { name: 'About Us', href: '/about-us' },
     { name: 'Certifications & Compliance', href: '/certifications-compliance' },
     { name: 'Clients', href: '/clients' },
     { name: 'Blogs', href: '/blogs' },
     { name: 'Events', href: '/events' },
     { name: 'FAQs', href: '/faqs' },
-    { name: 'Contact', href: '/contact' },
+    { name: 'Contact', href: '/contact-us' },
 ];
 
 const PRODUCTS_LINKS = [
-    { name: 'Facility Care', href: '/products/facility-care' },
-    { name: 'Kitchen Care', href: '/products/kitchen-care' },
-    { name: 'Laundry Care', href: '/products/laundry-care' },
-    { name: 'Carpet Care', href: '/products/carpet-care' },
-    { name: 'Marble Care', href: '/products/marble-care' },
-    { name: 'Automotive Care', href: '/products/automotive-care' },
-    { name: 'Pet Care', href: '/products/pet-care' },
-    { name: 'Personal Hygiene', href: '/products/personal-hygiene' },
+    { name: 'Facility Care', href: '/facility-care' },
+    { name: 'Kitchen Care', href: '/kitchen-care' },
+    { name: 'Laundry Care', href: '/laundry-care' },
+    { name: 'Carpet Care', href: '/carpet-care' },
+    { name: 'Marble Care', href: '/marble-care' },
+    { name: 'Automotive Care', href: '/automotive-care' },
+    { name: 'Pet Care', href: '/pet-care' },
+    { name: 'Personal Hygiene', href: '/personal-hygiene' },
+    { name: 'Germ Control', href: '/germ-control' },
 ];
 
 const INDUSTRIES_LINKS = [
@@ -89,13 +90,13 @@ const CONTACT_INFO = {
         '110044, India',
     ],
     phones: ['+91 98189 98806', '+91 88263 65252', '+91 97112 20961'],
-    email: 'customercare@kleanfix.com',
+    email: 'Skg@kleanfix.com',
 };
 
 const SOCIAL_LINKS = [
-    { name: 'LinkedIn', href: 'https://linkedin.com', icon: LinkedInIcon },
-    { name: 'Facebook', href: 'https://facebook.com', icon: FacebookIcon },
-    { name: 'Instagram', href: 'https://instagram.com', icon: InstagramIcon },
+    { name: 'LinkedIn', href: 'https://www.linkedin.com/company/kleanfix-industries-pvt-ltd/', icon: LinkedInIcon },
+    { name: 'Facebook', href: 'https://www.facebook.com/share/p/1DPBRC2Mzd/', icon: FacebookIcon },
+    { name: 'Instagram', href: 'https://www.instagram.com/kleanfix_industries?igsi=a3NsdzVpdWxvdGlq', icon: InstagramIcon },
 ];
 
 /**

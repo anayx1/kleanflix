@@ -52,7 +52,8 @@ export default function ProductDetailModal({ product, isOpen, onClose }) {
     const hasDetailImage = Boolean(product.detailImage);
     const encodedTitle = encodeURIComponent(product.title || 'Product');
     const submitRequirementHref = `/contact-us?product=${encodedTitle}#contact-form`;
-    const requestDetailsHref = `/contact-us?subject=technical-details&product=${encodedTitle}#contact-form`;
+    const whatsappMessage = `hi, i want to know more about ${product.title || ''}`.trim();
+    const whatsappHref = `https://wa.me/919818998806?text=${encodeURIComponent(whatsappMessage)}`;
 
     return (
         <AnimatePresence>
@@ -152,6 +153,7 @@ export default function ProductDetailModal({ product, isOpen, onClose }) {
                                             variant="pill-secondary"
                                             size="sm"
                                             href={submitRequirementHref}
+                                            onClick={onClose}
                                             showArrow={false}
                                             className="!text-xs md:!text-sm font-bold px-6 py-2.5 md:px-7 md:py-3 shadow-md justify-center whitespace-nowrap"
                                         >
@@ -160,7 +162,9 @@ export default function ProductDetailModal({ product, isOpen, onClose }) {
                                         <Button
                                             variant="secondary"
                                             size="sm"
-                                            href={requestDetailsHref}
+                                            href={whatsappHref}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
                                             className="!text-xs md:!text-sm font-bold justify-center whitespace-nowrap"
                                         >
                                             REQUEST TECHNICAL DETAILS
@@ -177,6 +181,7 @@ export default function ProductDetailModal({ product, isOpen, onClose }) {
                                     variant="pill-secondary"
                                     size="sm"
                                     href={submitRequirementHref}
+                                    onClick={onClose}
                                     showArrow={false}
                                     className="!text-xs md:!text-sm font-bold px-7 py-3 shadow-md whitespace-nowrap"
                                 >
@@ -185,7 +190,9 @@ export default function ProductDetailModal({ product, isOpen, onClose }) {
                                 <Button
                                     variant="secondary"
                                     size="sm"
-                                    href={requestDetailsHref}
+                                    href={whatsappHref}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="!text-xs md:!text-sm font-bold whitespace-nowrap"
                                 >
                                     REQUEST TECHNICAL DETAILS
