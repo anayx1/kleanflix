@@ -48,7 +48,7 @@ const personalHygieneSlides = [
         footerText: "This system replaces trial-and-error with system-driven execution.",
         cta: {
             text: "VIEW HOW THE SYSTEM WORKS",
-            href: "/how-it-works",
+            href: "/how-the-system-works",
             variant: "pill-secondary",
             showArrow: true
         },

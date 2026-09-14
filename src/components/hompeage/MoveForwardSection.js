@@ -66,7 +66,7 @@ export default function MoveForwardSection() {
                     transition={{ duration: 0.5, delay: 0.4 }}
                     className="flex justify-center"
                 >
-                    <Button variant="pill-secondary" showArrow={false} href="/submit-requirement" className="font-semibold">
+                    <Button variant="pill-secondary" showArrow={false} href="/contact-us" className="font-semibold">
                         SUBMIT REQUIREMENT
                     </Button>
                 </motion.div>

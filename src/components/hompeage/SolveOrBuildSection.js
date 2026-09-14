@@ -60,7 +60,7 @@ export default function SolveOrBuildSection() {
             <div className="main-container px-4 md:px-12">
                 <div className='w-full justify-center items-center md:flex md:-ml-32'>
 
-                    <div className="mb-10 md:mb-24 lg:mb-28 max-w-4xl">
+                    <div className="mb-10 md:mb-24 lg:mb-28 max-w-7xl">
 
                         <motion.h2
                             initial={{ opacity: 0, y: 30 }}

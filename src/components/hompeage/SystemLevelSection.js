@@ -92,7 +92,7 @@ export default function SystemLevelSection() {
                                 <p className="font-sans font-semibold text-lg md:text-xl lg:text-2xl text-primary-dark max-w-xl leading-snug">
                                     Built for multi-location operations, OEM production, and export environments where consistency is non-negotiable.
                                 </p>
-                                <Button variant="pill-secondary" showArrow={false} href="/system-works" className='font-medium leading-tight'>
+                                <Button variant="pill-secondary" showArrow={false} href="/how-the-system-works" className='font-medium leading-tight'>
                                     View how the system works
                                 </Button>
                             </div>

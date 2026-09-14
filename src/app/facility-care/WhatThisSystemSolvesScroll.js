@@ -39,7 +39,7 @@ export const facilityCareSlides = [
         footerText: "This ensures predictable cleaning outcomes across teams, shifts, and locations.",
         cta: {
             text: "VIEW HOW THE SYSTEM WORKS",
-            href: "/how-it-works",
+            href: "/how-the-system-works",
             variant: "pill-secondary",
             showArrow: true
         },

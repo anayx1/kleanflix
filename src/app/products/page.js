@@ -42,7 +42,7 @@ const ProductsPage = () => {
                 ctaText="REQUEST TECHNICAL DETAILS"
                 href="/contact-us"
                 secondaryCtaText="VIEW HOW THE SYSTEM WORKS"
-                secondaryHref="/contact-us"
+                secondaryHref="/how-the-system-works"
                 bg="#F7F7F7"
             />
             <FAQSection faqs={productsFaqs} />

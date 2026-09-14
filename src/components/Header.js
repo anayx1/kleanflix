@@ -41,7 +41,7 @@ const NAV_ITEMS = [
     { name: 'Exports', href: '/exports' },
     { name: 'Manufacturing', href: '/manufacturing' },
     { name: 'How It Works', href: '/how-the-system-works' },
-    { name: 'About Us', href: '/about' },
+    { name: 'About Us', href: '/about-us' },
 ];
 
 export default function Header() {
@@ -163,7 +163,7 @@ export default function Header() {
                     {/* Desktop CTA Button */}
                     <div className="hidden md:flex items-center shrink-0">
                         <Button
-                            href="/contact"
+                            href="/contact-us"
                             variant="pill-secondary"
                             size="sm"
                             showArrow={false}
@@ -237,7 +237,7 @@ export default function Header() {
 
                         <div className="pt-4 mt-2">
                             <Button
-                                href="/contact"
+                                href="/contact-us"
                                 variant="pill-secondary"
                                 size="md"
                                 showArrow={false}

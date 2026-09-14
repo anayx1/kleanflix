@@ -54,7 +54,7 @@ export default function SystemControlCtaSection() {
 
                     {/* CTA Button */}
                     <div className="pt-2">
-                        <Button variant="pill-secondary" showArrow={false} href="/submit-requirement" className="font-medium">
+                        <Button variant="pill-secondary" showArrow={false} href="/contact-us" className="font-medium">
                             SUBMIT REQUIREMENT
                         </Button>
                     </div>

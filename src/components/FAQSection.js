@@ -42,7 +42,7 @@ export default function FAQSection({
     items,
     title = "Frequently asked questions",
     description = "Got questions? We've got answers! Find quick responses to common queries about our services, timelines, and more.",
-    viewAllHref = "/contact-us",
+    viewAllHref = "/faqs",
     submitHref = "/contact-us",
     allowMultiple = true,
     className = ""

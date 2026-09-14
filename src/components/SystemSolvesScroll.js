@@ -204,7 +204,7 @@ export default function SystemSolvesScroll({
                                                             <Button
                                                                 variant={ctaConfig.variant || "pill-secondary"}
                                                                 showArrow={ctaConfig.showArrow ?? true}
-                                                                href={ctaConfig.href || "/how-it-works"}
+                                                                href={ctaConfig.href || "/how-the-system-works"}
                                                                 className="font-semibold text-xs md:text-sm px-6 py-3 md:px-8 md:py-3.5 gap-2.5"
                                                             >
                                                                 {ctaConfig.text}

@@ -89,7 +89,7 @@ export default function ControlSection() {
                                 </p>
 
                                 <div className="pt-4">
-                                    <Button variant="pill-secondary" showArrow={false} href="/contact" className="font-semibold">
+                                    <Button variant="pill-secondary" showArrow={false} href="/contact-us" className="font-semibold">
                                         START OEM DISCUSSION
                                     </Button>
                                 </div>
