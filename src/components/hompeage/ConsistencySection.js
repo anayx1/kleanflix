@@ -30,7 +30,7 @@ export default function ConsistencySection() {
                                 initial="hidden"
                                 whileInView="visible"
                                 viewport={{ once: true, amount: 0.15 }}
-                                className="md:col-span-4 relative h-[360px] md:h-[430px] w-[100px] md:w-[200px] rounded-[32px] md:rounded-[36px] overflow-hidden"
+                                className="md:col-span-4 relative h-[360px] md:h-[430px] w-full md:w-[200px] rounded-[32px] md:rounded-[36px] overflow-hidden"
                             >
                                 <motion.div
                                     variants={{

@@ -58,7 +58,7 @@ export default function SolveOrBuildSection() {
 
             {/* Main Section Header — inside container */}
             <div className="main-container px-4 md:px-12">
-                <div className='w-full justify-center items-center md:flex md:-ml-32'>
+                <div className='w-full justify-center items-center md:flex solve-header-container'>
 
                     <div className="mb-10 md:mb-24 lg:mb-28 max-w-7xl">
 
@@ -86,7 +86,7 @@ export default function SolveOrBuildSection() {
             </div>
 
             {/* Grid Rows — full width so images can reach the right edge */}
-            <div className="flex flex-col space-y-0">
+            <div className="main-container flex flex-col space-y-0">
 
                 {/* Division 1 & 2 Map */}
                 {divisions.map((division, idx) => (
@@ -127,16 +127,16 @@ export default function SolveOrBuildSection() {
                                         <Link
                                             key={itemIdx}
                                             href={ITEM_HREFS[item] || "/products"}
-                                            className="group flex items-start py-1.5 text-primary-dark hover:text-secondary transition-colors duration-200 select-none"
+                                            className="group flex items-center py-2.5 px-3 md:px-4 -mx-3 md:-mx-4 rounded-md text-primary-dark hover:bg-secondary hover:text-white transition-all duration-250 select-none"
                                         >
                                             {/* Consecutive Number */}
-                                            <span className="w-12 md:w-24 text-xs md:text-sm font-sans text-primary-dark/50 group-hover:text-secondary transition-colors duration-200 mt-0.5 shrink-0">
+                                            <span className="w-12 md:w-24 text-xs md:text-sm font-sans text-primary-dark/50 group-hover:text-white/70 transition-colors duration-250 shrink-0">
                                                 {numStr}
                                             </span>
                                             {/* Text & Arrow */}
                                             <span className="font-sans font-semibold text-base md:text-lg flex items-center gap-1.5 md:gap-2 leading-normal">
                                                 {item}
-                                                <ArrowRight className="w-4 h-4 text-primary-dark group-hover:text-secondary group-hover:translate-x-1.5 transition-all duration-200 shrink-0" />
+                                                <ArrowRight className="w-4 h-4 text-primary-dark group-hover:text-white group-hover:translate-x-1.5 transition-all duration-250 shrink-0" />
                                             </span>
                                         </Link>
                                     );
@@ -184,14 +184,14 @@ export default function SolveOrBuildSection() {
                             <div className="flex flex-col">
                                 <Link
                                     href="/exports"
-                                    className="group flex items-start py-1.5 text-primary-dark hover:text-secondary transition-colors duration-200 select-none"
+                                    className="group flex items-center py-2.5 px-3 md:px-4 -mx-3 md:-mx-4 rounded-md text-primary-dark hover:bg-secondary hover:text-white transition-all duration-250 select-none"
                                 >
-                                    <span className="w-12 md:w-24 text-xs md:text-sm font-sans text-primary-dark/50 group-hover:text-secondary transition-colors duration-200 mt-0.5 shrink-0">
+                                    <span className="w-12 md:w-24 text-xs md:text-sm font-sans text-primary-dark/50 group-hover:text-white/70 transition-colors duration-250 shrink-0">
                                         01
                                     </span>
                                     <span className="font-sans font-semibold text-base md:text-lg flex items-center gap-1.5 md:gap-2 leading-normal">
                                         View Exports
-                                        <ArrowRight className="w-4 h-4 text-primary-dark group-hover:text-secondary group-hover:translate-x-1.5 transition-all duration-200 shrink-0" />
+                                        <ArrowRight className="w-4 h-4 text-primary-dark group-hover:text-white group-hover:translate-x-1.5 transition-all duration-250 shrink-0" />
                                     </span>
                                 </Link>
                             </div>
@@ -205,14 +205,14 @@ export default function SolveOrBuildSection() {
                             <div className="flex flex-col">
                                 <Link
                                     href="/products"
-                                    className="group flex items-start py-1.5 text-primary-dark hover:text-secondary transition-colors duration-200 select-none"
+                                    className="group flex items-center py-2.5 px-3 md:px-4 -mx-3 md:-mx-4 rounded-md text-primary-dark hover:bg-secondary hover:text-white transition-all duration-250 select-none"
                                 >
-                                    <span className="w-12 md:w-24 text-xs md:text-sm font-sans text-primary-dark/50 group-hover:text-secondary transition-colors duration-200 mt-0.5 shrink-0">
+                                    <span className="w-12 md:w-24 text-xs md:text-sm font-sans text-primary-dark/50 group-hover:text-white/70 transition-colors duration-250 shrink-0">
                                         01
                                     </span>
                                     <span className="font-sans font-semibold text-base md:text-lg flex items-center gap-1.5 md:gap-2 leading-normal">
                                         View All Products
-                                        <ArrowRight className="w-4 h-4 text-primary-dark group-hover:text-secondary group-hover:translate-x-1.5 transition-all duration-200 shrink-0" />
+                                        <ArrowRight className="w-4 h-4 text-primary-dark group-hover:text-white group-hover:translate-x-1.5 transition-all duration-250 shrink-0" />
                                     </span>
                                 </Link>
                             </div>

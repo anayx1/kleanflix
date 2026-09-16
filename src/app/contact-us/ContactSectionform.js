@@ -258,7 +258,7 @@ export default function ContactSectionform() {
                             </div>
 
                             {/* Bottom Left Card: Not sure where you fit? */}
-                            <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm mt-4 lg:mt-6">
+                            <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm mt-4 lg:mt-6 contact-fit-card">
                                 <h3 className="text-primary font-bold text-xl md:!text-[24px] mb-2">
                                     Not sure where you fit?
                                 </h3>

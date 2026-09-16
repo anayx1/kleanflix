@@ -27,7 +27,7 @@ export default function WhereThisAppliesSection() {
     return (
         <section className="py-14 md:py-20 lg:py-24 bg-white">
             <div className="main-container px-6 md:px-12">
-                <div className="max-w-7xl mx-auto space-y-8 md:space-y-12">
+                <div className="max-w-7xl mx-auto space-y-8 md:space-y-12 where-this-applies-wrapper">
                     {/* Header: Title and Subtitle */}
                     <div className="text-center space-y-2 md:space-y-3">
                         <motion.h2
@@ -52,7 +52,7 @@ export default function WhereThisAppliesSection() {
                     </div>
 
                     {/* 3 Application Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch max-w-5xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch max-w-5xl mx-auto where-this-applies-cards">
                         {cards.map((card, idx) => (
                             <motion.div
                                 key={card.title}

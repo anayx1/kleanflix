@@ -102,7 +102,7 @@ export default function HowWeThinkSection() {
                             <ParallaxImage
                                 src="/about-us/how-we-think-right.avif"
                                 alt="Strategic planning and structured operational approach"
-                                className="w-full md:w-[320px] lg:w-[380px] h-[300px] md:h-[380px] lg:h-[420px] rounded-[24px] md:rounded-[30px] shadow-sm mb-8 md:mb-10"
+                                className="w-full md:w-[320px] lg:w-[380px] how-we-think-right-img h-[300px] md:h-[380px] lg:h-[420px] rounded-[24px] md:rounded-[30px] shadow-sm mb-8 md:mb-10"
                                 translateYRange={[-95, 95]}
                                 priority
                             />

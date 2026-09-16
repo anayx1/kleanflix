@@ -33,7 +33,7 @@ export default function BlogsListSection({ initialBlogs = [] }) {
     <section id="insights" className="py-12 md:py-16 lg:py-20 bg-white">
       <div className="main-container px-6 md:px-12">
         {/* 2-Column Responsive Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto blogs-grid-container">
           {visibleBlogs.map((blog) => (
             <Link
               key={blog.id}

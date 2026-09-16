@@ -71,7 +71,7 @@ export default function ManufacturingInfrastructureSection() {
                         className="md:col-span-7 md:pt-4 lg:pt-6 space-y-6 md:space-y-8 text-primary-dark items-start md:flex flex-col justify-end h-full"
                     >
                         {/* Lead Paragraph */}
-                        <p className="text-primary-dark text-lg md:text-xl lg:text-[22px] font-normal leading-snug ">
+                        <p className="text-primary-dark text-lg md:text-xl lg:text-[22px] font-normal leading-snug mt-15">
                             Kleanfix operates a Delhi-based <br className="hidden md:block" />
                             manufacturing setup designed for <br className="hidden md:block" />
                             controlled, repeatable production.

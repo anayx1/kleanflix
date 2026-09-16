@@ -25,7 +25,7 @@ export default function ConsistentOutputSection() {
                 }}
                 onCanPlay={(e) => {
                     e.currentTarget.muted = true;
-                    e.currentTarget.play().catch(() => {});
+                    e.currentTarget.play().catch(() => { });
                 }}
                 className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
             >
@@ -40,13 +40,13 @@ export default function ConsistentOutputSection() {
             <div className="absolute bottom-0 inset-x-0 h-48 md:h-72 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
 
             {/* Center Overlaid Content */}
-            <div className="relative z-20 main-container px-6 md:px-12 py-20 text-center">
+            <div className="relative z-20 main-container px-6 md:px-12 py-20 text-center consistent-output-container">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.8 }}
-                    className="max-w-5xl mx-auto space-y-6 md:space-y-8 mb-20"
+                    className="max-w-5xl mx-auto space-y-6 md:space-y-8 mb-20 consistent-output-content"
                 >
                     {/* Main Headline */}
                     <h2 className="font-sans font-bold text-3xl md:text-5xl lg:text-[54px] !text-white leading-[1.15] tracking-tight">
@@ -54,7 +54,7 @@ export default function ConsistentOutputSection() {
                     </h2>
 
                     {/* Subtext Bullets */}
-                    <div className="font-sans font-medium text-white/90 text-base md:text-xl lg:text-2xl space-y-2 max-w-4xl mx-auto">
+                    <div className="font-sans font-medium text-white/90 text-base md:text-xl lg:text-2xl space-y-2 max-w-4xl mx-auto consistent-output-content">
                         <p>
                             Manufacturing-led production • OEM-ready systems • Export-active supply
                         </p>

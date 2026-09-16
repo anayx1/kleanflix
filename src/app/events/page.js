@@ -82,18 +82,21 @@ export default function EventsPage() {
             <PastParticipationsSection />
 
             {/* Upcoming Events Section (Connected to DB & /api/events) */}
-            <UpcomingEventsSection events={events} />
+            <section className='hidden'>
 
-            {/* Not Attending CTA Section */}
-            <section className='bg-gray-50'>
+                <UpcomingEventsSection events={events} />
 
-                <CTASection
-                    title="Not attending?"
-                    description="You can still initiate the discussion."
-                    ctaText="SUBMIT REQUIREMENT"
-                    href="/contact-us"
-                    cardBg="bg-white"
-                />
+                {/* Not Attending CTA Section */}
+                <section className='bg-gray-50'>
+
+                    <CTASection
+                        title="Not attending?"
+                        description="You can still initiate the discussion."
+                        ctaText="SUBMIT REQUIREMENT"
+                        href="/contact-us"
+                        cardBg="bg-white"
+                    />
+                </section>
             </section>
         </main>
     );

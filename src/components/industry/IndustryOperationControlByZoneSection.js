@@ -151,7 +151,7 @@ export default function IndustryOperationControlByZoneSection({
                                     opacity: cardsOpacity,
                                     pointerEvents: cardsPointerEvents,
                                 }}
-                                className="w-full max-w-lg lg:max-w-xl flex flex-col gap-8 md:gap-12 lg:gap-14 will-change-transform py-0"
+                                className="w-full max-w-lg lg:max-w-xl zone-cards-container flex flex-col gap-8 md:gap-12 lg:gap-14 will-change-transform py-0"
                             >
                                 {cards.map((card, idx) => (
                                     <div

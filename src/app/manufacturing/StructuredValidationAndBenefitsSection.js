@@ -16,11 +16,10 @@ export default function StructuredValidationAndBenefitsSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                        className="text-center max-w-4xl mx-auto"
+                        className="text-left max-w-7xl mx-auto"
                     >
                         <h2 className="text-primary font-semibold text-3xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.15]">
-                            Manufacturing is supported by structured <br className="hidden md:block" />
-                            R&D and validation processes:
+                            Manufacturing is supported by structured R&D and validation processes:
                         </h2>
                     </motion.div>
 

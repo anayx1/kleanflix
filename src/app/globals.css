@@ -25,6 +25,7 @@ body {
 }
 
 @layer base {
+
   /* Global paragraph typography rules */
   p {
     font-size: 22px;
@@ -42,6 +43,7 @@ body {
     p {
       font-size: 24px;
     }
+
     h2 {
       font-size: 48px;
     }
@@ -115,6 +117,7 @@ video::-webkit-media-controls-enclosure {
   .modal-product-image-wrapper {
     height: 380px;
   }
+
   .modal-detail-image-wrapper {
     height: 440px;
   }
@@ -124,7 +127,60 @@ video::-webkit-media-controls-enclosure {
   .modal-product-image-wrapper {
     height: 460px;
   }
+
   .modal-detail-image-wrapper {
     height: 480px;
+  }
+}
+
+/* Isolated fix for SolveOrBuild section alignment on 1700px–2000px */
+@media (min-width: 1700px) {
+  .solve-header-container {
+    justify-content: flex-start !important;
+  }
+
+  .global-export-grid,
+  .structured-production-grid {
+    max-width: 90% !important;
+  }
+
+  .consistent-output-container {
+    text-align: left !important;
+  }
+
+  .consistent-output-content {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+
+  .system-control-cta-wrapper {
+    align-items: flex-start !important;
+  }
+
+  .system-control-cta-content {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+
+  .zone-cards-container {
+    max-width: 780px !important;
+  }
+
+  .where-this-applies-wrapper,
+  .where-this-applies-cards {
+    max-width: 100% !important;
+  }
+
+  .how-we-think-right-img {
+    width: 480px !important;
+    height: 480px !important;
+  }
+
+  .blogs-grid-container {
+    max-width: 100% !important;
+  }
+
+  .contact-fit-card {
+    max-width: 580px !important;
   }
 }

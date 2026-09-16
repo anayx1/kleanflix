@@ -7,7 +7,9 @@ export default function HomeHero() {
     return (
         <VideoGlassHero
             videoSrc="https://res.cloudinary.com/spqd54wy/video/upload/v1788284419/home-hero.mp4"
+            mobileVideoSrc="https://res.cloudinary.com/spqd54wy/video/upload/q_auto,w_720/v1788284419/home-hero.mp4"
             fallbackVideoSrc="/homepage/home-hero.mp4"
+            posterSrc="/homepage/sec3.jpg"
             containerHeightClass="h-screen max-h-[90dvh] min-h-[550px]"
         >
             <div className="flex flex-col md:flex-row items-start md:items-end justify-start gap-6 md:gap-10 w-full">

@@ -9,7 +9,7 @@ export default function StructuredProductionSection() {
     return (
         <section className="py-12 md:py-20 bg-white relative overflow-hidden">
             <div className="main-container px-6 md:px-12">
-                <div className="max-w-7xl md:mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+                <div className="max-w-7xl md:mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-stretch structured-production-grid">
 
                     {/* Left Column: Packaging / Robotic Arms Video Card */}
                     <motion.div

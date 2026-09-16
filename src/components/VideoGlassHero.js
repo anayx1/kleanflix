@@ -26,7 +26,9 @@ export default function VideoGlassHero({
     title,
     subtitle,
     videoSrc,
+    mobileVideoSrc,
     fallbackVideoSrc,
+    posterSrc,
     imageSrc,
     imageAlt = 'Hero Background',
     stripes = 40,
@@ -44,10 +46,20 @@ export default function VideoGlassHero({
     const [isCompleted, setIsCompleted] = useState(false);
     // Wait for video to buffer enough frames before starting reveal animation
     const [mediaReady, setMediaReady] = useState(!videoSrc && !fallbackVideoSrc);
+    const [isMobile, setIsMobile] = useState(false);
     const videoRef = useRef(null);
+    const mediaReadyRef = useRef(false);
 
     const handleVideoReady = useCallback(() => {
-        setMediaReady(true);
+        if (!mediaReadyRef.current) {
+            mediaReadyRef.current = true;
+            setMediaReady(true);
+        }
+    }, []);
+
+    // Detect mobile viewport for serving optimized video
+    useEffect(() => {
+        setIsMobile(window.innerWidth < 1001);
     }, []);
 
     // Catch the case where video loaded before React attached the onLoadedData handler
@@ -57,10 +69,20 @@ export default function VideoGlassHero({
             videoRef.current.defaultMuted = true;
             videoRef.current.play().catch(() => {});
             if (videoRef.current.readyState >= 2) {
-                setMediaReady(true);
+                handleVideoReady();
             }
         }
-    }, [videoSrc, fallbackVideoSrc]);
+    }, [videoSrc, fallbackVideoSrc, handleVideoReady]);
+
+    // Timeout safety: if video hasn't loaded within 4 seconds, force reveal anyway
+    // This prevents an infinite black screen on slow connections or blocked autoplay
+    useEffect(() => {
+        if (mediaReady || (!videoSrc && !fallbackVideoSrc)) return;
+        const timeout = setTimeout(() => {
+            handleVideoReady();
+        }, 4000);
+        return () => clearTimeout(timeout);
+    }, [mediaReady, videoSrc, fallbackVideoSrc, handleVideoReady]);
 
     useEffect(() => {
         if (!mediaReady) return;
@@ -132,6 +154,17 @@ export default function VideoGlassHero({
                         willChange: isCompleted ? 'auto' : 'filter',
                     }}
                 >
+                    {/* Poster image fallback — always visible behind video to prevent black screen */}
+                    {posterSrc && (
+                        <Image
+                            src={posterSrc}
+                            alt={imageAlt}
+                            fill
+                            priority
+                            sizes="100vw"
+                            className="object-cover object-center"
+                        />
+                    )}
                     {videoSrc ? (
                         <video
                             ref={videoRef}
@@ -150,7 +183,7 @@ export default function VideoGlassHero({
                                 handleVideoReady();
                             }}
                             onError={handleVideoReady}
-                            className="w-full h-full object-cover object-center pointer-events-none"
+                            className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
                         >
                             {Array.isArray(videoSrc) ? (
                                 videoSrc.map((src, index) => (
@@ -158,7 +191,8 @@ export default function VideoGlassHero({
                                 ))
                             ) : (
                                 <>
-                                    <source src={videoSrc} type="video/mp4" />
+                                    {/* Serve lower-resolution video on mobile for faster load */}
+                                    <source src={isMobile && mobileVideoSrc ? mobileVideoSrc : videoSrc} type="video/mp4" />
                                     {fallbackVideoSrc && <source src={fallbackVideoSrc} type="video/mp4" />}
                                 </>
                             )}
