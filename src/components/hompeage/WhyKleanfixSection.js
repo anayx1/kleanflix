@@ -13,7 +13,7 @@ export default function WhyKleanfixSection() {
 
     // ─── Text Block 1 (RIGHT): "Why kleanfix works?" ───
     // Starts at center with image, smoothly scrolls up to exit
-    const t1Y = useTransform(scrollYProgress, [0.08, 0.35], [0, -550]);
+    const t1Y = useTransform(scrollYProgress, [0.06, 0.32], [0, -550]);
 
     // ─── Text Block 2 (LEFT): "Not a trader network..." ───
     // Continuously scrolls from bottom offscreen (+550) -> center (0) -> top offscreen (-550)
@@ -21,7 +21,7 @@ export default function WhyKleanfixSection() {
 
     // ─── Text Block 3 (RIGHT): "Kleanfix is a structured system..." ───
     // Continuously scrolls from bottom offscreen (+550) -> center (0) -> top offscreen (-550)
-    const t3Y = useTransform(scrollYProgress, [0.32, 0.78], [550, -550]);
+    const t3Y = useTransform(scrollYProgress, [0.32, 0.76], [550, -550]);
 
     // ─── Text Block 4 (LEFT): "This enables:..." ───
     // Continuously scrolls from bottom offscreen (+550) -> center (0) and stays for section end
@@ -30,7 +30,7 @@ export default function WhyKleanfixSection() {
     return (
         <section
             ref={sectionRef}
-            className="relative min-h-[800vh]"
+            className="relative min-h-[450vh] md:min-h-[500vh]"
         >
             {/* Sticky viewport container */}
             <div className="sticky top-0 h-screen w-full overflow-hidden">

@@ -25,7 +25,7 @@ export default function ContactCtaVideoSection() {
                     }}
                     onCanPlay={(e) => {
                         e.currentTarget.muted = true;
-                        e.currentTarget.play().catch(() => {});
+                        e.currentTarget.play().catch(() => { });
                     }}
                     className="w-full h-full object-cover object-center pointer-events-none"
                 >
@@ -38,7 +38,7 @@ export default function ContactCtaVideoSection() {
 
             {/* Content Container positioned at the lower-left */}
             <div className="relative z-10 w-full px-6 md:px-12  pb-8 md:pb-10 lg:pb-12 pt-28 flex items-center justify-center">
-                <div className="max-w-5xl ">
+                <div className="max-w-5xl min-[1650px]:max-w-7xl ">
                     {/* Main Headline with exact 3-line layout matching screenshot */}
                     <h2 className="text-white font-semibold !text-white leading-tight">
                         If consistency matters to your business, you

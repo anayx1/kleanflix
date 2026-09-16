@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 export default function ConsistentOutputSection() {
     return (
-        <section className="relative w-full min-h-[600px] md:min-h-[750px] lg:min-h-[150dvh] flex items-end justify-center overflow-hidden bg-black">
+        <section className="relative w-full min-h-[600px] md:min-h-[750px] lg:min-h-[120dvh] flex items-end justify-center overflow-hidden bg-black">
 
             {/* Background Video */}
             <video
@@ -46,7 +46,7 @@ export default function ConsistentOutputSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.8 }}
-                    className="max-w-5xl mx-auto space-y-6 md:space-y-8 mb-20"
+                    className="max-w-5xl min-[1650px]:max-w-7xl mx-auto space-y-6 md:space-y-8 mb-20"
                 >
                     {/* Main Headline */}
                     <h2 className="font-sans font-bold text-3xl md:text-5xl lg:text-[54px] !text-white leading-[1.15] tracking-tight">
