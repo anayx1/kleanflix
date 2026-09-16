@@ -15,16 +15,16 @@ export default function HowExportRiskControlledSection() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true, amount: 0.2 }}
                         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                        className="md:col-span-5 flex flex-col items-start md:items-end space-y-6 md:space-y-8"
+                        className="md:col-span-5 flex flex-col items-start md:items-end space-y-6 md:space-y-8 export-risk-left-col"
                     >
                         {/* Heading */}
-                        <h2 className="text-primary font-bold text-3xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.08] text-left md:text-right">
-                            How export risk <br />
+                        <h2 className="text-primary font-bold text-3xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.08] text-left md:text-right export-risk-heading">
+                            How export risk <br className="export-risk-br" />
                             is controlled
                         </h2>
 
                         {/* Image */}
-                        <div className="relative w-full max-w-[280px] md:max-w-[320px] aspect-[10/11] rounded-2xl md:rounded-[26px] overflow-hidden shadow-xs bg-slate-200">
+                        <div className="relative w-full max-w-[280px] md:max-w-[320px] aspect-[10/11] rounded-2xl md:rounded-[26px] overflow-hidden shadow-xs bg-slate-200 export-risk-img-box">
                             <Image
                                 src="/exports/how-export-risk.jpg"
                                 alt="Cargo container crane operations at shipping port - How export risk is controlled"
@@ -41,7 +41,7 @@ export default function HowExportRiskControlledSection() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true, amount: 0.2 }}
                         transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                        className="md:col-span-7 md:pt-36 lg:pt-40 flex flex-col space-y-6 md:space-y-7 text-primary-dark"
+                        className="md:col-span-7 md:pt-36 lg:pt-40 flex flex-col space-y-6 md:space-y-7 text-primary-dark export-risk-right-col"
                     >
                         {/* Statement 1 */}
                         <p className="font-sans font-normal text-base md:text-lg lg:text-[20px] text-primary-dark leading-snug">
@@ -62,8 +62,8 @@ export default function HowExportRiskControlledSection() {
                         </div>
 
                         {/* Statement 3 */}
-                        <p className="font-sans font-normal text-base md:text-lg lg:text-[20px] text-primary-dark leading-snug max-w-lg">
-                            Instead of managing multiple dependencies, <br className="hidden md:inline" />
+                        <p className="font-sans font-normal text-base md:text-lg lg:text-[20px] text-primary-dark leading-snug max-w-lg export-risk-statement-3">
+                            Instead of managing multiple dependencies, <br className="hidden md:inline export-risk-text-br" />
                             everything operates within one system.
                         </p>
 

@@ -10,21 +10,21 @@ export default function ManufacturingInfrastructureSection() {
             <div className="main-container px-6 md:px-12">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 lg:gap-14 items-start">
                     {/* Left Column: Heading + Image slid right as in screenshot */}
-                    <div className="md:col-span-5 flex flex-col items-start md:items-end">
-                        <div className="w-full max-w-[340px] flex flex-col items-start md:items-end">
+                    <div className="md:col-span-5 flex flex-col items-start md:items-end mfg-infra-left-col">
+                        <div className="w-full max-w-[340px] flex flex-col items-start md:items-end mfg-infra-inner-col">
                             <motion.h2
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, amount: 0.2 }}
                                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                                className="w-full text-primary font-semibold text-3xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.12] mb-6 md:mb-8 text-left"
+                                className="w-full text-primary font-semibold text-3xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.12] mb-6 md:mb-8 text-left mfg-infra-heading"
                             >
-                                Manufacturing <br />
+                                Manufacturing <br className="mfg-infra-br" />
                                 Infrastructure
                             </motion.h2>
 
                             {/* Image Container with Bottom-to-Top Reveal Animation & Cover preservation */}
-                            <div className="relative w-full max-w-[280px] md:max-w-[250px] aspect-[3/4] rounded-xl overflow-hidden self-start md:self-end">
+                            <div className="relative w-full max-w-[280px] md:max-w-[250px] aspect-[3/4] rounded-xl overflow-hidden self-start md:self-end mfg-infra-img-box">
                                 <motion.div
                                     initial="hidden"
                                     whileInView="visible"
@@ -68,12 +68,12 @@ export default function ManufacturingInfrastructureSection() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true, amount: 0.2 }}
                         transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                        className="md:col-span-7 md:pt-4 lg:pt-6 space-y-6 md:space-y-8 text-primary-dark items-start md:flex flex-col justify-end h-full"
+                        className="md:col-span-7 md:pt-4 lg:pt-6 space-y-6 md:space-y-8 text-primary-dark items-start md:flex flex-col justify-end h-full mfg-infra-right-col"
                     >
                         {/* Lead Paragraph */}
-                        <p className="text-primary-dark text-lg md:text-xl lg:text-[22px] font-normal leading-snug mt-15">
-                            Kleanfix operates a Delhi-based <br className="hidden md:block" />
-                            manufacturing setup designed for <br className="hidden md:block" />
+                        <p className="text-primary-dark text-lg md:text-xl lg:text-[22px] font-normal leading-snug mt-15 mfg-infra-lead-p">
+                            Kleanfix operates a Delhi-based <br className="hidden md:block mfg-infra-lead-br" />
+                            manufacturing setup designed for <br className="hidden md:block mfg-infra-lead-br" />
                             controlled, repeatable production.
                         </p>
 
@@ -101,7 +101,7 @@ export default function ManufacturingInfrastructureSection() {
                                 It is a function of process discipline.
                             </p>
                             <p className="text-primary-dark text-base md:text-lg lg:text-[20px] font-normal leading-snug">
-                                Even high-capacity setups fail when process control <br className="hidden md:block" />
+                                Even high-capacity setups fail when process control <br className="hidden md:block mfg-infra-lead-br" />
                                 is inconsistent.
                             </p>
                         </div>

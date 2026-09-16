@@ -38,13 +38,13 @@ export default function SystemControlCtaSection() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/40 to-transparent z-10 pointer-events-none" />
 
             {/* Overlaid Content - Centered at Bottom */}
-            <div className="relative z-20 main-container px-6 md:px-12 w-full text-center flex flex-col items-center justify-end system-control-cta-wrapper">
+            <div className="relative z-20 main-container px-6 md:px-12 w-full text-center flex flex-col items-center justify-end">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.8 }}
-                    className="max-w-5xl mx-auto space-y-6 md:space-y-8 flex flex-col items-start text-left py-20 md:py-0 system-control-cta-content"
+                    className="max-w-5xl mx-auto space-y-6 md:space-y-8 flex flex-col items-start text-left py-20 md:py-0"
                 >
                     {/* Main Heading */}
                     <h2 className="font-sans font-semibold text-3xl md:text-5xl lg:text-[56px] !text-white leading-[1.12] tracking-tight text-left">
@@ -60,7 +60,7 @@ export default function SystemControlCtaSection() {
                     </div>
 
                     {/* Bottom Disclaimer Paragraph */}
-                    <p className="font-sans font-medium text-white text-sm md:text-base lg:text-lg leading-relaxed pt-2 text-left mx-auto system-control-cta-content">
+                    <p className="font-sans font-medium text-white text-sm md:text-base lg:text-lg leading-relaxed pt-2 text-left mx-auto">
                         Once submitted, your requirement is mapped to the right system based on application, scale, and performance needs — before any recommendation is made.
                     </p>
                 </motion.div>

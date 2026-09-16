@@ -144,24 +144,6 @@ video::-webkit-media-controls-enclosure {
     max-width: 90% !important;
   }
 
-  .consistent-output-container {
-    text-align: left !important;
-  }
-
-  .consistent-output-content {
-    margin-left: 0 !important;
-    margin-right: auto !important;
-  }
-
-  .system-control-cta-wrapper {
-    align-items: flex-start !important;
-  }
-
-  .system-control-cta-content {
-    margin-left: 0 !important;
-    margin-right: auto !important;
-  }
-
   .zone-cards-container {
     max-width: 780px !important;
   }
@@ -182,5 +164,98 @@ video::-webkit-media-controls-enclosure {
 
   .contact-fit-card {
     max-width: 580px !important;
+  }
+
+  .contact-card-container {
+    max-width: 1400px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Scoped rules for HowExportRiskControlledSection (1700px–2000px) */
+  .export-risk-left-col {
+    align-items: stretch !important;
+  }
+
+  .export-risk-heading {
+    text-align: left !important;
+    white-space: nowrap !important;
+    align-self: flex-start !important;
+    width: 100% !important;
+  }
+
+  .export-risk-br {
+    display: none !important;
+  }
+
+  .export-risk-text-br {
+    display: none !important;
+  }
+
+  .export-risk-statement-3 {
+    max-width: none !important;
+  }
+
+  .export-risk-right-col {
+    padding-top: 90px !important;
+    max-width: 720px !important;
+    width: 100% !important;
+  }
+
+  .export-risk-img-box {
+    align-self: flex-end !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+    max-width: 380px !important;
+    width: 380px !important;
+    height: 500px !important;
+    aspect-ratio: auto !important;
+  }
+
+  /* Scoped rules for ManufacturingInfrastructureSection (1700px–2000px) */
+  .mfg-infra-left-col {
+    align-items: stretch !important;
+  }
+
+  .mfg-infra-inner-col {
+    max-width: 100% !important;
+    align-items: stretch !important;
+  }
+
+  .mfg-infra-heading {
+    text-align: left !important;
+    white-space: nowrap !important;
+    align-self: flex-start !important;
+    width: 100% !important;
+  }
+
+  .mfg-infra-br {
+    display: none !important;
+  }
+
+  .mfg-infra-lead-br {
+    display: none !important;
+  }
+
+  .mfg-infra-right-col {
+    padding-top: 92px !important;
+    justify-content: flex-start !important;
+    height: auto !important;
+    max-width: 720px !important;
+    width: 100% !important;
+  }
+
+  .mfg-infra-lead-p {
+    margin-top: 0 !important;
+  }
+
+  .mfg-infra-img-box {
+    align-self: flex-end !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+    max-width: 360px !important;
+    width: 360px !important;
+    height: 480px !important;
+    aspect-ratio: auto !important;
   }
 }
