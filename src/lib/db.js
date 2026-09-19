@@ -69,6 +69,18 @@ try {
       createdAt TEXT NOT NULL,
       updatedAt TEXT NOT NULL
     );
+
+    CREATE TABLE IF NOT EXISTS admin_users (
+      id TEXT PRIMARY KEY,
+      username TEXT UNIQUE NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      passwordHash TEXT NOT NULL,
+      salt TEXT NOT NULL,
+      otpCode TEXT,
+      otpExpiresAt TEXT,
+      createdAt TEXT NOT NULL,
+      updatedAt TEXT NOT NULL
+    );
   `);
 } catch (e) {
   // Handled if already created
@@ -112,7 +124,26 @@ try {
   }
 } catch (e) {
   // Ignore concurrency error during initial seeding
-  console.error('Error initializing categories:', e);
+}
+
+// --- Default Admin User Seeding ---
+try {
+  const adminCount = db.prepare('SELECT count(*) as count FROM admin_users').all()[0]?.count || 0;
+  if (adminCount === 0) {
+    const now = new Date().toISOString();
+    // Default initial password: Admin@Kleanfix2026
+    const salt = 'a8f4c2194b6e5102d739e1c4b2817290';
+    // SHA512 PBKDF2 hash of 'Admin@Kleanfix2026' with this salt
+    const hash = 'a0d64478144005b63bb490a071f6479e0bfab647038148b11116238b72d2be41c0993952fdf9a44410a562efee51884dbd0b3e52f1e6fbeffea91d17d52a233b';
+
+    const insertAdmin = db.prepare(`
+      INSERT OR IGNORE INTO admin_users (id, username, email, passwordHash, salt, createdAt, updatedAt)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `);
+    insertAdmin.run('admin_root_1', 'admin', 'administrator@kleanfix.com', hash, salt, now, now);
+  }
+} catch (e) {
+  // Ignore concurrency error during admin user seeding
 }
 
 
@@ -623,5 +654,78 @@ export function deleteEvent(id) {
   return true;
 }
 
+// --- ADMIN USERS DB OPERATIONS ---
+export function getAdminByIdentifier(identifier) {
+  if (!identifier) return null;
+  const clean = identifier.trim().toLowerCase();
+  const row = db.prepare(`
+    SELECT * FROM admin_users 
+    WHERE LOWER(username) = ? OR LOWER(email) = ?
+    LIMIT 1
+  `).all(clean, clean)[0];
+
+  return row || null;
+}
+
+export function getAdminByEmail(email) {
+  if (!email) return null;
+  const clean = email.trim().toLowerCase();
+  const row = db.prepare(`
+    SELECT * FROM admin_users 
+    WHERE LOWER(email) = ?
+    LIMIT 1
+  `).all(clean)[0];
+
+  return row || null;
+}
+
+export function setAdminOtp(email, otpCode, expiresInMinutes = 15) {
+  const admin = getAdminByEmail(email);
+  if (!admin) return false;
+
+  const expiresAt = new Date(Date.now() + expiresInMinutes * 60 * 1000).toISOString();
+  const now = new Date().toISOString();
+
+  db.prepare(`
+    UPDATE admin_users
+    SET otpCode = ?, otpExpiresAt = ?, updatedAt = ?
+    WHERE id = ?
+  `).run(otpCode, expiresAt, now, admin.id);
+
+  return true;
+}
+
+export function verifyAndConsumeAdminOtp(email, otpCode) {
+  const admin = getAdminByEmail(email);
+  if (!admin || !admin.otpCode || !admin.otpExpiresAt) {
+    return { valid: false, message: 'No active OTP request found.' };
+  }
+
+  if (new Date() > new Date(admin.otpExpiresAt)) {
+    return { valid: false, message: 'OTP code has expired. Please request a new code.' };
+  }
+
+  if (admin.otpCode.trim() !== otpCode.trim()) {
+    return { valid: false, message: 'Invalid verification code.' };
+  }
+
+  return { valid: true };
+}
+
+export function updateAdminPassword(email, newHash, newSalt) {
+  const admin = getAdminByEmail(email);
+  if (!admin) return false;
+
+  const now = new Date().toISOString();
+  db.prepare(`
+    UPDATE admin_users
+    SET passwordHash = ?, salt = ?, otpCode = NULL, otpExpiresAt = NULL, updatedAt = ?
+    WHERE id = ?
+  `).run(newHash, newSalt, now, admin.id);
+
+  return true;
+}
+
 export default db;
+
 

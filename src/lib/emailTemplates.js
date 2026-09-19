@@ -334,3 +334,110 @@ export function getNewsletterEmailHtml({
 </html>
     `.trim();
 }
+
+/**
+ * Generates branded HTML email for Admin Forgot Password OTP Code
+ */
+export function getOtpEmailHtml({
+    otp = '',
+    username = 'Administrator',
+    requestedAt = new Date(),
+    expiresInMinutes = 15,
+}) {
+    const formattedDate = formatSubmissionDate(requestedAt);
+    const safeUsername = escapeHtml(username);
+    const safeOtp = escapeHtml(otp);
+
+    return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kleanfix Admin Password Reset Code</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #F4F6F8; font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1E293B;">
+  <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #F4F6F8; padding: 28px 12px;">
+    <tr>
+      <td align="center">
+        <!-- Main Container -->
+        <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 540px; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 14px rgba(30, 107, 184, 0.1); border: 1px solid #E2E8F0;">
+          
+          <!-- Top Accent Bar -->
+          <tr>
+            <td style="background: linear-gradient(90deg, #1E6BB8 0%, #0E4A8A 65%, #F47A1F 100%); height: 6px; font-size: 0; line-height: 0;">&nbsp;</td>
+          </tr>
+
+          <!-- Header Section -->
+          <tr>
+            <td style="padding: 26px 32px 20px 32px; background-color: #FFFFFF; border-bottom: 1px solid #EEF2F6;">
+              <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td>
+                    <div style="font-size: 24px; font-weight: 900; letter-spacing: -0.5px; text-transform: uppercase;">
+                      <span style="color: #1E6BB8;">KLEAN</span><span style="color: #F47A1F;">FIX</span>
+                    </div>
+                    <div style="font-size: 11px; color: #64748B; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 3px;">
+                      Admin Security Portal
+                    </div>
+                  </td>
+                  <td align="right">
+                    <span style="display: inline-block; background-color: #FEF2F2; color: #DC2626; font-size: 11px; font-weight: 700; padding: 5px 12px; border-radius: 16px; text-transform: uppercase; border: 1px solid #FECACA;">
+                      Security Verification
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Content Body -->
+          <tr>
+            <td style="padding: 28px 32px;">
+              <h2 style="margin: 0 0 10px 0; font-size: 20px; font-weight: 700; color: #0E4A8A;">
+                Password Reset Verification Code
+              </h2>
+              <p style="margin: 0 0 20px 0; font-size: 14px; color: #475569; line-height: 1.5;">
+                Hello <strong>${safeUsername}</strong>, we received a request to reset your password for the Kleanfix Admin Panel on <strong>${formattedDate}</strong>.
+              </p>
+
+              <!-- OTP Code Display Card -->
+              <div style="background: #F8FAFC; border: 2px dashed #1E6BB8; border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 24px;">
+                <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: #64748B; letter-spacing: 1px; margin-bottom: 8px;">
+                  Your One-Time Verification Code
+                </div>
+                <div style="font-size: 36px; font-weight: 900; letter-spacing: 8px; color: #1E6BB8; font-family: monospace; line-height: 1;">
+                  ${safeOtp}
+                </div>
+                <div style="font-size: 12px; color: #EF4444; font-weight: 600; margin-top: 10px;">
+                  ⏱ This code expires in ${expiresInMinutes} minutes.
+                </div>
+              </div>
+
+              <div style="background-color: #FFFBEB; border: 1px solid #FDE68A; border-radius: 8px; padding: 12px 16px; font-size: 12px; color: #92400E; line-height: 1.5;">
+                <strong>Security Notice:</strong> If you did not initiate this password reset request, please ignore this email. Your password will remain unchanged.
+              </div>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #F8FAFC; border-top: 1px solid #EEF2F6; padding: 18px 32px; text-align: center;">
+              <div style="font-size: 12px; color: #0E4A8A; font-weight: 600;">
+                Kleanfix Industries Pvt. Ltd.
+              </div>
+              <div style="font-size: 11px; color: #64748B; margin-top: 2px;">
+                Direct admin security notification sent to administrator@kleanfix.com
+              </div>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+    `.trim();
+}
+

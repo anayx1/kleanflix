@@ -1,11 +1,13 @@
 import Link from 'next/link';
-import { Package, FileText, Calendar, LayoutDashboard, ExternalLink } from 'lucide-react';
+import { Package, FileText, Calendar, ExternalLink, User } from 'lucide-react';
+import { getAdminSession } from '@/lib/auth';
+import AdminLoginForm from '@/components/admin/AdminLoginForm';
+import AdminLogoutButton from '@/components/admin/AdminLogoutButton';
 import "../globals.css";
 
-
 export const metadata = {
-  title: 'Admin Dashboard | kleanfix',
-  description: 'Manage Products, Blogs, and Media Content for kleanfix',
+  title: 'Admin Dashboard | Kleanfix',
+  description: 'Manage Products, Blogs, and Media Content for Kleanfix',
   robots: {
     index: false,
     follow: false,
@@ -18,7 +20,14 @@ export const metadata = {
   },
 };
 
-export default function AdminLayout({ children }) {
+export default async function AdminLayout({ children }) {
+  const session = await getAdminSession();
+
+  // If not authenticated, restrict access and show Login / Forgot Password UI
+  if (!session) {
+    return <AdminLoginForm />;
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
       {/* Top Navbar */}
@@ -30,7 +39,7 @@ export default function AdminLayout({ children }) {
                 K
               </div>
               <span className="font-bold text-lg text-slate-900 tracking-tight">
-                kleanfix <span className="text-[#F47A1F] text-xs uppercase px-2 py-0.5 bg-orange-50 rounded-full font-semibold border border-orange-200 ml-1">Admin Lite</span>
+                kleanfix <span className="text-[#F47A1F] text-xs uppercase px-2 py-0.5 bg-orange-50 rounded-full font-semibold border border-orange-200 ml-1">Admin Panel</span>
               </span>
             </Link>
 
@@ -61,6 +70,12 @@ export default function AdminLayout({ children }) {
           </div>
 
           <div className="flex items-center space-x-3">
+            {/* Logged in User Badge */}
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-600">
+              <User className="w-3.5 h-3.5 text-[#1E6BB8]" />
+              <span>{session.username || session.email}</span>
+            </div>
+
             <Link
               href="/"
               target="_blank"
@@ -69,6 +84,9 @@ export default function AdminLayout({ children }) {
               <span>View Site</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </Link>
+
+            {/* Logout Button */}
+            <AdminLogoutButton />
           </div>
         </div>
       </header>
