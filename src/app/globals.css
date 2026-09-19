@@ -271,3 +271,11 @@ video::-webkit-media-controls-enclosure {
     aspect-ratio: auto !important;
   }
 }
+
+/* Hide floating Google reCAPTCHA badge / banner */
+.grecaptcha-badge {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  display: none !important;
+}

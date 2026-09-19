@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Mail, Phone, MapPin, CheckCircle2 } from 'lucide-react';
 import Button from '@/components/Button';
 import { Input, Select, Textarea } from '@/components/ui/FormField';
+import ReCAPTCHA from '@/components/ui/ReCAPTCHA';
 import OnceYouSubmitSection from './OnceYouSubmitSection';
 
 function LinkedInIcon({ className = 'w-4 h-4' }) {
@@ -63,9 +64,11 @@ export default function ContactSectionform() {
         message: '',
     });
 
+    const [recaptchaToken, setRecaptchaToken] = useState('');
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [serverError, setServerError] = useState('');
 
     useEffect(() => {
         if (!searchParams) return;
@@ -103,6 +106,9 @@ export default function ContactSectionform() {
         if (errors[name]) {
             setErrors((prev) => ({ ...prev, [name]: '' }));
         }
+        if (serverError) {
+            setServerError('');
+        }
     };
 
     const validateForm = () => {
@@ -123,21 +129,46 @@ export default function ContactSectionform() {
             newErrors.emailAddress = 'Please enter a valid email address.';
         }
 
+        if (process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && !recaptchaToken) {
+            newErrors.recaptcha = 'Please verify that you are not a robot.';
+        }
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm()) return;
 
         setIsSubmitting(true);
+        setServerError('');
 
-        // Simulate API form submission
-        setTimeout(() => {
-            setIsSubmitting(false);
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ...formData,
+                    recaptchaToken,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                throw new Error(data.error || 'Failed to submit requirement. Please try again.');
+            }
+
             setIsSubmitted(true);
-        }, 800);
+        } catch (err) {
+            console.error('Submission error:', err);
+            setServerError(err.message || 'Something went wrong while sending your inquiry. Please try again later.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleReset = () => {
@@ -149,7 +180,9 @@ export default function ContactSectionform() {
             emailAddress: '',
             message: '',
         });
+        setRecaptchaToken('');
         setErrors({});
+        setServerError('');
         setIsSubmitted(false);
     };
 
@@ -374,6 +407,27 @@ export default function ContactSectionform() {
                                             />
                                         </div>
 
+                                        {/* Google reCAPTCHA Verification */}
+                                        <div className="pt-1">
+                                            <ReCAPTCHA
+                                                onVerify={(token) => {
+                                                    setRecaptchaToken(token);
+                                                    if (errors.recaptcha) {
+                                                        setErrors((prev) => ({ ...prev, recaptcha: '' }));
+                                                    }
+                                                }}
+                                                onExpire={() => setRecaptchaToken('')}
+                                                error={errors.recaptcha}
+                                            />
+                                        </div>
+
+                                        {/* Server Error Alert */}
+                                        {serverError && (
+                                            <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs md:text-sm font-medium">
+                                                {serverError}
+                                            </div>
+                                        )}
+
                                         {/* Submit Button */}
                                         <div className="pt-2">
                                             <button
@@ -381,7 +435,7 @@ export default function ContactSectionform() {
                                                 disabled={isSubmitting}
                                                 className="w-full bg-secondary text-white font-bold text-sm md:text-base uppercase tracking-wider rounded-xl py-3.5 px-6 hover:bg-[#e06912] active:scale-[0.99] transition-all duration-200 shadow-md hover:shadow-lg focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                                             >
-                                                {isSubmitting ? 'Submitting...' : 'SUBMIT REQUIREMENT'}
+                                                {isSubmitting ? 'SUBMITTING REQUIREMENT...' : 'SUBMIT REQUIREMENT'}
                                             </button>
                                         </div>
                                     </form>

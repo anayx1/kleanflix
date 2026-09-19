@@ -11,60 +11,68 @@ if (!fs.existsSync(dataDir)) {
 const dbPath = path.join(dataDir, 'kleanflix.db');
 const db = new DatabaseSync(dbPath);
 
-// Enable WAL mode and busy timeout for high concurrency across Next.js build workers
-db.exec('PRAGMA journal_mode = WAL;');
-db.exec('PRAGMA busy_timeout = 10000;');
+// Enable busy timeout first so worker threads wait for locks, then WAL mode safely
+try {
+  db.exec('PRAGMA busy_timeout = 30000;');
+  db.exec('PRAGMA journal_mode = WAL;');
+} catch (e) {
+  // Database might already have WAL or be busy in another worker
+}
 
-// Initialize Tables
-db.exec(`
-  CREATE TABLE IF NOT EXISTS products (
-    id TEXT PRIMARY KEY,
-    title TEXT NOT NULL,
-    slug TEXT UNIQUE NOT NULL,
-    category TEXT NOT NULL,
-    description TEXT NOT NULL,
-    price REAL DEFAULT 0,
-    image TEXT,
-    detailImage TEXT,
-    inStock INTEGER DEFAULT 1,
-    createdAt TEXT NOT NULL,
-    updatedAt TEXT NOT NULL
-  );
+// Initialize Tables safely
+try {
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS products (
+      id TEXT PRIMARY KEY,
+      title TEXT NOT NULL,
+      slug TEXT UNIQUE NOT NULL,
+      category TEXT NOT NULL,
+      description TEXT NOT NULL,
+      price REAL DEFAULT 0,
+      image TEXT,
+      detailImage TEXT,
+      inStock INTEGER DEFAULT 1,
+      createdAt TEXT NOT NULL,
+      updatedAt TEXT NOT NULL
+    );
 
-  CREATE TABLE IF NOT EXISTS blogs (
-    id TEXT PRIMARY KEY,
-    title TEXT NOT NULL,
-    slug TEXT UNIQUE NOT NULL,
-    content TEXT NOT NULL,
-    excerpt TEXT,
-    featuredImage TEXT,
-    author TEXT DEFAULT 'Kleanflix Team',
-    tags TEXT DEFAULT '',
-    status TEXT DEFAULT 'PUBLISHED',
-    publishedAt TEXT NOT NULL,
-    metaTitle TEXT,
-    metaDescription TEXT,
-    createdAt TEXT NOT NULL,
-    updatedAt TEXT NOT NULL
-  );
+    CREATE TABLE IF NOT EXISTS blogs (
+      id TEXT PRIMARY KEY,
+      title TEXT NOT NULL,
+      slug TEXT UNIQUE NOT NULL,
+      content TEXT NOT NULL,
+      excerpt TEXT,
+      featuredImage TEXT,
+      author TEXT DEFAULT 'Kleanflix Team',
+      tags TEXT DEFAULT '',
+      status TEXT DEFAULT 'PUBLISHED',
+      publishedAt TEXT NOT NULL,
+      metaTitle TEXT,
+      metaDescription TEXT,
+      createdAt TEXT NOT NULL,
+      updatedAt TEXT NOT NULL
+    );
 
-  CREATE TABLE IF NOT EXISTS categories (
-    id TEXT PRIMARY KEY,
-    name TEXT UNIQUE NOT NULL,
-    createdAt TEXT NOT NULL
-  );
+    CREATE TABLE IF NOT EXISTS categories (
+      id TEXT PRIMARY KEY,
+      name TEXT UNIQUE NOT NULL,
+      createdAt TEXT NOT NULL
+    );
 
-  CREATE TABLE IF NOT EXISTS events (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    dates TEXT NOT NULL,
-    location TEXT,
-    featuredImage TEXT,
-    orderIndex INTEGER DEFAULT 0,
-    createdAt TEXT NOT NULL,
-    updatedAt TEXT NOT NULL
-  );
-`);
+    CREATE TABLE IF NOT EXISTS events (
+      id TEXT PRIMARY KEY,
+      name TEXT NOT NULL,
+      dates TEXT NOT NULL,
+      location TEXT,
+      featuredImage TEXT,
+      orderIndex INTEGER DEFAULT 0,
+      createdAt TEXT NOT NULL,
+      updatedAt TEXT NOT NULL
+    );
+  `);
+} catch (e) {
+  // Handled if already created
+}
 
 // Migration: ensure detailImage column exists on existing databases
 try {
@@ -103,6 +111,7 @@ try {
     }
   }
 } catch (e) {
+  // Ignore concurrency error during initial seeding
   console.error('Error initializing categories:', e);
 }
 

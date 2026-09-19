@@ -120,18 +120,43 @@ function FooterLink({ href, children, isExternal = false, className = '' }) {
 export default function Footer() {
     const pathname = usePathname();
     const [email, setEmail] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [subscribed, setSubscribed] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     if (pathname?.startsWith('/admin')) {
         return null;
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (email.trim()) {
+        const trimmedEmail = email.trim();
+        if (!trimmedEmail) return;
+
+        setIsSubmitting(true);
+        setErrorMessage('');
+
+        try {
+            const res = await fetch('/api/newsletter', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: trimmedEmail }),
+            });
+
+            const data = await res.json();
+            if (!res.ok || !data.success) {
+                throw new Error(data.error || 'Failed to subscribe. Please try again.');
+            }
+
             setSubscribed(true);
             setEmail('');
-            setTimeout(() => setSubscribed(false), 4000);
+            setTimeout(() => setSubscribed(false), 5000);
+        } catch (err) {
+            console.error('Newsletter error:', err);
+            setErrorMessage(err.message || 'Subscription failed. Please try again.');
+            setTimeout(() => setErrorMessage(''), 4000);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -163,21 +188,31 @@ export default function Footer() {
                                     updates. You can unsubscribe at any time.
                                 </div>
 
-                                <form onSubmit={handleSubmit} className="flex items-center gap-2 max-w-md">
-                                    <input
-                                        type="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        placeholder="Enter your e-mail"
-                                        required
-                                        className="bg-white text-primary placeholder:text-primary/60 px-4 py-2.5 rounded-lg border border-slate-200 text-xs md:text-sm focus:outline-none focus:ring-1 focus:ring-primary flex-1 shadow-sm transition-all"
-                                    />
-                                    <button
-                                        type="submit"
-                                        className="bg-[#f0a267] hover:bg-[#e48f51] text-white font-medium px-6 py-2.5 rounded-lg text-xs md:text-sm transition-colors duration-200 shadow-sm cursor-pointer whitespace-nowrap"
-                                    >
-                                        {subscribed ? 'Subscribed!' : 'Submit'}
-                                    </button>
+                                <form onSubmit={handleSubmit} className="flex flex-col gap-1.5 max-w-md">
+                                    <div className="flex items-center gap-2">
+                                        <input
+                                            type="email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            placeholder="Enter your e-mail"
+                                            required
+                                            disabled={isSubmitting}
+                                            className="bg-white text-primary placeholder:text-primary/60 px-4 py-2.5 rounded-lg border border-slate-200 text-xs md:text-sm focus:outline-none focus:ring-1 focus:ring-primary flex-1 shadow-sm transition-all disabled:opacity-60"
+                                        />
+                                        <button
+                                            type="submit"
+                                            disabled={isSubmitting}
+                                            className="bg-[#f0a267] hover:bg-[#e48f51] text-white font-medium px-6 py-2.5 rounded-lg text-xs md:text-sm transition-colors duration-200 shadow-sm cursor-pointer whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+                                        >
+                                            {isSubmitting ? 'Sending...' : subscribed ? 'Subscribed!' : 'Submit'}
+                                        </button>
+                                    </div>
+                                    {errorMessage && (
+                                        <p className="text-red-500 text-[11px] font-medium mt-0.5">{errorMessage}</p>
+                                    )}
+                                    {subscribed && (
+                                        <p className="text-green-600 text-[11px] font-medium mt-0.5">Thank you for subscribing!</p>
+                                    )}
                                 </form>
                             </div>
                         </div>
