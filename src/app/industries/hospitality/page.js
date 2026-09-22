@@ -9,8 +9,9 @@ import HygieneConsistencySection from './HygieneConsistencySection';
 import WhatThisMeansForHotelOperatorsSection from './WhatThisMeansForHotelOperatorsSection';
 
 export const metadata = {
-    title: "Hospitality | kleanfix",
-    description: "Where Consistency Defines Guest Experience - kleanfix.",
+    title: 'Hospitality Cleaning & Housekeeping Solutions | Kleanfix',
+    description:
+        'Consistent housekeeping and kitchen hygiene chemical systems where consistency defines guest experience - Kleanfix.',
 };
 
 export default function HospitalityPage() {

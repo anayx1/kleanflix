@@ -17,9 +17,7 @@ export default function HowHealthcareEnvironmentOperatesSection() {
             imageAlt="How healthcare environment actually operate"
             heading={
                 <h2 className="text-primary font-bold text-3xl md:text-4xl lg:text-[44px] tracking-tight leading-[1.15]">
-                    How healthcare <br />
-                    environment <br />
-                    actually operate
+                    How healthcare environment <br className="hidden md:block" />actually operate
                 </h2>
             }
         >

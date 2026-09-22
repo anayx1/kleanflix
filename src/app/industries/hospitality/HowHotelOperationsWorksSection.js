@@ -7,8 +7,8 @@ export default function HowHotelOperationsWorksSection() {
             imageSrc="/hospitality/how-hotel-operations-works.avif"
             imageAlt="How hotel operations actually works"
             heading={
-                <h2 className="text-primary font-bold text-3xl md:text-5xl lg:text-[52px] tracking-tight leading-[1.15]">
-                    How hotel operations<br />actually works
+                <h2 className="text-primary font-bold text-3xl md:text-4xl lg:text-[44px] tracking-tight leading-[1.15]">
+                    How hotel operations <br className="hidden md:block" />actually works
                 </h2>
             }
         >

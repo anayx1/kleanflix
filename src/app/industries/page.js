@@ -7,8 +7,9 @@ import IndustryBreakdownSection from './IndustryBreakdownSection';
 import CTASection from '@/components/CTASection';
 
 export const metadata = {
-    title: "Industries | kleanfix",
-    description: "Solutions built around how your business actually operates at scale - kleanfix.",
+    title: 'Industries We Serve | Kleanfix',
+    description:
+        'Institutional cleaning and hygiene solutions built around how your business actually operates at scale - Kleanfix.',
 };
 
 export default function IndustriesPage() {

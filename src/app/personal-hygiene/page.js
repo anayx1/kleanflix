@@ -10,8 +10,9 @@ import OEMScalingSupportSection from '@/components/OEMScalingSupportSection';
 import { getProductsByCategory } from '@/lib/api';
 
 export const metadata = {
-    title: "Personal Hygiene | kleanfix",
-    description: "High-Frequency Hygiene That Shapes User Experience - kleanfix Personal Hygiene System.",
+    title: 'Personal Hygiene Systems | Kleanfix',
+    description:
+        'High-frequency hygiene systems that shape user experience and workplace sanitation - Kleanfix Personal Hygiene System.',
 };
 
 const personalHygieneSlides = [
@@ -65,7 +66,7 @@ const page = async () => {
             <ReededGlassHero
                 title="Personal Hygiene"
                 subtitle="High-Frequency Hygiene That Shapes User Experience"
-                imageSrc="/personal-hygiene/hero.webp"
+                imageSrc="/hero/personal-hero.jpeg"
                 imageAlt="Personal Hygiene Hero Background"
             />
 

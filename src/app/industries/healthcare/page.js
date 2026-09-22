@@ -9,8 +9,9 @@ import GermControlCoreLayerSection from './GermControlCoreLayerSection';
 import WhatThisMeansForHealthcareOperatorsSection from './WhatThisMeansForHealthcareOperatorsSection';
 
 export const metadata = {
-    title: "Healthcare | kleanfix",
-    description: "Where Hygiene Is a Control System, not a Task - kleanfix.",
+    title: 'Healthcare Cleaning & Hygiene Systems | Kleanfix',
+    description:
+        'Hospital-grade infection control, sanitization, and hygiene management systems for healthcare environments - Kleanfix.',
 };
 
 export default function HealthcarePage() {

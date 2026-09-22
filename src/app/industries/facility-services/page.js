@@ -10,8 +10,9 @@ import ScalabilityAndReplicationSection from './ScalabilityAndReplicationSection
 import WhatThisMeansForFacilityOperatorsSection from './WhatThisMeansForFacilityOperatorsSection';
 
 export const metadata = {
-    title: "Facility Services | kleanfix",
-    description: "Where Scale Demands System Control - kleanfix.",
+    title: 'Facility Services Cleaning Solutions | Kleanfix',
+    description:
+        'Standardized, scalable cleaning chemicals and hygiene control systems for multi-site facility management - Kleanfix.',
 };
 
 export default function FacilityCarePage() {
@@ -21,7 +22,7 @@ export default function FacilityCarePage() {
             <ReededGlassHero
                 title="Facility Services"
                 subtitle="Where Scale Demands System Control"
-                imageSrc="/facility-service/hero.webp"
+                imageSrc="/hero/facility-hero.png"
                 imageAlt="Facility Services Hero Background"
             />
 

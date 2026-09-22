@@ -18,8 +18,9 @@ const anton = Anton({
 });
 
 export const metadata = {
-  title: "kleanfix",
-  description: "kleanfix Application",
+  title: "Kleanfix | Professional Cleaning & Hygiene Systems",
+  description:
+    "Kleanfix is a manufacturing-led B2B business delivering high-performance cleaning chemicals, institutional hygiene systems, OEM manufacturing, and private label solutions.",
 };
 
 export default function RootLayout({ children }) {

@@ -15,6 +15,12 @@ import ConsistentOutputSection from '@/components/hompeage/ConsistentOutputSecti
 import TestimonialsSection from '@/components/hompeage/TestimonialsSection'
 import SystemControlCtaSection from '@/components/hompeage/SystemControlCtaSection'
 
+export const metadata = {
+    title: 'Kleanfix | Professional Cleaning & Hygiene Systems',
+    description:
+        'Kleanfix delivers high-performance cleaning chemicals, institutional hygiene systems, and structured manufacturing solutions for modern operations.',
+};
+
 const page = () => {
     return (
         <main className="min-h-screen bg-white">

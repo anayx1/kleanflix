@@ -9,6 +9,12 @@ import CTASection from '@/components/CTASection';
 import OEMScalingSupportSection from '@/components/OEMScalingSupportSection';
 import { getProductsByCategory } from '@/lib/api';
 
+export const metadata = {
+    title: 'Kitchen Care & Commercial Degreasing Systems | Kleanfix',
+    description:
+        'Commercial kitchen hygiene and degreasing solutions engineered for food safety, grease removal, utensil cleaning, and sanitization standards.',
+};
+
 const kitchenCareSlides = [
     {
         title: "What this\nsystem solves",

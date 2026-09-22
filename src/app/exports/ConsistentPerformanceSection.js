@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 export default function ConsistentPerformanceSection() {
     return (
-        <section className="py-12 md:py-16 lg:py-20 bg-white">
+        <section className="pt-4 md:pt-6 pb-12 md:pb-16 lg:pb-20 bg-white">
             <div className="main-container px-6 md:px-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-stretch">
                     {/* Left Column: Chemistry Stability Testing Photo (fixed rounded-xl) */}

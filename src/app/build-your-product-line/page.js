@@ -7,8 +7,9 @@ import HowKleanfixStructuresProductDevelopmentSection from './HowKleanfixStructu
 import WhatThisMeansForFoundersSection from './WhatThisMeansForFoundersSection';
 
 export const metadata = {
-    title: "Build Your Product Line | Kleanfix",
-    description: "Build Your Product Line Without Losing Control of It - kleanfix.",
+    title: 'Build Your Product Line | Kleanfix',
+    description:
+        'Build your custom cleaning and hygiene product line without losing control of formulation, production, and quality - Kleanfix.',
 };
 
 export default function BuildYourProductLinePage() {

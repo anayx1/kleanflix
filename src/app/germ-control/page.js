@@ -10,8 +10,9 @@ import OEMScalingSupportSection from '@/components/OEMScalingSupportSection';
 import { getProductsByCategory } from '@/lib/api';
 
 export const metadata = {
-    title: "Germ Control | kleanfix",
-    description: "Hygiene Beyond Visible Cleaning - kleanfix Germ Control System.",
+    title: 'Germ Control & Disinfection Systems | Kleanfix',
+    description:
+        'Hygiene beyond visible cleaning - high-level sanitization and disinfection systems by Kleanfix.',
 };
 
 const germControlSlides = [
@@ -65,7 +66,7 @@ const page = async () => {
             <ReededGlassHero
                 title="Germ Control"
                 subtitle="Hygiene Beyond Visible Cleaning"
-                imageSrc="/germ-control/hero.png"
+                imageSrc="/hero/germ-hero.jpeg"
                 imageAlt="Germ Control Hero Background"
             />
 

@@ -60,32 +60,20 @@ export default function IndustryOperationControlByZoneSection({
     const cardCount = cards.length;
 
     // Dynamic scroll choreography:
-    // 0.00 -> 0.15: Pure initial screen (only background and title, cards hidden)
-    // 0.15 -> 0.95: Each card smoothly enters and centers sequentially
-    // 0.95 -> 1.00: Final card stays centered, then unpins cleanly
+    // Card 0 is immediately active & centered at the start of the section (eliminates empty 1st scroll).
+    // Scrolling smoothly transitions between remaining zone cards.
     const cardsY = useTransform(scrollYProgress, (v) => {
-        const initY = typeof window !== 'undefined' ? window.innerHeight * 1.1 : 900;
-        if (cardCount === 0) return initY;
+        if (cardCount <= 1) return targets[0] ?? 0;
 
-        // Phase 0: Pure initial screen
-        if (v <= 0.15) return initY;
+        const totalTransitions = cardCount - 1;
+        const usableRange = 0.90; // 0.00 to 0.90 for card transitions, 0.90 to 1.00 rests on final card
+        const step = usableRange / totalTransitions;
 
-        const usableRange = 0.80; // from 0.15 to 0.95
-        const step = usableRange / cardCount;
-
-        // Card 0 entry
-        if (v < 0.15 + step) {
-            const t = (v - 0.15) / step;
-            const t0 = targets[0] ?? 200;
-            return initY + (t0 - initY) * t;
-        }
-
-        // Transition between subsequent cards
-        for (let i = 0; i < cardCount - 1; i++) {
-            const startV = 0.15 + (i + 1) * step;
-            const endV = 0.15 + (i + 2) * step;
+        for (let i = 0; i < totalTransitions; i++) {
+            const startV = i * step;
+            const endV = (i + 1) * step;
             if (v < endV) {
-                const t = (v - startV) / (endV - startV);
+                const t = Math.max(0, Math.min(1, (v - startV) / (endV - startV)));
                 const from = targets[i] ?? 0;
                 const to = targets[i + 1] ?? 0;
                 return from + (to - from) * t;
@@ -95,19 +83,10 @@ export default function IndustryOperationControlByZoneSection({
         return targets[cardCount - 1] ?? 0;
     });
 
-    // Keep cards invisible during the initial clean hero screen
-    const cardsOpacity = useTransform(scrollYProgress, (v) => {
-        if (v <= 0.14) return 0;
-        if (v < 0.20) return (v - 0.14) / (0.20 - 0.14);
-        return 1;
-    });
-
-    const cardsPointerEvents = useTransform(scrollYProgress, (v) => (v <= 0.15 ? 'none' : 'auto'));
-
     const sectionHeightClass =
         cardCount <= 3
-            ? 'min-h-[300vh] md:min-h-[340vh]'
-            : 'min-h-[380vh] md:min-h-[420vh]';
+            ? 'min-h-[200vh] md:min-h-[230vh]'
+            : 'min-h-[270vh] md:min-h-[300vh]';
 
     return (
         <section
@@ -148,8 +127,6 @@ export default function IndustryOperationControlByZoneSection({
                             <motion.div
                                 style={{
                                     y: cardsY,
-                                    opacity: cardsOpacity,
-                                    pointerEvents: cardsPointerEvents,
                                 }}
                                 className="w-full max-w-lg lg:max-w-xl zone-cards-container flex flex-col gap-8 md:gap-12 lg:gap-14 will-change-transform py-0"
                             >

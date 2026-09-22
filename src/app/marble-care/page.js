@@ -9,6 +9,12 @@ import CTASection from '@/components/CTASection';
 import OEMScalingSupportSection from '@/components/OEMScalingSupportSection';
 import { getProductsByCategory } from '@/lib/api';
 
+export const metadata = {
+    title: 'Marble Care & Stone Maintenance Systems | Kleanfix',
+    description:
+        'Specialized marble and natural stone care formulations for gentle pH-neutral cleaning, surface protection, shine restoration, and longevity.',
+};
+
 const marbleCareSlides = [
     {
         title: "What this\nsystem solves",

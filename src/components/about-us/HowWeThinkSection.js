@@ -46,7 +46,7 @@ export default function HowWeThinkSection() {
     return (
         <section className="relative w-full py-15 bg-white overflow-hidden">
             <div className="main-container px-6 md:px-12">
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 lg:gap-16 items-start">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 lg:gap-20 xl:gap-28 items-start">
 
                     {/* Left Column: Heading, Subtitle & Left Parallax Image */}
                     <div className="md:col-span-6 flex flex-col">
@@ -102,7 +102,7 @@ export default function HowWeThinkSection() {
                             <ParallaxImage
                                 src="/about-us/how-we-think-right.avif"
                                 alt="Strategic planning and structured operational approach"
-                                className="w-full md:w-[320px] lg:w-[380px] how-we-think-right-img h-[300px] md:h-[380px] lg:h-[420px] rounded-[24px] md:rounded-[30px] shadow-sm mb-8 md:mb-10"
+                                className="w-full md:max-w-[460px] lg:max-w-[520px] xl:max-w-[560px] how-we-think-right-img h-[320px] md:h-[400px] lg:h-[460px] rounded-[24px] md:rounded-[30px] shadow-sm mb-8 md:mb-10"
                                 translateYRange={[-95, 95]}
                                 priority
                             />
@@ -114,7 +114,7 @@ export default function HowWeThinkSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.3 }}
                             transition={{ duration: 0.7, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
-                            className="space-y-3"
+                            className="space-y-3 max-w-2xl"
                         >
                             <p className="text-primary-dark font-medium text-lg md:text-xl lg:text-[22px] leading-snug">
                                 Our approach is built on:
@@ -131,7 +131,7 @@ export default function HowWeThinkSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.3 }}
                             transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-                            className="text-primary-dark font-medium text-lg md:text-xl lg:text-[22px] mt-6 md:mt-8 leading-relaxed max-w-xl"
+                            className="text-primary-dark font-medium text-lg md:text-xl lg:text-[22px] mt-6 md:mt-8 leading-relaxed max-w-2xl"
                         >
                             This allows businesses to operate with more control and less dependency on fragmented decision-making.
                         </motion.p>

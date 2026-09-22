@@ -9,6 +9,12 @@ import CTASection from '@/components/CTASection';
 import OEMScalingSupportSection from '@/components/OEMScalingSupportSection';
 import { getProductsByCategory } from '@/lib/api';
 
+export const metadata = {
+    title: 'Commercial Laundry Care & Fabric Systems | Kleanfix',
+    description:
+        'Industrial and commercial laundry cleaning systems delivering high-efficiency stain removal, fabric protection, and operational cost savings.',
+};
+
 const laundryCareSlides = [
     {
         title: "What this\nsystem solves",

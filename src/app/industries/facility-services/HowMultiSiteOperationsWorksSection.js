@@ -7,9 +7,8 @@ export default function HowMultiSiteOperationsWorksSection() {
             imageSrc="/facility-service/how-multi-site.webp"
             imageAlt="How multi-site operations actually works"
             heading={
-                <h2 className="text-primary font-bold text-3xl md:text-5xl lg:text-[50px] tracking-tight leading-[1.15]">
-                    How multi-site <br />
-                    operations actually works
+                <h2 className="text-primary font-bold text-3xl md:text-4xl lg:text-[44px] tracking-tight leading-[1.15]">
+                    How multi-site operations <br className="hidden md:block" />actually works
                 </h2>
             }
         >

@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 export default function StructureNotProductsSection() {
     return (
-        <section className="relative w-full py-15 bg-white overflow-hidden">
+        <section className="relative w-full py-15 bg-white !overflow-hidden">
             <div className="main-container px-6 md:px-12">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 lg:gap-16 items-start">
 

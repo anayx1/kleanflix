@@ -9,6 +9,12 @@ import CTASection from '@/components/CTASection';
 import OEMScalingSupportSection from '@/components/OEMScalingSupportSection';
 import { getProductsByCategory } from '@/lib/api';
 
+export const metadata = {
+    title: 'Pet Care & Veterinary Hygiene Systems | Kleanfix',
+    description:
+        'Safe, effective pet care and kennel hygiene solutions formulated for odor elimination, area sanitization, and gentle pet maintenance.',
+};
+
 const petCareSlides = [
     {
         title: "What this\nsystem solves",

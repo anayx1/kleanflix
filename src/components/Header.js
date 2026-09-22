@@ -71,6 +71,27 @@ export default function Header() {
         setActiveMobileDropdown((prev) => (prev === name ? null : name));
     };
 
+    const isItemActive = (item) => {
+        if (!pathname) return false;
+        if (item.href === '/') {
+            return pathname === '/';
+        }
+        if (pathname === item.href || pathname.startsWith(item.href + '/')) {
+            return true;
+        }
+        if (item.dropdown) {
+            return item.dropdown.some(
+                (sub) => pathname === sub.href || pathname.startsWith(sub.href + '/')
+            );
+        }
+        return false;
+    };
+
+    const isSubItemActive = (subHref) => {
+        if (!pathname) return false;
+        return pathname === subHref || pathname.startsWith(subHref + '/');
+    };
+
     return (
         <header
             className={`sticky top-0 z-50 w-full transition-all duration-300 border-b border-gray-200/70 bg-[#F5F5F7] ${scrolled ? 'shadow-md backdrop-blur-md bg-[#F5F5F7]/95 py-1' : 'py-1'
@@ -93,6 +114,7 @@ export default function Header() {
                     {/* Desktop Navigation Links */}
                     <nav className="hidden md:flex items-center justify-center flex-1 gap-3.5 lg:gap-5 xl:gap-6 text-secondary font-medium">
                         {NAV_ITEMS.map((item) => {
+                            const active = isItemActive(item);
                             if (item.dropdown) {
                                 return (
                                     <div key={item.name} className="relative group py-4">
@@ -100,7 +122,13 @@ export default function Header() {
                                             href={item.href}
                                             className="inline-flex items-center gap-1 text-[13px] lg:text-[14px] xl:text-[15px] font-medium text-secondary hover:text-[#d96610] transition-all duration-200 whitespace-nowrap"
                                         >
-                                            <span className="group-hover:underline group-hover:underline-offset-8 group-hover:decoration-2 group-hover:decoration-secondary">
+                                            <span
+                                                className={`${
+                                                    active
+                                                        ? 'underline underline-offset-8 decoration-2 decoration-secondary font-semibold'
+                                                        : 'group-hover:underline group-hover:underline-offset-8 group-hover:decoration-2 group-hover:decoration-secondary'
+                                                }`}
+                                            >
                                                 {item.name}
                                             </span>
                                             <svg
@@ -117,30 +145,44 @@ export default function Header() {
                                             /* Mega Dropdown for Products (3 Columns) */
                                             <div className="absolute top-full left-0 pt-2 hidden group-hover:block z-50 transition-all duration-200 min-w-[580px] lg:min-w-[680px]">
                                                 <div className="bg-white rounded-[24px] shadow-2xl border border-gray-100 p-6 lg:p-8 grid grid-cols-3 gap-y-4 md:gap-y-5 gap-x-8 lg:gap-x-12">
-                                                    {item.dropdown.map((subItem) => (
-                                                        <Link
-                                                            key={subItem.name}
-                                                            href={subItem.href}
-                                                            className="text-secondary hover:text-[#d96610] hover:underline underline-offset-4 decoration-secondary text-[13px] lg:text-[14px] xl:text-[15px] font-medium transition-all duration-150 whitespace-nowrap"
-                                                        >
-                                                            {subItem.name}
-                                                        </Link>
-                                                    ))}
+                                                    {item.dropdown.map((subItem) => {
+                                                        const subActive = isSubItemActive(subItem.href);
+                                                        return (
+                                                            <Link
+                                                                key={subItem.name}
+                                                                href={subItem.href}
+                                                                className={`text-[13px] lg:text-[14px] xl:text-[15px] transition-all duration-150 whitespace-nowrap ${
+                                                                    subActive
+                                                                        ? 'text-[#d96610] underline underline-offset-4 decoration-secondary font-semibold'
+                                                                        : 'text-secondary hover:text-[#d96610] hover:underline underline-offset-4 decoration-secondary font-medium'
+                                                                }`}
+                                                            >
+                                                                {subItem.name}
+                                                            </Link>
+                                                        );
+                                                    })}
                                                 </div>
                                             </div>
                                         ) : (
                                             /* Single-column Dropdown for Industries */
                                             <div className="absolute top-full -left-4 pt-2 hidden group-hover:block z-50 transition-all duration-200 min-w-[200px] lg:min-w-[220px]">
                                                 <div className="bg-white rounded-[20px] shadow-2xl border border-gray-100 p-5 lg:p-6 flex flex-col gap-3 lg:gap-3.5">
-                                                    {item.dropdown.map((subItem) => (
-                                                        <Link
-                                                            key={subItem.name}
-                                                            href={subItem.href}
-                                                            className="text-secondary hover:text-[#d96610] hover:underline underline-offset-4 decoration-secondary text-[13px] lg:text-[14px] xl:text-[15px] font-medium transition-all duration-150 whitespace-nowrap"
-                                                        >
-                                                            {subItem.name}
-                                                        </Link>
-                                                    ))}
+                                                    {item.dropdown.map((subItem) => {
+                                                        const subActive = isSubItemActive(subItem.href);
+                                                        return (
+                                                            <Link
+                                                                key={subItem.name}
+                                                                href={subItem.href}
+                                                                className={`text-[13px] lg:text-[14px] xl:text-[15px] transition-all duration-150 whitespace-nowrap ${
+                                                                    subActive
+                                                                        ? 'text-[#d96610] underline underline-offset-4 decoration-secondary font-semibold'
+                                                                        : 'text-secondary hover:text-[#d96610] hover:underline underline-offset-4 decoration-secondary font-medium'
+                                                                }`}
+                                                            >
+                                                                {subItem.name}
+                                                            </Link>
+                                                        );
+                                                    })}
                                                 </div>
                                             </div>
                                         )}
@@ -152,7 +194,11 @@ export default function Header() {
                                 <Link
                                     key={item.name}
                                     href={item.href}
-                                    className="text-[13px] lg:text-[14px] xl:text-[15px] font-medium text-secondary hover:text-[#d96610] hover:underline hover:underline-offset-8 hover:decoration-2 hover:decoration-secondary transition-all duration-200 whitespace-nowrap py-4"
+                                    className={`text-[13px] lg:text-[14px] xl:text-[15px] transition-all duration-200 whitespace-nowrap py-4 ${
+                                        active
+                                            ? 'font-semibold text-secondary underline underline-offset-8 decoration-2 decoration-secondary'
+                                            : 'font-medium text-secondary hover:text-[#d96610] hover:underline hover:underline-offset-8 hover:decoration-2 hover:decoration-secondary'
+                                    }`}
                                 >
                                     {item.name}
                                 </Link>
@@ -190,6 +236,7 @@ export default function Header() {
                 <div className="md:hidden bg-white border-t border-gray-200 shadow-xl px-4 py-6 max-h-[85vh] overflow-y-auto">
                     <div className="flex flex-col gap-3">
                         {NAV_ITEMS.map((item) => {
+                            const active = isItemActive(item);
                             if (item.dropdown) {
                                 const isOpen = activeMobileDropdown === item.name;
                                 return (
@@ -199,7 +246,9 @@ export default function Header() {
                                             onClick={() => toggleMobileDropdown(item.name)}
                                             className="w-full flex items-center justify-between py-2 text-base font-semibold text-secondary text-left"
                                         >
-                                            <span>{item.name}</span>
+                                            <span className={active ? 'underline underline-offset-4 decoration-2 decoration-secondary' : ''}>
+                                                {item.name}
+                                            </span>
                                             <ChevronDown
                                                 className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''
                                                     }`}
@@ -207,16 +256,23 @@ export default function Header() {
                                         </button>
                                         {isOpen && (
                                             <div className="pl-4 mt-1 grid grid-cols-1 gap-2 border-l-2 border-secondary/30 my-1">
-                                                {item.dropdown.map((subItem) => (
-                                                    <Link
-                                                        key={subItem.name}
-                                                        href={subItem.href}
-                                                        onClick={() => setMobileMenuOpen(false)}
-                                                        className="py-1.5 text-sm font-semibold text-secondary hover:text-[#d96610]"
-                                                    >
-                                                        {subItem.name}
-                                                    </Link>
-                                                ))}
+                                                {item.dropdown.map((subItem) => {
+                                                    const subActive = isSubItemActive(subItem.href);
+                                                    return (
+                                                        <Link
+                                                            key={subItem.name}
+                                                            href={subItem.href}
+                                                            onClick={() => setMobileMenuOpen(false)}
+                                                            className={`py-1.5 text-sm font-semibold ${
+                                                                subActive
+                                                                    ? 'text-[#d96610] underline underline-offset-4 decoration-secondary'
+                                                                    : 'text-secondary hover:text-[#d96610]'
+                                                            }`}
+                                                        >
+                                                            {subItem.name}
+                                                        </Link>
+                                                    );
+                                                })}
                                             </div>
                                         )}
                                     </div>
@@ -228,7 +284,11 @@ export default function Header() {
                                     key={item.name}
                                     href={item.href}
                                     onClick={() => setMobileMenuOpen(false)}
-                                    className="py-2.5 text-base font-semibold text-secondary border-b border-gray-100 hover:text-[#d96610]"
+                                    className={`py-2.5 text-base font-semibold border-b border-gray-100 hover:text-[#d96610] ${
+                                        active
+                                            ? 'text-secondary underline underline-offset-4 decoration-2 decoration-secondary'
+                                            : 'text-secondary'
+                                    }`}
                                 >
                                     {item.name}
                                 </Link>
@@ -254,4 +314,6 @@ export default function Header() {
         </header>
     );
 }
+
+
 

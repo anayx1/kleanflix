@@ -9,6 +9,12 @@ import OEMScalingSupportSection from '@/components/OEMScalingSupportSection'
 import CTASection from '@/components/CTASection'
 import { getProductsByCategory } from '@/lib/api'
 
+export const metadata = {
+    title: 'Facility Care & Maintenance Cleaning Systems | Kleanfix',
+    description:
+        'Complete facility care hygiene solutions for multi-surface maintenance, daily cleaning, washroom sanitation, and high-traffic commercial spaces.',
+};
+
 const facilityCare = async () => {
     const products = await getProductsByCategory('Facility Care');
 
@@ -17,7 +23,7 @@ const facilityCare = async () => {
             <ReededGlassHero
                 title="Facility Care"
                 subtitle="The Backbone of Daily Hygiene Systems"
-                imageSrc="/facility-care/hero.webp"
+                imageSrc="/hero/facility-care.png"
                 imageAlt="Contact Us Hero Background"
             />
             <section className="py-12 md:py-16 lg:py-20 bg-white">

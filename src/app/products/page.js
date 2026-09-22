@@ -25,6 +25,12 @@ const productsFaqs = [
     }
 ];
 
+export const metadata = {
+    title: 'Products & Chemical Systems | Kleanfix',
+    description:
+        'Explore Kleanfix professional cleaning and hygiene product systems designed for commercial facilities, industrial operations, hospitality, and healthcare.',
+};
+
 const ProductsPage = () => {
     return (
         <main className="min-h-screen bg-white">

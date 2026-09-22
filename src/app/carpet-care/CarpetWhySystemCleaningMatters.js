@@ -42,7 +42,7 @@ export default function CarpetWhySystemCleaningMatters() {
                 }}
                 className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
             >
-                <source src="/carpet-care/sec5.mp4" type="video/mp4" />
+                <source src="/carpet-care/why-system-based-cleaning.mp4" type="video/mp4" />
             </video>
 
             {/* Subtle overlay for depth */}

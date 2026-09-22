@@ -29,10 +29,6 @@ export default function IntegratedSystemsSection() {
         offset: ['start start', 'end end']
     });
 
-    // ─── Background opacity & Y (Desktop only) ───
-    const bgOpacity = useTransform(scrollYProgress, [0.25, 0.4, 0.92, 1], [0, 0.6, 0.6, 0.6]);
-    const bgY = useTransform(scrollYProgress, [0.3, 0.95], [0, -450]);
-
     // ─── Right column vertical scroll (Desktop only) ───
     const stackY = useTransform(scrollYProgress, [0.05, 0.35, 0.65, 0.92], [0, 0, -480, -960]);
 
@@ -54,25 +50,22 @@ export default function IntegratedSystemsSection() {
     return (
         <section
             ref={sectionRef}
-            className="relative min-h-0 md:min-h-[400vh] py-12 md:py-0 bg-[#F7F7F7] md:bg-transparent"
+            className="relative min-h-0 md:min-h-[400vh] py-12 md:py-0 bg-transparent"
         >
             {/* Sticky viewport container on desktop, static container on mobile */}
             <div className="relative md:sticky md:top-0 h-auto md:h-screen w-full overflow-hidden flex items-center">
 
-                {/* Background image layer — desktop only */}
-                <motion.div
-                    className="hidden md:block absolute inset-x-0 top-0 z-0 pointer-events-none h-[calc(100vh+400px)]"
-                    style={{ opacity: bgOpacity, y: bgY }}
-                >
+                {/* Static Fixed Background Image Layer */}
+                <div className="hidden md:block absolute inset-0 z-0 pointer-events-none">
                     <Image
                         src="/homepage/sec-7-bg.jpg"
-                        alt=""
+                        alt="Integrated systems background"
                         fill
                         sizes="100vw"
-                        className="object-cover object-center"
+                        className="object-cover object-center opacity-60"
                         priority
                     />
-                </motion.div>
+                </div>
 
                 {/* Content grid */}
                 <div className="relative z-10 h-full w-full flex items-center justify-center">
@@ -106,9 +99,9 @@ export default function IntegratedSystemsSection() {
                                     style={isMobile ? {} : { y: stackY }}
                                 >
                                     {slides.map((slide, idx) => {
-                                        const opacityValue = idx === 0 ? img1Opacity : idx === 1 ? img2Opacity : img3Opacity;
-                                        const xValue = idx === 0 ? img1X : idx === 1 ? img2X : img3X;
-                                        const extraYValue = idx === 0 ? img1ExtraY : idx === 1 ? img2ExtraY : img3ExtraY;
+                                        const opacityValue = idx === 0 ? img1Opacity : idx === 1 ? img2Opacity : idx === 2 ? img3Opacity : 1;
+                                        const xValue = idx === 0 ? img1X : idx === 1 ? img2X : idx === 2 ? img3X : 0;
+                                        const extraYValue = idx === 0 ? img1ExtraY : idx === 1 ? img2ExtraY : idx === 2 ? img3ExtraY : 0;
 
                                         return (
                                             <motion.div

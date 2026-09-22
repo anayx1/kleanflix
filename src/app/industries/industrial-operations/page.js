@@ -10,8 +10,9 @@ import PerformanceAndContinuitySection from './PerformanceAndContinuitySection';
 import WhatThisMeansForIndustrialOperatorsSection from './WhatThisMeansForIndustrialOperatorsSection';
 
 export const metadata = {
-    title: "Industrial Operations | kleanfix",
-    description: "Industrial Cleaning Systems Built for Performance Under Load - kleanfix.",
+    title: 'Industrial Operations Cleaning Solutions | Kleanfix',
+    description:
+        'Heavy-duty industrial cleaning systems built for performance, degreasing, and residue control under high-load operations - Kleanfix.',
 };
 
 export default function IndustrialOperationsPage() {

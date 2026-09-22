@@ -10,8 +10,9 @@ import OEMScalingSupportSection from '@/components/OEMScalingSupportSection';
 import { getProductsByCategory } from '@/lib/api';
 
 export const metadata = {
-    title: "Carpet Care | kleanfix",
-    description: "A Deep-Cleaning System for Textile Surfaces - kleanfix Carpet Care System.",
+    title: 'Carpet Care Cleaning Systems | Kleanfix',
+    description:
+        'A deep-cleaning system for textile surfaces and high-traffic carpeting - Kleanfix Carpet Care System.',
 };
 
 const carpetCareSlides = [
@@ -65,7 +66,7 @@ const page = async () => {
             <ReededGlassHero
                 title="Carpet Care"
                 subtitle="A Deep-Cleaning System for Textile Surfaces"
-                imageSrc="/carpet-care/hero.png"
+                imageSrc="/hero/carpet-hero.png"
                 imageAlt="Carpet Care Hero Background"
             />
 

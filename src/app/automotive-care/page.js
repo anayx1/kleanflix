@@ -9,6 +9,12 @@ import CTASection from '@/components/CTASection';
 import OEMScalingSupportSection from '@/components/OEMScalingSupportSection';
 import { getProductsByCategory } from '@/lib/api';
 
+export const metadata = {
+    title: 'Automotive Care Cleaning Systems | Kleanfix',
+    description:
+        'High-performance automotive cleaning chemicals and vehicle maintenance systems for exterior wash, interior care, engine degreasing, and surface protection.',
+};
+
 const automotiveCareSlides = [
     {
         title: "What this\nsystem solves",
@@ -60,7 +66,7 @@ const page = async () => {
             <ReededGlassHero
                 title="Automotive Care"
                 subtitle="A Structured Cleaning System for Multi-Surface Vehicles"
-                imageSrc="/automotive-care/hero.webp"
+                imageSrc="/hero/automotive-hero.jpg"
                 imageAlt="Automotive Care Hero Background"
             />
 

@@ -5,8 +5,9 @@ import WhyThisMattersSection from './WhyThisMattersSection';
 import ContactCtaVideoSection from './ContactCtaVideoSection';
 
 export const metadata = {
-    title: "Contact Us | kleanfix",
-    description: "Tell Us What You Are Trying to Solve or Build - Get in touch with kleanfix.",
+    title: 'Contact Us | Kleanfix',
+    description:
+        'Connect with the Kleanfix team to map your facility requirements, request OEM formulations, or discuss institutional hygiene systems.',
 };
 
 export default function ContactUsPage() {
